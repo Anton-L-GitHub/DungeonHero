@@ -60,6 +60,7 @@ class Enemy():
 
 class Giant_spider(Enemy):
     def __init__(self):
+        super().__init__()
         self._health = 1
         self._name = "Giant Spider"
         self._initiative = 7
@@ -70,6 +71,7 @@ class Giant_spider(Enemy):
 
 class Skeleton(Enemy):
     def __init__(self):
+        super().__init__()
         self._health = 2
         self._name = "Skeleton"
         self._initiative = 4
@@ -80,6 +82,7 @@ class Skeleton(Enemy):
 
 class Orc(Enemy):
     def __init__(self):
+        super().__init__()
         self._health = 3
         self._name = "Orc"
         self._initiative = 6
@@ -90,6 +93,7 @@ class Orc(Enemy):
 
 class Troll(Enemy):
     def __init__(self):
+        super().__init__()
         self._health = 4
         self._name = "Troll"
         self._initiative = 2
