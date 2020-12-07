@@ -7,11 +7,11 @@ def show_help():
     print("\nTo show these instructions again type 'HELP'. To end the game type 'QUIT'.")
 
 #Initialization of parameters?
-"""
+
 #Temporary move command
 players_moves = []
 players_directions = ["U", "D", "L", "R"]
-"""
+
 player_choice = input(">>>").upper()
 
 #game loop
