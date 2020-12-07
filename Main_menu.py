@@ -6,3 +6,18 @@ def show_help():
     print("\If you box yourself in or get attached by the monster, you lose...")
     print("\nTo show these instructions again type 'HELP'. To end the game type 'QUIT'.")
 
+#Initialization of parameters?
+"""
+#Temporary move command
+players_moves = []
+players_directions = ["U", "D", "L", "R"]
+"""
+player_choice = input(">>>").upper()
+
+#game loop
+while True:
+    if player_choice == "HELP":
+        show_help()
+        player_choice = input(">>>").upper()
+    elif player_choice == "QUIT":
+        break
