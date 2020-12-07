@@ -21,3 +21,7 @@ while True:
         player_choice = input(">>>").upper()
     elif player_choice == "QUIT":
         break
+    elif player_choice not in players_directions:
+        print("\n>>>Command key not recognized<<<")
+        show_help()
+        player_choice = input("Please Try Again. >>>").upper()
