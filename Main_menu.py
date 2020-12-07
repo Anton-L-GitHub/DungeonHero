@@ -6,6 +6,12 @@ def show_help():
     print("\nIf you box yourself in or get attached by the monster, you lose...")
     print("\nTo show these instructions again type 'HELP'. To end the game type 'QUIT'.")
 
+
+def welcomeMessage():
+    print("\nDungeon Run är ett textbaserat äventyrsspel för en spelare. Det spelas genom att göra val i menyer som") 
+    print("\ninnehåller olika alternativ. Man väljer vilken typ av hjälte man vill spela, för att sedan utforska en karta") 
+    print("\nmed slumpmässigt innehåll i jakt på skatter. Men se upp för monster! Det gäller att samla på sig så mycket") 
+    print("\nskatter som möjligt och att hitta ut med livet i behåll.")
 #Initialization of parameters?
 
 #Temporary move command
