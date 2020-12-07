@@ -1,3 +1,4 @@
+#Class for creating maps
 class GameMap:
     def __init__(self, x, y):
         self.x = x
@@ -5,6 +6,7 @@ class GameMap:
         self.player = 'X'
         self.map_grid = []
     
+    #Creating map
     def create_map(self):
         for _i in range(0, self.y):
             x = []
@@ -14,18 +16,22 @@ class GameMap:
                 x.append("-")
             self.map_grid.append(x)
     
-    def print_map(self):
-        count = len(self.map_grid)
+    #Prints the map with inverted y axis
+    def nice_print(self):
+            temp_list = []
+            for i in range(self.x):
+                temp_string = ' '.join(self.map_grid[i])
+                temp_list.append(temp_string)
 
-        bottom_info_row = ""
-        for i in range(self.x+1):
-            bottom_info_row += f'{i}    '
-        print(bottom_info_row)
+            for i in range(self.y, 0, -1):
+                print(f'{i} {temp_list[i-1]}')
 
-        for x in range(len(self.map_grid), 0, -1):
-            print(f'{x} {self.map_grid[x-1]}')
-            count -= 1
+            bottom_info_row = ""
+            for i in range(self.x+1):
+                bottom_info_row += f'{i} '
+            print(bottom_info_row)
     
+    #Check boundaries inside map
     def check_bound(self, x, y):
         if (0 <= y <= self.y):
             if (0 <= x <= self.x):
@@ -33,6 +39,7 @@ class GameMap:
     
         return False
     
+    #Handles movement directions
     def make_direction(self, x, y, direction):
         directionsDict = {
             'U': (x, y+1),
@@ -43,6 +50,7 @@ class GameMap:
         
         return directionsDict[direction]
     
+    #Move the player
     def make_move(self, x, y, direction):
         
         new_pos = self.make_direction(x, y, direction)
@@ -56,9 +64,9 @@ class GameMap:
             print("Not a position, you donkey!")
 
 
-
+#test methods
 playMap = GameMap(8, 8)
 playMap.create_map()
 playMap.make_move(0, 0, 'U')
 playMap.make_move(0, 1, 'R')
-playMap.print_map()
+playMap.nice_print()
