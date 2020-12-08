@@ -1,3 +1,5 @@
+import monster_enounter_example as MSE
+
 #Class for creating maps
 class GameMap:
     def __init__(self, x, y):
@@ -12,7 +14,7 @@ class GameMap:
         return Room()
 
     
-    #Creating map
+    #Create map
     def create_map(self):
         for _i in range(0, self.y):
             x_axis = []
@@ -89,14 +91,18 @@ class GameMap:
 class Room:
     def __init__(self):
         self.state = '-'
+        self.enemies = self.spawn_enemies()
+    
+    def spawn_enemies(self):
+        enemies = MSE.randomiseMonsterEncounter()
+        return enemies.return_enemies()
+    
+    def enemies_name(self):
+        for i in range(len(self.enemies)):
+            print(self.enemies[i].get_name())
     
     def change_state(self, new_state):
         self.state = new_state
-
-    def spawn_monsters(self):
-        #call funtion to generate monsters
-        #save monsters to map
-        pass
 
     def spawn_tressure(self):
         #call funtion to generate tresure
@@ -116,7 +122,8 @@ class Room:
 
     
 
-#test methods
+#test methods GameMap
+'''
 playMap = GameMap(5, 5)
 playMap.create_map()
 playMap.change_grid_sate(0, 0, "X")
@@ -124,3 +131,11 @@ playMap.change_grid_sate(1, 1, "X")
 playMap.change_grid_sate(2, 1, "X")
 playMap.print_map_grid()
 #playMap.print_object()
+'''
+
+#Test methods Room
+'''
+playRoom = Room()
+playRoom.spawn_enemies()
+playRoom.enemies_name()
+'''
