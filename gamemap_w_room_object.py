@@ -2,19 +2,19 @@ import monster_enounter_example as MSE
 
 #Class for creating maps
 class GameMap:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+    def __init__(self, y, x):
+        self.y = y # <--- chnage to self.y_max?
+        self.x = x # <--- change to self.x_max?
         self.player = 'O'
         self.map_grid = []
     
     #Creates map with stored Room object in each grid
     def create_map(self):
-        for _i in range(0, self.y):
+        for y in range(0, self.y):
             x_axis = []
         
-            for _j in range(0, self.x):
-                x_axis.append(Room())
+            for x in range(0, self.x):
+                x_axis.append(Room(f'{y}{x}'))
             self.map_grid.append(x_axis)
 
     # Changes state of a grid 
@@ -31,7 +31,7 @@ class GameMap:
         for y in range(self.y):
             temp_x_string = f'{y+1} '
             for x in range(self.x):
-                temp_x_string += f'{self.map_grid[y][x].get_state()} '
+                temp_x_string += f'{self.map_grid[y][x].get_room_state()} ' # <-- .get_room_sate could be switched for .get_room_name to get room name
             temp_y_list.append(temp_x_string)
         
         # Prints map with inverted y axis
@@ -45,11 +45,19 @@ class GameMap:
             bottom_info_row += f'{i}{space}'
         print(bottom_info_row)
     
-    #Prints out all objects in map_grid
-    def print_object(self):
+    # Prints out all objects in map_grid
+    def print_room_object(self):
         for y in range(0, self.y):
             for x in range(0, self.x):
                 print(self.map_grid[y][x])
+    
+    # Prints out all objects name in map_grid
+    def print_room_name(self):
+        temp_list = []
+        for y in range(0, self.y):
+            for x in range(0, self.x):
+                temp_list.append(self.map_grid[y][x].get_room_name())
+        print(temp_list)
 
     #Check boundaries inside map
     def check_bound(self, x, y):
@@ -84,7 +92,8 @@ class GameMap:
             print("Not a position, you donkey!")
     
 class Room:
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.state = '-'
         self.enemies = self.spawn_enemies()
     
@@ -93,6 +102,9 @@ class Room:
     def spawn_enemies(self):
         enemies = MSE.randomiseMonsterEncounter()
         return enemies.return_enemies()
+    
+    def get_room_name(self):
+        return self.name
     
     # Prints name of enemies object  
     def enemies_name(self):
@@ -116,27 +128,28 @@ class Room:
         pass
     
     # Retuns state of grid, example: explored = "X", unexplored = "-", looted = "O"?
-    def get_state(self):
+    def get_room_state(self):
         return self.state
 
 
     
 
 #test GameMap methods 
-'''
+
 playMap = GameMap(5, 5)
 playMap.create_map()
 playMap.change_grid_sate(0, 0, "X")
 playMap.change_grid_sate(1, 1, "X")
 playMap.change_grid_sate(2, 1, "X")
 playMap.print_map_grid()
-playMap.print_object()
+playMap.print_room_name()
 #playMap.print_object()
-'''
+
 
 #Test Room methods 
 '''
-playRoom = Room()
+playRoom = Room("hej")
 playRoom.spawn_enemies()
 playRoom.enemies_name()
+print(playRoom.get_room_name())
 '''
