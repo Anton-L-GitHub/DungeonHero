@@ -29,7 +29,7 @@ while True:
         show_help()
         player_choice = input(">>>").upper()
     elif player_choice == "QUIT":
-        with open("map_save.json", "w") as saveout:
+        with open("map_save.json", "w") as f:
             json.dump(#Player_character, f, indent=2)
         print(#players_Character)
         break
