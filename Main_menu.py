@@ -1,3 +1,6 @@
+import json
+import sys
+
 #Show basic instructions
 def show_help():
     print("\nTry to find the way out before the monsters finds you!")
@@ -26,6 +29,9 @@ while True:
         show_help()
         player_choice = input(">>>").upper()
     elif player_choice == "QUIT":
+        with open("map_save.json", "w") as saveout:
+            json.dump(#Player, f, indent=2)
+        print(#players_Character)
         break
     elif player_choice not in players_directions:
         print("\n>>>Command key not recognized<<<")
