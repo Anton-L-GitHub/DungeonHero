@@ -130,3 +130,7 @@ dmypy.json
 
 # Ignore tmp files
 *.tmp
+
+# IDE
+.idea/*
+.vscode/*
