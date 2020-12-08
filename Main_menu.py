@@ -30,7 +30,7 @@ while True:
         player_choice = input(">>>").upper()
     elif player_choice == "QUIT":
         with open("map_save.json", "w") as saveout:
-            json.dump(#Player, f, indent=2)
+            json.dump(#Player_character, f, indent=2)
         print(#players_Character)
         break
     elif player_choice not in players_directions:
