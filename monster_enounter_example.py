@@ -17,6 +17,7 @@ class randomiseMonsterEncounter():
         
         return enemie_types
 
+    # Prints the enemy_types as object
     def print_enemie_types_objects(self):
         for i in range(len(self.enemie_types)):
             self.enemie_types[i]
@@ -29,10 +30,12 @@ class randomiseMonsterEncounter():
                 enemies.append(self.enemie_types[i])
         return enemies
     
+    # Prints enemies generated from randomise_enemies
     def print_enemies(self):
         for i in self.enemies:
             print(self.enemies[i])
     
+    # Prints enemies generated from randomise_enemies by name
     def print_enemies_name(self):
         for i in range(len(self.enemies)):
             print(self.enemies[i].get_name())
