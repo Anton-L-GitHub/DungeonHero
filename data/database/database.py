@@ -4,8 +4,9 @@ import json
 
 json_file = 'data/database/data.json'
 
+
 class Database:
-    
+
     def __init__(self):
         self.check_json_file()
 
@@ -17,8 +18,7 @@ class Database:
         with open(json_file, 'r') as file:
             return json.load(file)
 
-
-    def disc_save(list_of_dicts):
+    def disc_save(self, list_of_dicts):
         """ Takes list of instances attributes in form of a py-dict and writes it to a json file """
         with open(json_file, 'w') as file:
             json.dump(list_of_dicts, file)

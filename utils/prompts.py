@@ -6,7 +6,7 @@ from game_files.characters import Knight, Thief, Wizard
 START_MENU = '\n1: New game\n2: Load game\n0: Exit \n> '
 CHARACTER_CHOISE = '\nChoose character:\n1: Knight\n2: Wizard\n3: Thief\n---\n0: Exit \n> '
 MAP_MENU = '\nMap Difficulty: \n1: Small \n2: Medium \n2: Large \n---\n0: Exit \n> '
-MAP_SPAWN = '\nSpawn: \n1: Bottom left \n2: Botton right \n\n2: Top Left \n2: Top right\n---\n0: Exit \n> '
+MAP_SPAWN = '\nSpawn: \n1: Bottom left \n2: Botton right \n\n3: Top Left \n4: Top right\n---\n0: Exit \n> '
 
 
 def start_menu_prompt(game):
@@ -17,6 +17,7 @@ def start_menu_prompt(game):
         elif user_input == '2':
             return game.load_game()
         user_input = input(START_MENU)
+
 
 def create_hero_prompt():
     user_choise = input(CHARACTER_CHOISE)
@@ -30,28 +31,28 @@ def create_hero_prompt():
         else:
             user_choise = input(CHARACTER_CHOISE)
 
+
 def map_create_prompt():
+    user_input = input(MAP_MENU)
+    while user_input != '0':
+        if user_input == '1':
+            return create_map_instance('small')
+        elif user_input == '2':
+            return create_map_instance('medium')
+        elif user_input == '3':
+            return create_map_instance('large')
         user_input = input(MAP_MENU)
-        while user_input != '0':
-            if user_input == '1':
-                return create_map_instance('small')
-            elif user_input == '2':
-                return create_map_instance('medium')
-            elif user_input == '3':
-                return create_map_instance('large')
-            user_input = input(MAP_MENU)
 
 
 def map_spawn_prompt(map):
-        user_input = input(MAP_SPAWN)
-        while user_input != '0':
-            if user_input == '1':
-                return map.set_start_position('b-l')
-            elif user_input == '2':
-                return map.set_start_position('b-r')
-            elif user_input == '3':
-                return map.set_start_position('t-l')
-            elif user_input == '3':
-                return map.set_start_position('t-r')
-            user_input = input(MAP_MENU)
-
+    user_input = input(MAP_SPAWN)
+    while user_input != '0':
+        if user_input == '1':
+            return map.set_start_position('b-l')
+        elif user_input == '2':
+            return map.set_start_position('b-r')
+        elif user_input == '3':
+            return map.set_start_position('t-l')
+        elif user_input == '3':
+            return map.set_start_position('t-r')
+        user_input = input(MAP_MENU)
