@@ -1,4 +1,4 @@
-from lib.game import Game
+from game_files.game import Game
 
 """ Main module for application """
 

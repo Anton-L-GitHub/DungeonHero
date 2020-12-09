@@ -1,4 +1,5 @@
-from lib.characters import Knight, Thief, Wizard
+from game_files.gamemap import create_map_instance
+from game_files.characters import Knight, Thief, Wizard
 
 """ Concerned displaying prompts in terminal """
 
@@ -23,14 +24,11 @@ def map_prompt():
         user_input = input(MAP_MENU)
         while user_input != '0':
             if user_input == '1':
-                # get small map obj
-                pass GameMap.add_new_map('Small')
+                return create_map_instance('small')
             elif user_input == '2':
-                # get medium map obj
-                pass
+                return create_map_instance('medium')
             elif user_input == '3':
-                # get large map obj
-                pass
+                return create_map_instance('large')
             user_input = input(MAP_MENU)
 
 
