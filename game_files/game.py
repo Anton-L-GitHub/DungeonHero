@@ -1,9 +1,6 @@
-from utils.prompts import hero_prompt, map_prompt
+from utils.prompts import create_hero_prompt, map_create_prompt, map_spawn_prompt, start_menu_prompt
 
 """ Concerned with creating &  loading games """
-
-
-START_MENU = '\n1: New game\n2: Load game\n0: Exit \n> '
 
 
 class Game:
@@ -15,26 +12,24 @@ class Game:
         self.map = None
 
     def start_game(self):
-        self.start_menu()
+        start_menu_prompt(self)
+        map_spawn_prompt(self.map)
+    
+    def create_new_hero(self):
+        self.hero = input('Choose name: ')
+        self.character = create_hero_prompt()
         self.map_menu()
-
-    def create_hero(self, name):
-        self.hero = name
-        self.character = hero_prompt()
-
-    def start_menu(self):
-        user_input = input(START_MENU)
-        while user_input != '0':
-            if user_input == '1':
-                return self.create_hero(input('Choose name: '))
-            elif user_input == '2':
-                # Load from json
-                break
-            user_input = input(START_MENU)
+        self.map.print_map_grid()
+    
+    def load_game(self):
+        pass
 
     def map_menu(self):
-        self.map = map_prompt()
-        self.map.set_start_position()
+        self.map = map_create_prompt()
+        map_spawn_prompt(self.map)
+
+    def set_start_position(self):
+        pass        
 
     def build_hero_from_disk(self):
         pass
