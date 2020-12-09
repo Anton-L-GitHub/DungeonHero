@@ -1,5 +1,5 @@
 import unittest
-from utils import enemies
+from lib import enemies
 
 
 class MonsterTests(unittest.TestCase):

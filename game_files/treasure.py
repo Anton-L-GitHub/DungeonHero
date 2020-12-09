@@ -1,6 +1,10 @@
 
+""" Tresure module """
 
-class Treasure():
+
+class Treasure:
+    """ blalbalbal """
+
     def __init__(self):
         self._name = "Treasure"
         self._value = 0
@@ -32,6 +36,8 @@ class Treasure():
 
 
 class Coins(Treasure):
+    """ blalbalbal """
+
     def __init__(self):
         super().__init__()
         self._name = "Coins"
@@ -40,6 +46,8 @@ class Coins(Treasure):
 
 
 class Coin_pouch(Treasure):
+    """ blalbalbal """
+
     def __init__(self):
         super().__init__()
         self._name = "Coin pouch"
@@ -48,6 +56,8 @@ class Coin_pouch(Treasure):
 
 
 class Gold_jewelry(Treasure):
+    """ blalbalbal """
+
     def __init__(self):
         super().__init__()
         self._name = "Gold jewelry"
@@ -56,6 +66,8 @@ class Gold_jewelry(Treasure):
 
 
 class Gemstone(Treasure):
+    """ blalbalbal """
+
     def __init__(self):
         super().__init__()
         self._name = "Gemstone"
@@ -64,9 +76,10 @@ class Gemstone(Treasure):
 
 
 class Treasure_chest(Treasure):
+    """ blalbalbal """
+
     def __init__(self):
         super().__init__()
         self._name = "Treasure chest"
         self._value = 20
         self._rarity = 5
-
