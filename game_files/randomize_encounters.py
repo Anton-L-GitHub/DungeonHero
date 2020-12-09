@@ -1,6 +1,7 @@
 import random
-import enemies as enemies_py
-import treasure as tresure_py
+import game_files.enemies as enemies_py
+import game_files.treasure as tresure_py
+
 
 class RandomizeEncounter():
 

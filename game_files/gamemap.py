@@ -1,4 +1,4 @@
-import randomize_encounters as ran_enc_py
+from game_files import randomize_encounters as ran_enc_py
 
 
 # Class for creating maps
@@ -60,13 +60,13 @@ class GameMap:
             'R': (x+1, y),
             'D': (x, y-1),
             'L': (x-1, y)
-            }
+        }
 
         return directionsDict[direction]
-    
+
     def make_start_position_template(self, corner):
         template = {
-            'b-l': (0, 0), 
+            'b-l': (0, 0),
             't-l': (self.y_max-1, 0),
             'b-r': (0, self.x_max-1),
             't-r': (self.y_max-1, self.x_max-1)
@@ -110,19 +110,19 @@ class Room:
     def spawn_enemies(self):
         enemies = ran_enc_py.RandomizeEnemies()
         return enemies.return_content()
-    
+
     def spawn_tressure(self):
         tresures = ran_enc_py.RandomizeTresure()
         return tresures.return_content()
 
     def get_room_name(self):
         return self.name
-    
+
     # Prints name of enemies object
     def enemies_name(self):
         for i in range(len(self.enemies)):
             print(self.enemies[i].get_name())
-    
+
     def tresures_name(self):
         for i in range(len(self.tresures)):
             print(self.tresures[i].get_name())
@@ -143,18 +143,20 @@ class Room:
         return self.state
 
 # Create map instance
+
+
 def create_map_instance(index):
     template = {
         'small': 4,
         'medium': 5,
         'large': 8
-        }
+    }
     playMap = GameMap(template[index], template[index])
     playMap.create_map()
 
     return playMap
 
-    
+
 # test methods
 
 '''
