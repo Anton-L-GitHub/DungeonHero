@@ -1,49 +1,82 @@
 import random
 import utils.enemies as enemies_py
+import utils.treasure as tresure_py
 
-class randomiseMonsterEncounter():
+
+class RandomizeEncounter():
+
     def __init__(self):
-        self.enemie_types = self.make_enemie_types()
-        self.enemies = self.randomise_enemies()
+        self.content = []
+        self.types = []
 
-    #Import enemies, mabye from json later?
+    # Prints the enemy_types as object
+    def print_types_objects(self):
+        for i in range(len(self.types)):
+            self.types[i]
+
+    # Spawns enemies based on rarity atribute
+    def randomize(self):
+        content = []
+        for i in range(len(self.types)):
+            if random.randint(1, 100) <= self.types[i].get_rarity():
+                content.append(self.types[i])
+        return content
+
+    # Prints enemies generated from randomise_enemies
+    def print_content(self):
+        for i in self.content:
+            print(self.content[i])
+
+    # Prints enemies generated from randomise_enemies by name
+    def print_content_name(self):
+        for i in range(len(self.content)):
+            print(self.content[i].get_name())
+
+    # Returns enemys
+    def return_content(self):
+        return self.content
+
+
+class RandomizeTresure(RandomizeEncounter):
+
+    def __init__(self):
+        self.types = self.make_enemie_types()
+        self.content = self.randomize()
+
+    def make_enemie_types(self):
+        tresure_types = [
+            tresure_py.Coins(),
+            tresure_py.Coin_pouch(),
+            tresure_py.Gold_jewelry(),
+            tresure_py.Gemstone(),
+            tresure_py.Treasure_chest()
+        ]
+
+        return tresure_types
+
+
+class RandomizeEnemies(RandomizeEncounter):
+
+    def __init__(self):
+        self.types = self.make_enemie_types()
+        self.content = self.randomize()
+
     def make_enemie_types(self):
         enemie_types = [
             enemies_py.Giant_spider(),
             enemies_py.Skeleton(),
             enemies_py.Orc(),
             enemies_py.Troll()
-            ]
-        
+        ]
+
         return enemie_types
 
-    # Prints the enemy_types as object
-    def print_enemie_types_objects(self):
-        for i in range(len(self.enemie_types)):
-            self.enemie_types[i]
 
-    #Spawns enemies based on rarity atribute
-    def randomise_enemies(self):
-        enemies = []
-        for i in range(len(self.enemie_types)):
-            if random.randint(1, 100) <= self.enemie_types[i].get_rarity():
-                enemies.append(self.enemie_types[i])
-        return enemies
-    
-    # Prints enemies generated from randomise_enemies
-    def print_enemies(self):
-        for i in self.enemies:
-            print(self.enemies[i])
-    
-    # Prints enemies generated from randomise_enemies by name
-    def print_enemies_name(self):
-        for i in range(len(self.enemies)):
-            print(self.enemies[i].get_name())
-    
-    #Returns enemys
-    def return_enemies(self):
-        return self.enemies
+# Test randomiseMonsterEncounter methods
+
+test_enemie = RandomizeEnemies()
+test_enemie.print_content_name()
 
 
-#test = randomiseMonsterEncounter()
-#test.print_enemies_name()
+test_tresure = RandomizeTresure()
+test_tresure.print_content_name()
