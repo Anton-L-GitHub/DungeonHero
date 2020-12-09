@@ -3,17 +3,17 @@ import monster_enounter_example as MSE
 #Class for creating maps
 class GameMap:
     def __init__(self, y, x):
-        self.y = y # <--- chnage to self.y_max?
-        self.x = x # <--- change to self.x_max?
+        self.y_max = y # <--- chnage to self.y_max_max?
+        self.x_max = x # <--- change to self.x_max_max?
         self.player = 'O'
         self.map_grid = []
     
     #Creates map with stored Room object in each grid
     def create_map(self):
-        for y in range(0, self.y):
+        for y in range(0, self.y_max):
             x_axis = []
         
-            for x in range(0, self.x):
+            for x in range(0, self.x_max):
                 x_axis.append(Room(f'{y}{x}'))
             self.map_grid.append(x_axis)
 
@@ -28,41 +28,46 @@ class GameMap:
         # self.map_grid's x axis list into 1 row string, (temp_x_string).
         # Stores temp_x_string in y axis list, (temp_y_list)
         temp_y_list = []
-        for y in range(self.y):
+        for y in range(self.y_max):
             temp_x_string = f'{y+1} '
-            for x in range(self.x):
+            for x in range(self.x_max):
                 temp_x_string += f'{self.map_grid[y][x].get_room_state()} ' # <-- .get_room_sate could be switched for .get_room_name to get room name
             temp_y_list.append(temp_x_string)
         
         # Prints map with inverted y axis
-        for y in range(self.y, 0, -1):
+        for y in range(self.y_max, 0, -1):
             print(temp_y_list[y-1])
 
         #Prints a x axis bottom row of numbers
         space = ' '
         bottom_info_row = f'0{space}'
-        for i in range(1, self.x+1):
+        for i in range(1, self.x_max+1):
             bottom_info_row += f'{i}{space}'
         print(bottom_info_row)
+
+    def set_start_position(self, x, y):
+        self.player_x = x
+        self.player_y = y
+        self.map_grid[y][x].change_state('X')
     
     # Prints out all objects in map_grid
     def print_room_object(self):
-        for y in range(0, self.y):
-            for x in range(0, self.x):
+        for y in range(0, self.y_max):
+            for x in range(0, self.x_max):
                 print(self.map_grid[y][x])
     
     # Prints out all objects name in map_grid
     def print_room_name(self):
         temp_list = []
-        for y in range(0, self.y):
-            for x in range(0, self.x):
+        for y in range(0, self.y_max):
+            for x in range(0, self.x_max):
                 temp_list.append(self.map_grid[y][x].get_room_name())
         print(temp_list)
 
     #Check boundaries inside map
     def check_bound(self, x, y):
-        if (0 <= y < self.y):
-            if (0 <= x < self.x):
+        if (0 <= y < self.y_max):
+            if (0 <= x < self.x_max):
                 return True
     
         return False
@@ -80,14 +85,18 @@ class GameMap:
     
     #Move the player basic, prob outdated.
     def make_move(self, x, y, direction):
-        
+
         new_pos = self.make_direction(x, y, direction)
-        self.map_grid[y][x] = self.player
+        old_x = x
+        old_y = y
         x = new_pos[0]
         y = new_pos[1]
 
-        if self.check_bound(x, y) == True:
-            self.map_grid[y][x] = self.player
+        if self.check_bound(x, y):
+            self.map_grid[old_y][old_x].change_state('O')
+            self.player_x = x
+            self.player_y = y
+            self.map_grid[y][x].change_state('😊')
         else:
             print("Not a position, you donkey!")
     
@@ -133,17 +142,28 @@ class Room:
 
 
     
-
+'''
 #test GameMap methods 
 
 playMap = GameMap(5, 5)
 playMap.create_map()
-playMap.change_grid_sate(0, 0, "X")
-playMap.change_grid_sate(1, 1, "X")
-playMap.change_grid_sate(2, 1, "X")
+#playMap.change_grid_sate(0, 0, "X")
+#playMap.change_grid_sate(1, 1, "X")
+#playMap.change_grid_sate(2, 1, "X")
+playMap.set_start_position(2,2)
 playMap.print_map_grid()
 playMap.print_room_name()
 #playMap.print_object()
+
+'''
+playMap = GameMap(5, 5)
+playMap.create_map()
+playMap.set_start_position(2,2)
+input_dir = ''
+while input_dir != 'e':
+    input_dir = input("choose direction")
+    playMap.make_move(playMap.player_x, playMap.player_y, input_dir)
+    playMap.print_map_grid()
 
 
 #Test Room methods 
