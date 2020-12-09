@@ -1,0 +1,14 @@
+{
+    "normal": 
+    {
+        "description": ["Du kommer till en mörk grotta.", "Du kommer till en ljus grotta.", "Du möter ett tomt rum."]
+    },
+    "encounter": 
+    {
+        "description": ["Du möter ", " Du darrar av skräck och gör dig redo för att slåss."]
+    },
+    "end": 
+    {
+        "description": "Du kommer till en mörk yta, bra gjort, din åsna."
+    }
+}
