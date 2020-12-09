@@ -1,4 +1,4 @@
-import monster_enounter_example as MSE
+# import monster_enounter_example as MSE
 
 
 # Class for creating maps
@@ -92,7 +92,7 @@ class Room:
         self.name = name
         self.state = '-'
         self.description = ''
-        self.enemies = self.spawn_enemies()
+        # self.enemies = self.spawn_enemies()
 
     # Spawns enemyes in room, return list of
     # Enemy objects from enemies.py
@@ -128,8 +128,25 @@ class Room:
     def get_room_state(self):
         return self.state
 
+# Create map instance
+def create_map_instance(index):
+    template = {
+        'small': 4,
+        'medium': 5,
+        'large': 8
+        }
+    playMap = GameMap(template[index], template[index])
+    playMap.create_map()
+
+    return playMap
+
+test = create_map_instance('large')
+
+test.set_start_position(0, 0)
+test.print_map_grid()
 
 # test methods
+'''
 playMap = GameMap(8, 8)
 playMap.create_map()
 playMap.set_start_position(0, 0)
@@ -143,3 +160,4 @@ while input_dir != 'e':
     input_dir = input("choose direction")
     playMap.make_move(playMap.player_x, playMap.player_y, input_dir)
     playMap.print_map_grid()
+'''
