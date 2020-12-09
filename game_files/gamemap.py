@@ -73,7 +73,6 @@ class GameMap:
         }
         return template[corner]
 
-
     def set_start_position(self, corner):
         corner_tuple = self.make_start_position_template(corner)
         self.player_y = corner_tuple[0]
@@ -154,11 +153,12 @@ def create_map_instance(index):
     
 # test methods
 
+'''
 playMap = GameMap(8, 8)
 playMap.create_map()
 playMap.set_start_position('t-l')
 playMap.print_map_grid()
-
+'''
 
 '''
 playRoom = Room("hej")
