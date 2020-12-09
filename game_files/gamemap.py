@@ -1,4 +1,4 @@
-# import monster_enounter_example as MSE
+import randomize_encounters as ran_enc_py
 
 
 # Class for creating maps
@@ -102,30 +102,34 @@ class Room:
         self.name = name
         self.state = '-'
         self.description = ''
-        # self.enemies = self.spawn_enemies()
+        self.enemies = self.spawn_enemies()
+        self.tresures = self.spawn_tressure()
 
     # Spawns enemyes in room, return list of
     # Enemy objects from enemies.py
     def spawn_enemies(self):
-        enemies = MSE.randomiseMonsterEncounter()
-        return enemies.return_enemies()
+        enemies = ran_enc_py.RandomizeEnemies()
+        return enemies.return_content()
+    
+    def spawn_tressure(self):
+        tresures = ran_enc_py.RandomizeTresure()
+        return tresures.return_content()
 
     def get_room_name(self):
         return self.name
-
+    
     # Prints name of enemies object
     def enemies_name(self):
         for i in range(len(self.enemies)):
             print(self.enemies[i].get_name())
+    
+    def tresures_name(self):
+        for i in range(len(self.tresures)):
+            print(self.tresures[i].get_name())
 
     # Changes Room state
     def change_state(self, new_state):
         self.state = new_state
-
-    def spawn_tressure(self):
-        # call funtion to generate tresure
-        # save tresure to map
-        pass
 
     def won_room(self):
         # save to json something to indicate the room is completed
@@ -156,14 +160,16 @@ def create_map_instance(index):
 '''
 playMap = GameMap(8, 8)
 playMap.create_map()
-playMap.set_start_position('t-l')
+playMap.set_start_position('t-r')
 playMap.print_map_grid()
+'''
+'''
+playRoom = Room("hej")
+playRoom.tresures_name()
+playRoom.enemies_name()
 '''
 
 '''
-playRoom = Room("hej")
-playRoom.spawn_enemies()
-playRoom.enemies_name()
 input_dir = ''
 while input_dir != 'e':
     input_dir = input("choose direction")
