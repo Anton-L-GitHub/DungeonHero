@@ -2,13 +2,12 @@ import json
 
 """ Concerned with storing and retrieving media-objects from a JSON-file. """
 
-json_file = 'data/lib_register.json'
+json_file = 'data/database/data.json'
 
 class Database:
     
     def __init__(self):
         self.check_json_file()
-
 
     def check_json_file(self):
         pass
