@@ -63,11 +63,22 @@ class GameMap:
             }
 
         return directionsDict[direction]
+    
+    def make_start_position_template(self, corner):
+        template = {
+            'b-l': (0, 0), 
+            't-l': (self.y_max, 0),
+            'b-r': (0, self.x_max),
+            't-r': (self.y_max, self.x_max)
+        }
+        return template
 
-    def set_start_position(self, x, y):
-        self.player_x = x
-        self.player_y = y
-        self.map_grid[y][x].change_state('X')
+
+    def set_start_position(self, corner):
+        corner_tuple = self.make_start_position_template(corner)
+        self.player_y = corner_tuple[0]
+        self.player_x = corner_tuple[1]
+        self.map_grid[self.player_y][self.player_x].change_state('X')
 
     # Move the player
     def make_move(self, x, y, direction):
