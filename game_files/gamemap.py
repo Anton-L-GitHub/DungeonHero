@@ -67,11 +67,11 @@ class GameMap:
     def make_start_position_template(self, corner):
         template = {
             'b-l': (0, 0), 
-            't-l': (self.y_max, 0),
-            'b-r': (0, self.x_max),
-            't-r': (self.y_max, self.x_max)
+            't-l': (self.y_max-1, 0),
+            'b-r': (0, self.x_max-1),
+            't-r': (self.y_max-1, self.x_max-1)
         }
-        return template
+        return template[corner]
 
 
     def set_start_position(self, corner):
@@ -153,10 +153,14 @@ def create_map_instance(index):
 
     
 # test methods
-'''
+
 playMap = GameMap(8, 8)
 playMap.create_map()
-playMap.set_start_position(0, 0)
+playMap.set_start_position('t-l')
+playMap.print_map_grid()
+
+
+'''
 playRoom = Room("hej")
 playRoom.spawn_enemies()
 playRoom.enemies_name()
