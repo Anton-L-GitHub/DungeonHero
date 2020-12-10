@@ -10,6 +10,9 @@ class Character:
         self.health = 0
         self.attack = 0
         self.agility = 0
+        self.image = 'data/images/knight.png'
+        self.room_image = 'data/images/knight_on_room.png'
+        self.backpack_image = 'data/images/backpack.png'
         self.special_ability = None
         self.backpack = []
 
@@ -26,6 +29,8 @@ class Knight(Character):
         self.health = 10
         self.attack = 6
         self.agility = 4
+        self.image = 'data/images/knight.png'
+        self.room_image = 'data/images/knight_on_room.png'
         self.special_ability = 'Sheild block'
 
 
@@ -38,6 +43,8 @@ class Wizard(Character):
         self.health = 4
         self.attack = 9
         self.agility = 5
+        self.image = 'data/images/wizard.png'
+        self.room_image = 'data/images/wizard_on_room.png'
         self.special_ability = 'Glow!'
 
 
@@ -50,4 +57,6 @@ class Thief(Character):
         self.health = 5
         self.attack = 5
         self.agility = 7
+        self.image = 'data/images/thief.png'
+        self.room_image = 'data/images/thief_on_room.png'
         self.special_ability = 'Critical strike!'
