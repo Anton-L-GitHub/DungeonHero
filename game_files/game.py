@@ -27,7 +27,7 @@ class Game:
                 continue
             elif room.enemies:
                 print('MONSTERS')
-                self.fight_enemy(room)
+                print(self.fight_enemy(room))
                 
 
     def create_new_hero(self):
@@ -48,7 +48,6 @@ class Game:
         result[self.character] = dice_toss(self.character.initiative)
         for monster in monsters:
             result[monster] = dice_toss(monster._initiative)
-        print(result)
         result = list(dict(sorted(result.items(), key=lambda item: item[1], reverse=True)).keys())
         return result
 
