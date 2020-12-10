@@ -1,4 +1,4 @@
-import randomize_encounters as ran_enc_py
+from game_files import randomize_encounters as ran_enc_py
 
 
 # Class for creating maps
@@ -210,6 +210,7 @@ while input_dir != 'e':
     input_dir = input("choose direction")
     print(playMap.make_move(input_dir))
     playMap.print_map_grid()
+    print(playMap.get_room_at_grid().get_contents())
     
 
     
