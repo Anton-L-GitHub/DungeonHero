@@ -1,6 +1,5 @@
 import random
-import enemies as enemies_py
-import treasures as treasures_py
+from game_files import enemies, treasures
 
 
 class RandomizeEncounter():
@@ -45,11 +44,11 @@ class RandomizeTreasures(RandomizeEncounter):
 
     def make_enemie_types(self):
         treasures_types = [
-            treasures_py.Coins(),
-            treasures_py.Coin_pouch(),
-            treasures_py.Gold_jewelry(),
-            treasures_py.Gemstone(),
-            treasures_py.Treasure_chest()
+            treasures.Coins(),
+            treasures.Coin_pouch(),
+            treasures.Gold_jewelry(),
+            treasures.Gemstone(),
+            treasures.Treasure_chest()
         ]
 
         return treasures_types
@@ -63,10 +62,10 @@ class RandomizeEnemies(RandomizeEncounter):
 
     def make_enemie_types(self):
         enemie_types = [
-            enemies_py.Giant_spider(),
-            enemies_py.Skeleton(),
-            enemies_py.Orc(),
-            enemies_py.Troll()
+            enemies.Giant_spider(),
+            enemies.Skeleton(),
+            enemies.Orc(),
+            enemies.Troll()
         ]
 
         return enemie_types
