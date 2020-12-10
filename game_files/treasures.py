@@ -9,6 +9,7 @@ class Treasure:
         self._name = "Treasure"
         self._value = 0
         self._rarity = 0
+        self.image = 'data/images/coins.png'
 
     def set_name(self, new_name):
         if not isinstance(new_name, str):
@@ -43,6 +44,7 @@ class Coins(Treasure):
         self._name = "Coins"
         self._value = 2
         self._rarity = 40
+        self.image = 'data/images/coins.png'
 
 
 class Coin_pouch(Treasure):
@@ -53,6 +55,7 @@ class Coin_pouch(Treasure):
         self._name = "Coin pouch"
         self._value = 6
         self._rarity = 20
+        self.image = 'data/images/coin_pouch.png'
 
 
 class Gold_jewelry(Treasure):
@@ -63,6 +66,7 @@ class Gold_jewelry(Treasure):
         self._name = "Gold jewelry"
         self._value = 10
         self._rarity = 15
+        self.image = 'data/images/gold_jewelry.png'
 
 
 class Gemstone(Treasure):
@@ -73,6 +77,7 @@ class Gemstone(Treasure):
         self._name = "Gemstone"
         self._value = 14
         self._rarity = 10
+        self.image = 'data/images/gemstone.png'
 
 
 class Treasure_chest(Treasure):
@@ -83,3 +88,4 @@ class Treasure_chest(Treasure):
         self._name = "Treasure chest"
         self._value = 20
         self._rarity = 5
+        self.image = 'data/images/treasure_chest.png'
