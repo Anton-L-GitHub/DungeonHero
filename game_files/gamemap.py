@@ -17,7 +17,7 @@ class GameMap:
             x_axis = []
 
             for x in range(0, self.x_max):
-                x_axis.append(Room(f'{y}{x}'))
+                x_axis.append(EncounterRoom(f'{y}{x}'))
             self.map_grid.append(x_axis)
 
     def get_room_at_grid(self, y, x):
@@ -80,7 +80,13 @@ class GameMap:
         corner_tuple = self.make_start_position_template(corner)
         self.player_y = corner_tuple[0]
         self.player_x = corner_tuple[1]
-        self.map_grid[self.player_y][self.player_x].change_state('X')
+        self.map_grid[self.player_y][self.player_x].set_state('X')
+        self.set_exit_room(corner_tuple)
+
+    def set_exit_room(self, corner):
+        corner1 = - corner[0] + self.y_max - 1
+        corner2 = - corner[1] + self.x_max - 1
+        self.map_grid[corner1][corner2].set_state('E')
 
     # Move the player
     def make_move(self, direction):
@@ -92,10 +98,10 @@ class GameMap:
         y = new_pos[1]
 
         if self.check_bound(x, y):
-            self.map_grid[old_y][old_x].change_state('O')
+            self.map_grid[old_y][old_x].set_state('O')
             self.player_x = x
             self.player_y = y
-            self.map_grid[y][x].change_state('X')
+            self.map_grid[y][x].set_state('X')
         else:
             print("Not a position, you donkey!")
 
@@ -105,6 +111,22 @@ class Room:
         self.name = name
         self.state = '-'
         self.description = ''
+
+    # Retuns state of grid
+    def get_room_state(self):
+        return self.state
+
+    def get_room_name(self):
+        return self.name
+
+    # Changes Room state
+    def set_state(self, new_state):
+        self.state = new_state
+
+
+class EncounterRoom(Room):
+    def __init__(self, name):
+        super().__init__(name)
         self.enemies = self.spawn_enemies()
         self.treasures = self.spawn_treasures()
 
@@ -118,9 +140,6 @@ class Room:
         treasures = ran_enc_py.RandomizeTreasures()
         return treasures.return_content()
 
-    def get_room_name(self):
-        return self.name
-
     # Prints name of enemies object
     def enemies_name(self):
         for i in range(len(self.enemies)):
@@ -130,10 +149,6 @@ class Room:
         for i in range(len(self.treasures)):
             print(self.treasures[i].get_name())
 
-    # Changes Room state
-    def change_state(self, new_state):
-        self.state = new_state
-
     def won_room(self):
         # save to json something to indicate the room is completed
         # chnage json-side map_grid to "x" (completed)
@@ -141,12 +156,8 @@ class Room:
         # chnage client side map_grid to "x" (completed)
         pass
 
-    # Retuns state of grid
-    def get_room_state(self):
-        return self.state
 
 # Create map instance
-
 
 def create_map_instance(index):
     template = {
@@ -161,7 +172,6 @@ def create_map_instance(index):
 
 
 # test methods
-
 '''
 playMap = GameMap(8, 8)
 playMap.create_map()
@@ -177,7 +187,7 @@ playRoom = Room("hej")
 playRoom.treasures_name()
 playRoom.enemies_name()
 '''
-
+'''
 playMap = GameMap(8, 8)
 playMap.create_map()
 playMap.set_start_position('b-l')
@@ -186,3 +196,4 @@ while input_dir != 'e':
     input_dir = input("choose direction")
     playMap.make_move(input_dir)
     playMap.print_map_grid()
+'''
