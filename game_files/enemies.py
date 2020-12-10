@@ -11,6 +11,7 @@ class Enemy:
         self._initiative = 0
         self._attack = 0
         self._agility = 0
+        self.image = 'data/images/orc.png'
         self._rarity = 0
 
     def set_health(self, new_value):
@@ -73,6 +74,7 @@ class Giant_spider(Enemy):
         self._attack = 2
         self._agility = 3
         self._rarity = 20
+        self.image = 'data/images/giant_spider.png'
 
 
 class Skeleton(Enemy):
@@ -86,6 +88,7 @@ class Skeleton(Enemy):
         self._attack = 3
         self._agility = 3
         self._rarity = 15
+        self.image = 'data/images/skeleton.png'
 
 
 class Orc(Enemy):
@@ -99,6 +102,7 @@ class Orc(Enemy):
         self._attack = 4
         self._agility = 4
         self._rarity = 10
+        self.image = 'data/images/orc.png'
 
 
 class Troll(Enemy):
@@ -112,3 +116,4 @@ class Troll(Enemy):
         self._attack = 7
         self._agility = 2
         self._rarity = 5
+        self.image = 'data/images/troll.png'
