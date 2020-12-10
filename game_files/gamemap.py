@@ -103,7 +103,7 @@ class Room:
         self.state = '-'
         self.description = ''
         self.enemies = self.spawn_enemies()
-        self.tresures = self.spawn_tressure()
+        self.treasures = self.spawn_treasures()
 
     # Spawns enemyes in room, return list of
     # Enemy objects from enemies.py
@@ -111,9 +111,9 @@ class Room:
         enemies = ran_enc_py.RandomizeEnemies()
         return enemies.return_content()
 
-    def spawn_tressure(self):
-        tresures = ran_enc_py.RandomizeTresure()
-        return tresures.return_content()
+    def spawn_treasures(self):
+        treasures = ran_enc_py.RandomizeTreasures()
+        return treasures.return_content()
 
     def get_room_name(self):
         return self.name
@@ -123,9 +123,9 @@ class Room:
         for i in range(len(self.enemies)):
             print(self.enemies[i].get_name())
 
-    def tresures_name(self):
-        for i in range(len(self.tresures)):
-            print(self.tresures[i].get_name())
+    def treasures_name(self):
+        for i in range(len(self.treasures)):
+            print(self.treasures[i].get_name())
 
     # Changes Room state
     def change_state(self, new_state):
@@ -167,7 +167,7 @@ playMap.print_map_grid()
 '''
 '''
 playRoom = Room("hej")
-playRoom.tresures_name()
+playRoom.treasures_name()
 playRoom.enemies_name()
 '''
 

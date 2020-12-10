@@ -1,5 +1,5 @@
 
-""" Tresure module """
+""" Treasures module """
 
 
 class Treasure:

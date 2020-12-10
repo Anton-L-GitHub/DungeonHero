@@ -37,7 +37,7 @@ class RandomizeEncounter():
         return self.content
 
 
-class RandomizeTresure(RandomizeEncounter):
+class RandomizeTreasures(RandomizeEncounter):
 
     def __init__(self):
         self.types = self.make_enemie_types()
