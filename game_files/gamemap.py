@@ -1,4 +1,4 @@
-from game_files import randomize_encounters as ran_enc_py
+import randomize_encounters as ran_enc_py
 
 
 # Class for creating maps
@@ -19,6 +19,9 @@ class GameMap:
             for x in range(0, self.x_max):
                 x_axis.append(Room(f'{y}{x}'))
             self.map_grid.append(x_axis)
+    
+    def get_room_at_grid(self, y, x):
+        return self.map_grid[y][x]
 
     # Prints the map with inverted y axis
     def print_map_grid(self):
@@ -164,7 +167,11 @@ playMap = GameMap(8, 8)
 playMap.create_map()
 playMap.set_start_position('t-r')
 playMap.print_map_grid()
+room00 = playMap.get_room_at_grid(0, 0)
+print(room00.get_room_name())
+print(room00.get_room_state())
 '''
+
 '''
 playRoom = Room("hej")
 playRoom.treasures_name()
