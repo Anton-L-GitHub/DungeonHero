@@ -44,7 +44,7 @@ class RandomizeTresure(RandomizeEncounter):
         self.content = self.randomize()
 
     def make_enemie_types(self):
-        tresure_types = [
+        treasures_types = [
             treasures_py.Coins(),
             treasures_py.Coin_pouch(),
             treasures_py.Gold_jewelry(),
