@@ -19,7 +19,7 @@ class GameMap:
             for x in range(0, self.x_max):
                 x_axis.append(Room(f'{y}{x}'))
             self.map_grid.append(x_axis)
-    
+
     def get_room_at_grid(self, y, x):
         return self.map_grid[y][x]
 
@@ -59,10 +59,10 @@ class GameMap:
     # Handles movement directions
     def make_direction(self, x, y, direction):
         directionsDict = {
-            'U': (x, y+1),
-            'R': (x+1, y),
-            'D': (x, y-1),
-            'L': (x-1, y)
+            'W': (x, y+1),
+            'A': (x-1, y),
+            'S': (x, y-1),
+            'D': (x+1, y)
         }
 
         return directionsDict[direction]
@@ -83,11 +83,11 @@ class GameMap:
         self.map_grid[self.player_y][self.player_x].change_state('X')
 
     # Move the player
-    def make_move(self, x, y, direction):
+    def make_move(self, direction):
 
-        new_pos = self.make_direction(x, y, direction)
-        old_x = x
-        old_y = y
+        new_pos = self.make_direction(self.player_x, self.player_y, direction)
+        old_x = self.player_x
+        old_y = self.player_y
         x = new_pos[0]
         y = new_pos[1]
 
@@ -178,10 +178,11 @@ playRoom.treasures_name()
 playRoom.enemies_name()
 '''
 
-'''
+playMap = GameMap(8, 8)
+playMap.create_map()
+playMap.set_start_position('b-l')
 input_dir = ''
 while input_dir != 'e':
     input_dir = input("choose direction")
-    playMap.make_move(playMap.player_x, playMap.player_y, input_dir)
+    playMap.make_move(input_dir)
     playMap.print_map_grid()
-'''
