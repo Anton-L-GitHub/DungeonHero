@@ -7,9 +7,19 @@ START_MENU = '\n1: New game\n2: Load game\n0: Exit \n> '
 CHARACTER_CHOISE = '\nChoose character:\n1: Knight\n2: Wizard\n3: Thief\n---\n0: Exit \n> '
 MAP_MENU = '\nMap Difficulty: \n1: Small \n2: Medium \n2: Large \n---\n0: Exit \n> '
 MAP_SPAWN = '\nSpawn: \n1: Bottom left \n2: Botton right \n\n2: Top Left \n2: Top right\n---\n0: Exit \n> '
+WELCOME_MSG = """Dungeon Run is a text-based adventure game for a player. It is played by making selections in menus 
+that contain different options. You choose the type of hero you want to play, and then explore a map with random content in 
+search of treasures. But watch out for monsters! It is important to collect as many treasures as possible 
+and to find out with life intact."""
+SHOW_HELP = """Try to find the way out before the monsters finds you! 
+You can move up(U), down(D), left(L), or right(R).
+You cannot move into any space you have already been in. If you box yourself in or get attached by the monster, you lose.
+To show these instructions again type 'HELP'. To end the game type 'QUIT'."""
 
 
 def start_menu_prompt(game):
+    print(WELCOME_MSG)
+    print(SHOW_HELP)
     user_input = input(START_MENU)
     while user_input != '0':
         if user_input == '1':
