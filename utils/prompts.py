@@ -12,7 +12,7 @@ that contain different options. You choose the type of hero you want to play, an
 search of treasures. But watch out for monsters! It is important to collect as many treasures as possible 
 and to find out with life intact."""
 SHOW_HELP = """Try to find the way out before the monsters finds you! 
-You can move up(U), down(D), left(L), or right(R).
+You can move up(W), down(S), left(A), or right(D).
 You cannot move into any space you have already been in. If you box yourself in or get attached by the monster, you lose.
 To show these instructions again type 'HELP'. To end the game type 'QUIT'."""
 
