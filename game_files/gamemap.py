@@ -8,7 +8,6 @@ class GameMap:
         self.y_max = y
         self.player_x = 0
         self.player_y = 0
-        self.player = 'X'
         self.map_grid = []
 
     # Creating map
@@ -20,8 +19,8 @@ class GameMap:
                 x_axis.append(EncounterRoom(f'{y}{x}'))
             self.map_grid.append(x_axis)
 
-    def get_room_at_grid(self, y, x):
-        return self.map_grid[y][x]
+    def get_room_at_grid(self):
+        return self.map_grid[self.player_y][self.player_x]
 
     # Prints the map with inverted y axis
     def print_map_grid(self):
@@ -102,8 +101,12 @@ class GameMap:
             self.player_x = x
             self.player_y = y
             self.map_grid[y][x].set_state('X')
+
+            return self.get_room_at_grid()
         else:
             print("Not a position, you donkey!")
+
+            return False
 
 
 class Room:
@@ -111,6 +114,7 @@ class Room:
         self.name = name
         self.state = '-'
         self.description = ''
+        self.content = {}
 
     # Retuns state of grid
     def get_room_state(self):
@@ -123,12 +127,19 @@ class Room:
     def set_state(self, new_state):
         self.state = new_state
 
+    def is_room_empty(self):
+        if len(self.content) > 0:
+            return True
+        else:
+            return False
 
 class EncounterRoom(Room):
     def __init__(self, name):
         super().__init__(name)
         self.enemies = self.spawn_enemies()
         self.treasures = self.spawn_treasures()
+        self.content['enemies'] = self.enemies
+        self.content['treasure'] = self.treasures
 
     # Spawns enemyes in room, return list of
     # Enemy objects from enemies.py
@@ -136,16 +147,19 @@ class EncounterRoom(Room):
         enemies = ran_enc_py.RandomizeEnemies()
         return enemies.return_content()
 
+    def get_contents(self):
+        return self.content
+
     def spawn_treasures(self):
         treasures = ran_enc_py.RandomizeTreasures()
         return treasures.return_content()
 
     # Prints name of enemies object
-    def enemies_name(self):
+    def enemies_names(self):
         for i in range(len(self.enemies)):
             print(self.enemies[i].get_name())
 
-    def treasures_name(self):
+    def treasures_names(self):
         for i in range(len(self.treasures)):
             print(self.treasures[i].get_name())
 
@@ -187,13 +201,16 @@ playRoom = Room("hej")
 playRoom.treasures_name()
 playRoom.enemies_name()
 '''
-'''
+
 playMap = GameMap(8, 8)
 playMap.create_map()
-playMap.set_start_position('b-l')
+playMap.set_start_position('t-r')
 input_dir = ''
 while input_dir != 'e':
     input_dir = input("choose direction")
-    playMap.make_move(input_dir)
+    print(playMap.make_move(input_dir))
     playMap.print_map_grid()
-'''
+    
+
+    
+
