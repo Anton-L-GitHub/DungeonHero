@@ -8,6 +8,7 @@ class GameMap:
         self.y_max = y
         self.player_x = 0
         self.player_y = 0
+        self.player_prev = tuple()
         self.map_grid = []
 
     # Creating map
@@ -79,30 +80,47 @@ class GameMap:
         corner_tuple = self.make_start_position_template(corner)
         self.player_y = corner_tuple[0]
         self.player_x = corner_tuple[1]
+        self.player_prev = (self.player_y, self.player_x)
         self.map_grid[self.player_y][self.player_x].set_state('X')
         self.set_exit_room(corner_tuple)
+
+    def check_if_exit(self, x, y):
+        if isinstance(self.map_grid[y][x], EscapeRoom):
+            return True
+        else:
+            return False
 
     def set_exit_room(self, corner):
         corner1 = - corner[0] + self.y_max - 1
         corner2 = - corner[1] + self.x_max - 1
-        self.map_grid[corner1][corner2].set_state('E')
+        exitRoom = EscapeRoom(f'{corner1}{corner2}')
+        self.map_grid[corner1][corner2] = exitRoom
+
+    def make_step_back(self):
+        self.map_grid[self.player_prev[0]][self.player_prev[1]].set_state('X')
+        self.map_grid[self.player_y][self.player_x].set_state('-')
+        self.player_x = self.player_prev[1]
+        self.player_y = self.player_prev[0]
+
 
     # Move the player
     def make_move(self, direction):
 
         new_pos = self.make_direction(self.player_x, self.player_y, direction)
-        old_x = self.player_x
-        old_y = self.player_y
+        self.player_prev = (self.player_y, self.player_x)
         x = new_pos[0]
         y = new_pos[1]
 
         if self.check_bound(x, y):
-            self.map_grid[old_y][old_x].set_state('O')
-            self.player_x = x
-            self.player_y = y
-            self.map_grid[y][x].set_state('X')
+            if self.check_if_exit(x, y):
+                self.map_grid[y][x].escape()
+            else:
+                self.map_grid[self.player_prev[0]][self.player_prev[1]].set_state('O')
+                self.player_x = x
+                self.player_y = y
+                self.map_grid[y][x].set_state('X')
 
-            return self.get_room_at_grid()
+                return self.get_room_at_grid()
         else:
             print("Not a position, you donkey!")
 
@@ -132,6 +150,9 @@ class Room:
             return True
         else:
             return False
+    
+    def get_contents(self):
+        return self.content
 
 class EncounterRoom(Room):
     def __init__(self, name):
@@ -146,9 +167,6 @@ class EncounterRoom(Room):
     def spawn_enemies(self):
         enemies = ran_enc_py.RandomizeEnemies()
         return enemies.return_content()
-
-    def get_contents(self):
-        return self.content
 
     def spawn_treasures(self):
         treasures = ran_enc_py.RandomizeTreasures()
@@ -169,6 +187,14 @@ class EncounterRoom(Room):
 
         # chnage client side map_grid to "x" (completed)
         pass
+
+class EscapeRoom(Room):
+    def __init__(self, name):
+        super().__init__(name)
+        self.state = 'E'
+    
+    def escape(self):
+        print("Do you want to escape? No ok then.")
 
 
 # Create map instance
@@ -204,14 +230,21 @@ playRoom.enemies_name()
 
 playMap = GameMap(8, 8)
 playMap.create_map()
-playMap.set_start_position('t-r')
+playMap.set_start_position('t-l')
 input_dir = ''
-while input_dir != 'e':
+while input_dir != 'A':
     input_dir = input("choose direction")
     print(playMap.make_move(input_dir))
     playMap.print_map_grid()
     print(playMap.get_room_at_grid().get_contents())
-    
+playMap.make_step_back()
+playMap.print_map_grid()
+input_dir = ''
+while input_dir != 'A':
+    input_dir = input("choose direction")
+    print(playMap.make_move(input_dir))
+    playMap.print_map_grid()
+    print(playMap.get_room_at_grid().get_contents())
 
     
 
