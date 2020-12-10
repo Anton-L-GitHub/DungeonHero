@@ -1,6 +1,10 @@
 
+""" Ememies module """
 
-class Enemy():
+
+class Enemy:
+    """ Character blalbalbal """
+
     def __init__(self):
         self._health = 0
         self._name = "Enemy"
@@ -28,7 +32,7 @@ class Enemy():
         if not isinstance(new_value, int):
             raise TypeError("Attack has to be of type Integer.")
         self._attack = new_value
-    
+
     def set_agility(self, new_value):
         if not isinstance(new_value, int):
             raise TypeError("Agility has to be of type Integer.")
@@ -59,6 +63,8 @@ class Enemy():
 
 
 class Giant_spider(Enemy):
+    """ blalbalbal """
+
     def __init__(self):
         super().__init__()
         self._health = 1
@@ -70,6 +76,8 @@ class Giant_spider(Enemy):
 
 
 class Skeleton(Enemy):
+    """ blalbalbal """
+
     def __init__(self):
         super().__init__()
         self._health = 2
@@ -81,6 +89,8 @@ class Skeleton(Enemy):
 
 
 class Orc(Enemy):
+    """ blalbalbal """
+
     def __init__(self):
         super().__init__()
         self._health = 3
@@ -92,6 +102,8 @@ class Orc(Enemy):
 
 
 class Troll(Enemy):
+    """ blalbalbal """
+
     def __init__(self):
         super().__init__()
         self._health = 4
@@ -100,4 +112,3 @@ class Troll(Enemy):
         self._attack = 7
         self._agility = 2
         self._rarity = 5
-

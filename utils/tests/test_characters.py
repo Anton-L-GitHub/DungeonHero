@@ -1,5 +1,5 @@
 import unittest
-from utils import characters
+from lib import characters
 
 
 class CharactersTests(unittest.TestCase):

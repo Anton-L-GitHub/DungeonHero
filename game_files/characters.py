@@ -1,3 +1,7 @@
+
+""" Character module """
+
+
 class Character:
     """ Character blalbalbal """
 
@@ -6,17 +10,8 @@ class Character:
         self.health = 0
         self.attack = 0
         self.agility = 0
+        self.special_ability = None
         self.backpack = []
-        # Lägg till special-attack?
-
-    def movement(self):
-        """ Communicates with map-class about player location """
-        pass
-
-    def special_ability(self):
-        """ A distinct ability for the character class """
-        # Måste troligtvis utveckla utveckla stridssystem innan
-        pass
 
     def __repr__(self):
         return self.__class__.__name__
@@ -31,10 +26,7 @@ class Knight(Character):
         self.health = 10
         self.attack = 6
         self.agility = 4
-
-    def special_ability(self):
-        # Måste troligtvis utveckla utveckla stridssystem innan 
-        return 'Sheild block!'
+        self.special_ability = 'Sheild block'
 
 
 class Wizard(Character):
@@ -46,11 +38,7 @@ class Wizard(Character):
         self.health = 4
         self.attack = 9
         self.agility = 5
-
-    def special_ability(self):
-        """ A distinct ability for the character class """
-        # Måste troligtvis utveckla utveckla stridssystem innan
-        return 'Glow!'
+        self.special_ability = 'Glow!'
 
 
 class Thief(Character):
@@ -62,8 +50,4 @@ class Thief(Character):
         self.health = 5
         self.attack = 5
         self.agility = 7
-
-    def special_ability(self):
-        """ A distinct ability for the character class """
-        # Måste troligtvis utveckla utveckla stridssystem innan
-        return 'Critical strike!'
+        self.special_ability = 'Critical strike!'
