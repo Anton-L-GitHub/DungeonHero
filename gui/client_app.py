@@ -5,6 +5,15 @@ from game_files import enemies
 from game_files import treasures
 import random
 import time
+import winsound
+import os
+
+path = os.path.abspath(os.getcwd())
+path += '/data/music/the_cave.wav'
+
+winsound.PlaySound(path, winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC)
+
+
 
 class Game:
     def __init__(self):
@@ -667,7 +676,7 @@ class GuiEntity(tk.Frame):
         self.image = tk.PhotoImage(file=self.entity.get_image())
         self.build_entity_frame()
         self.grid(column=entity_num, row=0, padx=15)
-        self.rowconfigure(0, weight=0)
+        self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
     def update(self):
