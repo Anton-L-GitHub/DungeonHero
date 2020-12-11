@@ -11,6 +11,9 @@ class Treasure:
         self._rarity = 0
         self.image = 'data/images/coins.png'
 
+    def get_image(self):
+        return self.image
+
     def set_name(self, new_name):
         if not isinstance(new_name, str):
             raise TypeError("Name has to be of type String.")

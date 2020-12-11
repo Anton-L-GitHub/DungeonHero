@@ -14,6 +14,9 @@ class Enemy:
         self.image = 'data/images/orc.png'
         self._rarity = 0
 
+    def get_image(self):
+        return self.image
+
     def set_health(self, new_value):
         if not isinstance(new_value, int):
             raise TypeError("Health has to be of type Integer.")

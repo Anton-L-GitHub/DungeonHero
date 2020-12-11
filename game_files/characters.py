@@ -6,6 +6,7 @@ class Character:
     """ Character blalbalbal """
 
     def __init__(self):
+        self.name = "Player"
         self.initiative = 0
         self.health = 0
         self.attack = 0
@@ -15,6 +16,24 @@ class Character:
         self.backpack_image = 'data/images/backpack.png'
         self.special_ability = None
         self.backpack = []
+
+    def get_image(self):
+        return self.image
+
+    def get_name(self):
+        return self.name
+
+    def get_initiative(self):
+        return self.initiative
+
+    def get_health(self):
+        return self.health
+
+    def get_attack(self):
+        return self.attack
+
+    def get_agility(self):
+        return self.agility
 
     def __repr__(self):
         return self.__class__.__name__
