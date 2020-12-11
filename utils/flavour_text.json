@@ -1,0 +1,6 @@
+{
+    "room_empty": ["You come to an empty and dark room, you don't see anything of interest."],
+    "room_escaped": "Using your agility, you managed to escape the horrifying monsters from the room before",
+    "room_battle": "You tread carefully in the dark cave, suddenly you hear a sound behind you.",
+    "room_treasure": "You see a treasure in the distance"
+}
