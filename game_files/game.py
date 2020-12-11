@@ -1,5 +1,6 @@
 from utils.utils import dice_toss
 from utils.prompts import create_hero_prompt, map_create_prompt, map_spawn_prompt, start_menu_prompt, user_make_move
+from data.database import database
 
 """ Concerned with creating & loading games """
 
@@ -8,7 +9,6 @@ class Game:
     """ Concerned with keeping track of hero, map and character """
 
     def __init__(self):
-        self.hero_name = ''
         self.character = None
         self.map = None
 
@@ -30,9 +30,9 @@ class Game:
                 print(self.fight_enemy(room))
                 
 
-    def create_new_hero(self):
-        self.hero_name = input('Choose name: ')
+    def create_new_hero(self, hero_name):
         self.character = create_hero_prompt()
+        self.character.name = hero_name
         self.new_map()
 
     def new_map(self):
@@ -59,7 +59,7 @@ class Game:
         pass
 
     def save_hero_to_disk(self):
-        pass
+        database.disc_save_character(self.character)
 
 
 class Combat_system:
