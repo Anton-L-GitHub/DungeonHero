@@ -132,7 +132,7 @@ class Room:
         self.name = name
         self.state = '-'
         self.description = ''
-        self.content = {}
+        self.content = {'enemies': [], 'treasures': []}
 
     # Retuns state of grid
     def get_room_state(self):
@@ -161,10 +161,8 @@ class Room:
 class EncounterRoom(Room):
     def __init__(self, name):
         super().__init__(name)
-        self.enemies = self.spawn_enemies()
-        self.treasures = self.spawn_treasures()
-        self.content['enemies'] = self.enemies
-        self.content['treasure'] = self.treasures
+        self.content['enemies'] = self.spawn_enemies()
+        self.content['treasures'] = self.spawn_treasures()
 
     # Spawns enemyes in room, return list of
     # Enemy objects from enemies.py
@@ -178,12 +176,12 @@ class EncounterRoom(Room):
 
     # Prints name of enemies object
     def enemies_names(self):
-        for i in range(len(self.enemies)):
-            print(self.enemies[i].get_name())
+        for i in range(len(self.content['enemies'])):
+            print(self.content['enemies'][i].get_name())
 
     def treasures_names(self):
-        for i in range(len(self.treasures)):
-            print(self.treasures[i].get_name())
+        for i in range(len(self.content['treasures'])):
+            print(self.content['treasures'][i].get_name())
 
     def won_room(self):
         # save to json something to indicate the room is completed
