@@ -1,4 +1,3 @@
-from game_files.gamemap import EncounterRoom
 from game_files.game import Game
 
 """ Main module for application """
