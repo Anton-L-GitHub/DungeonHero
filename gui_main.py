@@ -8,6 +8,5 @@ def main():
     myapp = client_app.App(root)
     myapp.mainloop()
 
-
 if __name__ == "__main__":
     main()
