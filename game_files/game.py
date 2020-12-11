@@ -1,76 +1,55 @@
-from utils.utils import dice_toss
-from utils.prompts import create_hero_prompt, map_create_prompt, map_spawn_prompt, start_menu_prompt, user_make_move
-from data.database import database
+from utils.prompts import prompts
+from utils.utils import dice_toss, sort_keys
 
-""" Concerned with creating & loading games """
+
+""" Concerned with blabla """
 
 
 class Game:
-    """ Concerned with keeping track of hero, map and character """
 
-    def __init__(self):
-        self.character = None
-        self.map = None
+    def __init__(self, Character, GameMap):
+        self.character = Character
+        self.game_map = GameMap
 
-    def start_game(self):
-        start_menu_prompt(self)
-        self.main_game()
+    # Terminal methods
+    @classmethod
+    def terminal_new_game(cls):
+        character, game_map = prompts.new_game()
+        new_game = cls(character, game_map)
+        new_game.terminal_map_print()
+        position = prompts.map_spawn_prompt()
+        new_game.map_set_start_position(position)
+        return new_game
 
-    def main_game(self):
-        print('The game has begun!')
-        while True:
-            print('\n')
-            self.map.print_map_grid()
-            room = user_make_move(self.map)
-            if room == False:
-                print('Invalid move!')
-                continue
-            elif room.enemies:
-                print('MONSTERS')
-                print(self.fight_enemy(room))
-                
+    # Terminal metod
+    def terminal_make_move(self):
+        return self.player_move_next_room(prompts.map_move_direction())
 
-    def create_new_hero(self, hero_name):
-        self.character = create_hero_prompt()
-        self.character.name = hero_name
-        self.new_map()
+    def terminal_map_print(self):
+        return f'\n\n{self.game_map.print_map_grid()}'
+    # Terminal methods end
 
-    def new_map(self):
-        self.map = map_create_prompt()
-        map_spawn_prompt(self.map)
+    
+    # Map / player / room
+    def map_set_start_position(self, position: str):
+        return self.game_map.set_start_position(position)
 
-    def fight_enemy(self, room):
+    def player_move_next_room(self, direction: str) -> object:
+        return self.game_map.make_move(direction)
+
+    def room_get_mosters(self, room: object):
         monsters = room.content['enemies']
-        return self.decide_turn(monsters)
+        if monsters:
+            return self.decide_turn(monsters)
 
-    def decide_turn(self, monsters):
+    # Fight
+    def decide_turn(self, monsters: list) -> list:
         result = {}
         result[self.character] = dice_toss(self.character.initiative)
         for monster in monsters:
             result[monster] = dice_toss(monster._initiative)
-        result = list(dict(sorted(result.items(), key=lambda item: item[1], reverse=True)).keys())
+        sort_keys(result)
         return result
 
-
-    def load_game(self):
-        pass
-
-    def build_hero_from_disk(self):
-        pass
-
-    def save_hero_to_disk(self):
-        database.disc_save_character(self.character)
-
-
-class Combat_system:
-    """ Concerned with combat stuff """
-
-    def __init__(self, room):
-        self.map = None
-        self.character = None
-
-    def who_starts(self):
-        pass
-
-    def randomizer(self):
+    def fight_monster(self, monsters: list):
         pass

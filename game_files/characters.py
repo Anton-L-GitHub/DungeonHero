@@ -17,6 +17,9 @@ class Character:
         self.special_ability = None
         self.backpack = []
 
+    def set_name(self, name):
+        self.name = name
+
     def get_image(self):
         return self.image
 
