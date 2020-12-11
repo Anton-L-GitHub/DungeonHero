@@ -1,9 +1,27 @@
 {
-    "room_empty": ["You come to an empty and dark room, you don't see anything of interest.",
-                "You enter a dark room. You shine your torch towards the center of the room but you find it to be empty. No luck this time..."],
-    "room_escaped": "Using your agility, you managed to escape the horrifying monsters from the room before",
-    "room_battle": ["You tread carefully into a dark room, suddenly you hear a sound behind you.",
-                "You enter a room but you are instantly greated by an angry snarl, looks like trouble!"],
-    "room_treasure": ["You see a treasure in the distance",
-                "You enter a room and the light from your torch reflects off something made out of gold.. You found a treasure!"]
+    "room_empty":
+        [
+            "You come to an empty and dark room, you don't see anything of interest..",
+            "The room you entered appears to be empty, such a disappointment..",
+            "This room looks empty, you sigh and move on.",
+            "You enter a dark room. You shine your torch towards the center of the room but you find it to be empty. No luck this time..."
+        ],
+    "room_escaped":
+        [
+            "Using your agility, you managed to escape the horrifying monsters from the room!"
+        ],
+    "room_battle":
+        [
+            "You tread carefully into a dark room, suddenly you hear a sound behind you.",
+            "You loudly stumble into a room, big mistake!",
+            "As you enter the room you are welcomed by a growl in the distance.",
+            "You enter a room but you are instantly greated by an angry snarl, looks like trouble!"
+        ],
+    "room_treasure":
+        [
+            "You see a treasure in the distance!",
+            "It's your lucky day! This room has nothing but gold for you.",
+            "Something in the distance catches your eye.. something shimmering.. something made out of gold!",
+            "You enter a room and the light from your torch reflects off something made out of gold.. You found a treasure!"
+        ]
 }
