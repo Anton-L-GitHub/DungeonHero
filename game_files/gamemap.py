@@ -1,5 +1,5 @@
 from game_files import randomize_encounters as ran_enc_py
-
+import random
 
 # Class for creating maps
 class GameMap:
@@ -163,6 +163,7 @@ class EncounterRoom(Room):
         super().__init__(name)
         self.content['enemies'] = self.spawn_enemies()
         self.content['treasures'] = self.spawn_treasures()
+        self.description = self.get_description()
 
     # Spawns enemyes in room, return list of
     # Enemy objects from enemies.py
@@ -189,6 +190,35 @@ class EncounterRoom(Room):
 
         # chnage client side map_grid to "x" (completed)
         pass
+
+    def get_description(self):
+        if len(self.content['enemies']) == 1:
+            description = random.choice([
+                "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
+                "You enter a room but you are instantly\ngreated by an angry snarl, looks like trouble!"])
+            return description
+        if len(self.content['enemies']) >= 2:
+            description = random.choice([
+                "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
+                "You loudly stumble into a room,\nbig mistake!",
+                "As you enter the room you are welcomed by\na growl in the distance.",
+                "As you enter the room several enemies are waiting for you!\nStand and fight or run?"])
+            return description
+        if len(self.content['enemies']) == 0 and len(self.content['treasures']) > 0:
+            description = random.choice([
+                "You see a treasure in the distance!",
+                "It's your lucky day!\nThis room has nothing but gold for you.",
+                "Something in the distance catches your eye..\nsomething shimmering..\nsomething made out of gold!",
+                "You enter a room and the light from your torch\nreflects off something made out of gold..\nYou found a treasure!"])
+            return description
+        else:
+            description = random.choice([
+                "You come to an empty and dark room,\nyou don't see anything of interest..",
+                "The room you entered appears to be empty,\nsuch a disappointment..",
+                "This room looks empty,\nyou sigh and move on.",
+                "You enter a dark room.\nYou shine your torch towards the center of\n the room but you find it to be empty.\nNo luck this time..."])
+            return description
+
 
 class ExitRoom(Room):
     def __init__(self, name):
