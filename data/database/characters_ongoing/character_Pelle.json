@@ -1,0 +1,498 @@
+{
+    "map" : {
+        "x_max" : 5,
+        "y_max" : 5,
+        "player_x" : 0,
+        "player_y" : 4,
+        "player_prev" : [
+            4,
+            0
+        ],
+        "map_grid" : [
+            [
+                {
+                    "name" : "00",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    }
+                },
+                {
+                    "name" : "01",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coin pouch",
+                                "_value" : 6,
+                                "_rarity" : 20,
+                                "image" : "data/images/coin_pouch.png"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name" : "02",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name" : "03",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    }
+                },
+                {
+                    "name" : "04",
+                    "state" : "E",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    }
+                }
+            ],
+            [
+                {
+                    "name" : "10",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    }
+                },
+                {
+                    "name" : "11",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name" : "12",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name" : "13",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 1,
+                                "_name" : "Giant Spider",
+                                "_initiative" : 7,
+                                "_attack" : 2,
+                                "_agility" : 3,
+                                "image" : "data/images/giant_spider.png",
+                                "_rarity" : 20
+                            },
+                            {
+                                "_health" : 3,
+                                "_name" : "Orc",
+                                "_initiative" : 6,
+                                "_attack" : 4,
+                                "_agility" : 4,
+                                "image" : "data/images/orc.png",
+                                "_rarity" : 10
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name" : "14",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Gold jewelry",
+                                "_value" : 10,
+                                "_rarity" : 15,
+                                "image" : "data/images/gold_jewelry.png"
+                            }
+                        ]
+                    }
+                }
+            ],
+            [
+                {
+                    "name" : "20",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Gold jewelry",
+                                "_value" : 10,
+                                "_rarity" : 15,
+                                "image" : "data/images/gold_jewelry.png"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name" : "21",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    }
+                },
+                {
+                    "name" : "22",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 1,
+                                "_name" : "Giant Spider",
+                                "_initiative" : 7,
+                                "_attack" : 2,
+                                "_agility" : 3,
+                                "image" : "data/images/giant_spider.png",
+                                "_rarity" : 20
+                            },
+                            {
+                                "_health" : 2,
+                                "_name" : "Skeleton",
+                                "_initiative" : 4,
+                                "_attack" : 3,
+                                "_agility" : 3,
+                                "image" : "data/images/skeleton.png",
+                                "_rarity" : 15
+                            },
+                            {
+                                "_health" : 4,
+                                "_name" : "Troll",
+                                "_initiative" : 2,
+                                "_attack" : 7,
+                                "_agility" : 2,
+                                "image" : "data/images/troll.png",
+                                "_rarity" : 5
+                            }
+                        ],
+                        "treasures" : []
+                    }
+                },
+                {
+                    "name" : "23",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    }
+                },
+                {
+                    "name" : "24",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 3,
+                                "_name" : "Orc",
+                                "_initiative" : 6,
+                                "_attack" : 4,
+                                "_agility" : 4,
+                                "image" : "data/images/orc.png",
+                                "_rarity" : 10
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coin pouch",
+                                "_value" : 6,
+                                "_rarity" : 20,
+                                "image" : "data/images/coin_pouch.png"
+                            },
+                            {
+                                "_name" : "Gold jewelry",
+                                "_value" : 10,
+                                "_rarity" : 15,
+                                "image" : "data/images/gold_jewelry.png"
+                            }
+                        ]
+                    }
+                }
+            ],
+            [
+                {
+                    "name" : "30",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            },
+                            {
+                                "_name" : "Coin pouch",
+                                "_value" : 6,
+                                "_rarity" : 20,
+                                "image" : "data/images/coin_pouch.png"
+                            },
+                            {
+                                "_name" : "Gold jewelry",
+                                "_value" : 10,
+                                "_rarity" : 15,
+                                "image" : "data/images/gold_jewelry.png"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name" : "31",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 2,
+                                "_name" : "Skeleton",
+                                "_initiative" : 4,
+                                "_attack" : 3,
+                                "_agility" : 3,
+                                "image" : "data/images/skeleton.png",
+                                "_rarity" : 15
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name" : "32",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 3,
+                                "_name" : "Orc",
+                                "_initiative" : 6,
+                                "_attack" : 4,
+                                "_agility" : 4,
+                                "image" : "data/images/orc.png",
+                                "_rarity" : 10
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            },
+                            {
+                                "_name" : "Treasure chest",
+                                "_value" : 20,
+                                "_rarity" : 5,
+                                "image" : "data/images/treasure_chest.png"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name" : "33",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            },
+                            {
+                                "_name" : "Gold jewelry",
+                                "_value" : 10,
+                                "_rarity" : 15,
+                                "image" : "data/images/gold_jewelry.png"
+                            },
+                            {
+                                "_name" : "Gemstone",
+                                "_value" : 14,
+                                "_rarity" : 10,
+                                "image" : "data/images/gemstone.png"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name" : "34",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 1,
+                                "_name" : "Giant Spider",
+                                "_initiative" : 7,
+                                "_attack" : 2,
+                                "_agility" : 3,
+                                "image" : "data/images/giant_spider.png",
+                                "_rarity" : 20
+                            },
+                            {
+                                "_health" : 4,
+                                "_name" : "Troll",
+                                "_initiative" : 2,
+                                "_attack" : 7,
+                                "_agility" : 2,
+                                "image" : "data/images/troll.png",
+                                "_rarity" : 5
+                            }
+                        ],
+                        "treasures" : []
+                    }
+                }
+            ],
+            [
+                {
+                    "name" : "40",
+                    "state" : "X",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    }
+                },
+                {
+                    "name" : "41",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    }
+                },
+                {
+                    "name" : "42",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Gemstone",
+                                "_value" : 14,
+                                "_rarity" : 10,
+                                "image" : "data/images/gemstone.png"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name" : "43",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Gemstone",
+                                "_value" : 14,
+                                "_rarity" : 10,
+                                "image" : "data/images/gemstone.png"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name" : "44",
+                    "state" : "-",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Gold jewelry",
+                                "_value" : 10,
+                                "_rarity" : 15,
+                                "image" : "data/images/gold_jewelry.png"
+                            }
+                        ]
+                    }
+                }
+            ]
+        ]
+    },
+    "player" : {
+        "name" : "Pelle",
+        "initiative" : 5,
+        "health" : 10,
+        "attack" : 6,
+        "agility" : 4,
+        "image" : "data/images/knight.png",
+        "room_image" : "data/images/knight_on_room.png",
+        "backpack_image" : "data/images/backpack.png",
+        "special_ability" : "Sheild block",
+        "backpack" : []
+    }
+}
