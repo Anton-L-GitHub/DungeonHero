@@ -3,11 +3,8 @@ from game_files import gamemap
 from game_files import characters
 from game_files import enemies
 from game_files import treasures
-import threading
 import random
 import time
-
-
 
 class Game:
     def __init__(self):
@@ -41,6 +38,7 @@ class Root(tk.Tk):
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
         self.minsize(1280, 720)
+        self.maxsize(1280, 720)
         self.color_mapping = {
             'flavour_text_color': '#fff757',
             'combat_yellow': '#ffdc00',
@@ -504,7 +502,7 @@ class GuiRoom(tk.Frame):
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
-        self.columnconfigure(3, weight=1)
+        self.columnconfigure(3, weight=0)
         self.columnconfigure(4, weight=1)
         self.create_room()
         self.grid(sticky="nwes")
@@ -736,7 +734,7 @@ class GuiCombat(tk.Frame):
 
     def create_combat_text(self):
         self.combat_text_frame = tk.Frame(self, relief=tk.RAISED, borderwidth=2)
-        self.combat_text_frame.grid(row=1, column=1, sticky="nswe")
+        self.combat_text_frame.grid(row=1, column=1, columnspan=2, sticky="nswe")
         self.combat_text_frame.rowconfigure(0, weight=0)
         self.combat_text_frame.rowconfigure(1, weight=1)
         self.combat_text_frame.columnconfigure(0, weight=1)
@@ -747,7 +745,7 @@ class GuiCombat(tk.Frame):
 
     def create_player_combat_options(self):
         self.combat_menu_frame = tk.Frame(self, relief=tk.RAISED, borderwidth=2)
-        self.combat_menu_frame.grid(row=0, column=1, sticky="nwe")
+        self.combat_menu_frame.grid(row=0, column=1, columnspan=2, sticky="nwe")
         self.combat_menu_frame.rowconfigure(0, weight=1)
         self.combat_menu_frame.rowconfigure(1, weight=1)
         self.combat_menu_frame.rowconfigure(2, weight=1)
