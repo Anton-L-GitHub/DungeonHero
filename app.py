@@ -17,7 +17,7 @@ def main():
         if not new_room:
             print('Invalid move')
         elif monsters:
-            game.fight_monster(monsters)
+            game.fight(monsters)
 
 if __name__ == '__main__':
     main()

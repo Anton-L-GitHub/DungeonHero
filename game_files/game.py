@@ -10,8 +10,10 @@ class Game:
     def __init__(self, Character, GameMap):
         self.character = Character
         self.game_map = GameMap
+        self._monsters = None
+        self._room = None
 
-    # Terminal methods
+    # Terminal 
     @classmethod
     def terminal_new_game(cls):
         character, game_map = prompts.new_game()
@@ -21,21 +23,21 @@ class Game:
         new_game.map_set_start_position(position)
         return new_game
 
-    # Terminal metod
     def terminal_make_move(self):
         return self.player_move_next_room(prompts.map_move_direction())
 
     def terminal_map_print(self):
         return f'\n\n{self.game_map.print_map_grid()}'
-    # Terminal methods end
 
-    
-    # Map / player / room
+    # Map / player
     def map_set_start_position(self, position: str):
         return self.game_map.set_start_position(position)
 
     def player_move_next_room(self, direction: str) -> object:
-        return self.game_map.make_move(direction)
+        self._set_monsters(None)
+        next_room = self.game_map.make_move(direction)
+        self._set_room(next_room)
+        return next_room
 
     def room_get_mosters(self, room: object):
         monsters = room.content['enemies']
@@ -51,5 +53,16 @@ class Game:
         sort_keys(result)
         return result
 
-    def fight_monster(self, monsters: list):
+    def fight(self, fighters: list):
+        for fighter in fighters:
+            if fighter == self.character:
+                pass
+
+    def try_to_escape(self):
         pass
+
+    def _set_monsters(self, monsters):
+        self._monsters = monsters
+
+    def _set_room(self, room):
+        self._room = room
