@@ -175,7 +175,7 @@ class App(tk.Frame):
         self.movement_right_button.grid(column=2, row=1, sticky="nswe")
 
     def build_room_frame(self, room):
-        self.room_frame = tk.Frame(self, bg="GREEN")
+        self.room_frame = tk.Frame(self, bg="#2c2c2c")
         self.room_frame.grid(row=1, column=0, columnspan=3, sticky="nswe")
         self.room_frame.rowconfigure(0, weight=1)
         self.room_frame.columnconfigure(0, weight=1)
@@ -222,7 +222,7 @@ class GuiPlayer(tk.Frame):
         if self.player.get_health() > 0:
             self.player_health_label.config(text = f"Health: {self.player.health}")
         elif self.player.get_health() == 0:
-            self.player_health_label.config(text = f"DEAD", bg="RED")
+            self.player_health_label.config(text = f"DEAD", bg="#ec1c24")
         self.player_attack_label.config(text = f"Attack: {self.player.attack}")
         self.player_agility_label.config(text = f"Agility: {self.player.agility}")
         self.player_initiative_label.config(text = f"Initiative: {self.player.initiative}")
@@ -251,16 +251,16 @@ class GuiPlayer(tk.Frame):
         self.player_portrait_label = tk.Label(self.player_portrait_frame, image=self.player_image, bg="GREY")
         self.player_portrait_label.grid(sticky="wens")
         #player_health
-        self.player_health_label = tk.Label(self.create_player_details_frames, text="PLAYER HEALTH", bg="GREEN")
+        self.player_health_label = tk.Label(self.create_player_details_frames, text="PLAYER HEALTH", bg="#8bc53f")
         self.player_health_label.grid(row=1, sticky="new")
         #player_attack
-        self.player_attack_label = tk.Label(self.create_player_details_frames, text="PLAYER ATTACK", bg="YELLOW")
+        self.player_attack_label = tk.Label(self.create_player_details_frames, text="PLAYER ATTACK", bg="#f06422")
         self.player_attack_label.grid(row=2, sticky="new")
         #player_agility
-        self.player_agility_label = tk.Label(self.create_player_details_frames, text="PLAYER AGILITY", bg="LIGHTGREEN")
+        self.player_agility_label = tk.Label(self.create_player_details_frames, text="PLAYER AGILITY", bg="#01b696")
         self.player_agility_label.grid(row=3, sticky="new")
         #player_initiative
-        self.player_initiative_label = tk.Label(self.create_player_details_frames, text="PLAYER INITIATIVE", bg="LIGHTBLUE")
+        self.player_initiative_label = tk.Label(self.create_player_details_frames, text="PLAYER INITIATIVE", bg="#0094d6")
         self.player_initiative_label.grid(row=4, sticky="new")
         #player_backpack_frame
         self.player_backpack_frame = tk.Frame(self.create_player_details_frames, relief=tk.RAISED, borderwidth=2)
@@ -317,7 +317,7 @@ class GuiRoom(tk.Frame):
     def create_combat_frames(self):
         self.combat_status_label = tk.Label(self, text=f"Combat: {self.root.game.player.get_name()}'s turn!", font=("Times", 16, 'bold'), bg="DARKRED")
         self.combat_status_label.grid(row=1, columnspan=5, sticky="nswe")
-        self.combat_container = tk.Frame(self, bg="GREEN")
+        self.combat_container = tk.Frame(self, bg="#2c2c2c")
         self.combat_container.grid(row=2, column=1, rowspan=2, columnspan=4, sticky="nswe")
         self.combat_container.rowconfigure(0, weight=1, minsize=50)
         self.combat_container.columnconfigure(0, weight=1)
@@ -339,7 +339,7 @@ class GuiRoom(tk.Frame):
             self.all_entity_frames.append(GuiEntity(self.enemy_container, enemy, entity_num))
 
     def create_room_lost_frames(self):
-        self.lose_container = tk.Frame(self, bg='green', relief=tk.RAISED, borderwidth=5)
+        self.lose_container = tk.Frame(self, bg='#2c2c2c', relief=tk.RAISED, borderwidth=5)
         self.lose_container.grid(row=1, rowspan=3, column=0, columnspan=5, sticky="nswe")
         self.lose_container.rowconfigure(0, weight=0)
         self.lose_container.rowconfigure(1, weight=0)
@@ -358,7 +358,7 @@ class GuiRoom(tk.Frame):
 
     def create_room_won_frames(self):
         self.all_treasure_images = list()
-        self.victory_container = tk.Frame(self, bg='green', relief=tk.RAISED, borderwidth=5)
+        self.victory_container = tk.Frame(self, bg='#2c2c2c', relief=tk.RAISED, borderwidth=5)
         self.victory_container.grid(row=1, rowspan=3, column=0, columnspan=5, sticky="nswe")
         self.victory_container.rowconfigure(0, weight=0)
         self.victory_container.rowconfigure(1, weight=0)
@@ -369,14 +369,14 @@ class GuiRoom(tk.Frame):
         self.victory_label = tk.Label(self.victory_container, text="Room Cleared", font=("Times", 20, 'bold'), relief=tk.RAISED, borderwidth=2)
         self.victory_label.grid(row=0, column=0, columnspan=3,  sticky="nwe")
         #treasures
-        self.victory_treasure_frame = tk.Frame(self.victory_container, bg="GREEN")
+        self.victory_treasure_frame = tk.Frame(self.victory_container, bg="#2c2c2c")
         self.victory_treasure_frame.grid(row=1, column=1, sticky="nwe")
         self.victory_treasure_frame.rowconfigure(0, weight=1)
         self.victory_treasure_frame.columnconfigure(0, weight=1)
         self.victory_treasure_frame.columnconfigure(1, weight=1)
         self.victory_treasure_frame.columnconfigure(2, weight=0)
         self.victory_treasure_frame.columnconfigure(3, weight=1)
-        self.treasure_label = tk.Label(self.victory_treasure_frame, text="Treasures Found:", font=("Times", 15), bg="lightgreen", relief=tk.RAISED, borderwidth=2)
+        self.treasure_label = tk.Label(self.victory_treasure_frame, text="Treasures Found:", font=("Times", 15), bg="#01b696", relief=tk.RAISED, borderwidth=2)
         self.treasure_label.grid(row=0, columnspan=4, sticky='nwe')
         self.treasure_sum = 0
         for row_num, treasure in enumerate(self.room_obj.treasures):
@@ -387,7 +387,7 @@ class GuiRoom(tk.Frame):
                 relief=tk.RAISED,
                 borderwidth=2,
                 text=row_num+1,
-                bg="lightgreen"
+                bg="#01b696"
             )
             num_item_label.grid(row=row_num+1, column=0, sticky="nswe")
             #name
@@ -396,7 +396,7 @@ class GuiRoom(tk.Frame):
                 relief=tk.RAISED,
                 borderwidth=2,
                 text=treasure.get_name(),
-                bg="lightgreen"
+                bg="#01b696"
                 )
             treasure_name_label.grid(row=row_num+1, column=1, sticky="nswe")
             #image
@@ -414,7 +414,7 @@ class GuiRoom(tk.Frame):
                 relief=tk.RAISED,
                 borderwidth=2,
                 text=f'Value: {treasure.get_value()}',
-                bg="lightgreen"
+                bg="#01b696"
                 )
             treasure_value_label.grid(row=row_num+1, column=3, sticky="nswe")
         self.treasure_sum_label = tk.Label(
@@ -422,7 +422,7 @@ class GuiRoom(tk.Frame):
             relief=tk.RAISED,
             borderwidth=2,
             text=f'Total value: {self.treasure_sum}',
-            bg="lightgreen",
+            bg="#01b696",
             font=("Times", 15)
             )
         self.treasure_sum_label.grid(row=len(self.room_obj.treasures)+1, column=0, columnspan=4, sticky="nswe")
@@ -448,7 +448,7 @@ class GuiEntity(tk.Frame):
             self.entity_agility.config(text= f"Agility: {self.entity.get_agility()}")
             self.entity_initiative.config(text= f"Initiative: {self.entity.get_initiative()}")
         else:
-            self.entity_health.config(bg="RED", text="DEAD")
+            self.entity_health.config(bg="#ec1c24", text="DEAD")
 
     def build_entity_frame(self):
         color = "GREY"
@@ -459,16 +459,16 @@ class GuiEntity(tk.Frame):
         self.entity_name = tk.Label(self, text=self.entity.get_name(), bg=color, font=('Times', 12, 'bold'))
         self.entity_name.grid(sticky="snwe")
         #health
-        self.entity_health = tk.Label(self, text=f'Health: {self.entity.get_health()}', bg='GREEN')
+        self.entity_health = tk.Label(self, text=f'Health: {self.entity.get_health()}', bg='#8bc53f')
         self.entity_health.grid(sticky="snwe")
         #attack
-        self.entity_attack = tk.Label(self, text=f'Attack: {self.entity.get_attack()}', bg='YELLOW')
+        self.entity_attack = tk.Label(self, text=f'Attack: {self.entity.get_attack()}', bg='#f06422')
         self.entity_attack.grid(sticky="snwe")
         #agility
-        self.entity_agility = tk.Label(self, text=f'Agility: {self.entity.get_agility()}', bg='LIGHTGREEN')
+        self.entity_agility = tk.Label(self, text=f'Agility: {self.entity.get_agility()}', bg='#01b696')
         self.entity_agility.grid(sticky="snwe")
         #initiative
-        self.entity_initiative = tk.Label(self, text=f'Initiative: {self.entity.get_initiative()}', bg='LIGHTBLUE')
+        self.entity_initiative = tk.Label(self, text=f'Initiative: {self.entity.get_initiative()}', bg='#0094d6')
         self.entity_initiative.grid(sticky="snwe")
 
 
