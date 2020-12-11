@@ -306,31 +306,35 @@ class App(tk.Frame):
         self.player = GuiPlayer(self.root, self.player_frame)
     
     def build_movement_frame(self, container):
+        self.up_image = tk.PhotoImage(file="data/images/arrow_up.png")
+        self.down_image = tk.PhotoImage(file="data/images/arrow_down.png")
+        self.left_image = tk.PhotoImage(file="data/images/arrow_left.png")
+        self.right_image = tk.PhotoImage(file="data/images/arrow_right.png")
         self.movement_frame = tk.Frame(container, bg="GREY")
         self.movement_frame.grid(row=1, column=1, sticky="n", pady=10)
-        self.movement_frame.rowconfigure(0, weight=0, minsize=50)
-        self.movement_frame.rowconfigure(1, weight=0, minsize=50)
-        self.movement_frame.rowconfigure(2, weight=0, minsize=50)
-        self.movement_frame.columnconfigure(0, weight=0, minsize=50)
-        self.movement_frame.columnconfigure(1, weight=0, minsize=50)
-        self.movement_frame.columnconfigure(2, weight=0, minsize=50)
+        self.movement_frame.rowconfigure(0, weight=1)
+        self.movement_frame.rowconfigure(1, weight=1)
+        self.movement_frame.rowconfigure(2, weight=1)
+        self.movement_frame.columnconfigure(0, weight=0)
+        self.movement_frame.columnconfigure(1, weight=0)
+        self.movement_frame.columnconfigure(2, weight=0)
         #UP_BUTTON
-        self.movement_up_button = tk.Button(self.movement_frame, text="UP",
+        self.movement_up_button = tk.Button(self.movement_frame, text="UP", image=self.up_image, bg="BLACK",
             command=lambda:self.movement("A")
             )
         self.movement_up_button.grid(column=1, row=0, sticky="nsew")
         #DOWN_BUTTON
-        self.movement_down_button = tk.Button(self.movement_frame, text="DOWN",
+        self.movement_down_button = tk.Button(self.movement_frame, text="DOWN", image=self.down_image, bg="BLACK",
             command=lambda:self.movement("D")
             )
         self.movement_down_button.grid(column=1, row=2, sticky="nswe")
         #LEFT_BUTTON
-        self.movement_left_button = tk.Button(self.movement_frame, text="LEFT",
+        self.movement_left_button = tk.Button(self.movement_frame, text="LEFT", image=self.left_image, bg="BLACK",
             command=lambda:self.movement("S")
             )
         self.movement_left_button.grid(column=0, row=1, sticky="nswe")
         #RIGHT BUTTON
-        self.movement_right_button = tk.Button(self.movement_frame, text="RIGHT",
+        self.movement_right_button = tk.Button(self.movement_frame, text="RIGHT", image=self.right_image, bg="BLACK",
             command=lambda:self.movement("W")
             )
         self.movement_right_button.grid(column=2, row=1, sticky="nswe")
