@@ -1,4 +1,5 @@
 from game_files.game import Game
+from data.database import database 
 
 """ Main module for application """
 
