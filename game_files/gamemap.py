@@ -233,13 +233,22 @@ playRoom = Room("hej")
 playRoom.treasures_name()
 playRoom.enemies_name()
 '''
-playMap = GameMap(8, 8)
-playMap.create_map()
-playMap.set_start_position('t-l')
-input_dir = ''
-while input_dir != 'e':
-    input_dir = input("choose direction")
-    print(playMap.make_move(input_dir))
-    playMap.print_map_grid()
-    print(playMap.get_room_at_grid().get_contents())
+# playMap = GameMap(8, 8)
+# playMap.create_map()
+# playMap.set_start_position('t-l')
+# input_dir = ''
+# while input_dir != 'A':
+#     input_dir = input("choose direction")
+#     print(playMap.make_move(input_dir))
+#     playMap.print_map_grid()
+#     print(playMap.get_room_at_grid().get_contents())
+# playMap.make_step_back()
+# playMap.print_map_grid()
+# input_dir = ''
+# while input_dir != 'A':
+#     input_dir = input("choose direction")
+#     print(playMap.make_move(input_dir))
+#     playMap.print_map_grid()
+#     print(playMap.get_room_at_grid().get_contents())
+
 
