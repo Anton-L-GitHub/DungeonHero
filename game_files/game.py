@@ -40,8 +40,8 @@ class Game:
         map_spawn_prompt(self.map)
 
     def fight_enemy(self, room):
-        monsters = [monster for monster in room.enemies]
-        self.decide_turn(monsters)
+        monsters = room.content['enemies']
+        return self.decide_turn(monsters)
 
     def decide_turn(self, monsters):
         result = {}
