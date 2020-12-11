@@ -85,7 +85,7 @@ class GameMap:
         self.set_exit_room(corner_tuple)
 
     def check_if_exit(self, x, y):
-        if isinstance(self.map_grid[y][x], EscapeRoom):
+        if isinstance(self.map_grid[y][x], ExitRoom):
             return True
         else:
             return False
@@ -93,7 +93,7 @@ class GameMap:
     def set_exit_room(self, corner):
         corner1 = - corner[0] + self.y_max - 1
         corner2 = - corner[1] + self.x_max - 1
-        exitRoom = EscapeRoom(f'{corner1}{corner2}')
+        exitRoom = ExitRoom(f'{corner1}{corner2}')
         self.map_grid[corner1][corner2] = exitRoom
 
     def make_step_back(self):
@@ -113,9 +113,11 @@ class GameMap:
 
         if self.check_bound(x, y):
             if self.check_if_exit(x, y):
-                self.map_grid[y][x].escape()
+                self.map_grid[y][x].exit()
             else:
-                self.map_grid[self.player_prev[0]][self.player_prev[1]].set_state('O')
+                '''
+                self.map_grid[self.player_prev[0]][self.player_prev[1]].set_room_cleared()
+                '''
                 self.player_x = x
                 self.player_y = y
                 self.map_grid[y][x].set_state('X')
@@ -154,6 +156,10 @@ class Room:
     def get_contents(self):
         return self.content
 
+    def set_room_cleared(self):
+        self.set_state('O')
+        self.content = {}
+
 class EncounterRoom(Room):
     def __init__(self, name):
         super().__init__(name)
@@ -188,13 +194,13 @@ class EncounterRoom(Room):
         # chnage client side map_grid to "x" (completed)
         pass
 
-class EscapeRoom(Room):
+class ExitRoom(Room):
     def __init__(self, name):
         super().__init__(name)
         self.state = 'E'
     
-    def escape(self):
-        print("Do you want to escape? No ok then.")
+    def exit(self):
+        print("Do you want to exit? No ok then.")
 
 
 # Create map instance
@@ -227,24 +233,13 @@ playRoom = Room("hej")
 playRoom.treasures_name()
 playRoom.enemies_name()
 '''
-
 playMap = GameMap(8, 8)
 playMap.create_map()
 playMap.set_start_position('t-l')
 input_dir = ''
-while input_dir != 'A':
+while input_dir != 'e':
     input_dir = input("choose direction")
     print(playMap.make_move(input_dir))
     playMap.print_map_grid()
     print(playMap.get_room_at_grid().get_contents())
-playMap.make_step_back()
-playMap.print_map_grid()
-input_dir = ''
-while input_dir != 'A':
-    input_dir = input("choose direction")
-    print(playMap.make_move(input_dir))
-    playMap.print_map_grid()
-    print(playMap.get_room_at_grid().get_contents())
-
-    
 
