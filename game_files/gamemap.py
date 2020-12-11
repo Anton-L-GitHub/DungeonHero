@@ -115,9 +115,7 @@ class GameMap:
             if self.check_if_exit(x, y):
                 self.map_grid[y][x].exit()
             else:
-                '''
                 self.map_grid[self.player_prev[0]][self.player_prev[1]].set_room_cleared()
-                '''
                 self.player_x = x
                 self.player_y = y
                 self.map_grid[y][x].set_state('X')
@@ -200,6 +198,10 @@ class ExitRoom(Room):
         self.state = 'E'
     
     def exit(self):
+        input_string = input('Do you want to exit the cave? ')
+        if input_string.lower() == 'yes':
+            # Save character
+            print("Congratulations you escaped!")
         print("Do you want to exit? No ok then.")
 
 
@@ -250,5 +252,15 @@ playRoom.enemies_name()
 #     print(playMap.make_move(input_dir))
 #     playMap.print_map_grid()
 #     print(playMap.get_room_at_grid().get_contents())
+
+playMap = GameMap(8, 8)
+playMap.create_map()
+playMap.set_start_position('t-l')
+input_dir = ''
+while input_dir != 'e':
+    input_dir = input("choose direction")
+    print(playMap.make_move(input_dir))
+    playMap.print_map_grid()
+    print(playMap.get_room_at_grid().get_contents())
 
 
