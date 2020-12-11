@@ -3,13 +3,15 @@ from game_files import gamemap
 from game_files import characters
 from game_files import enemies
 from game_files import treasures
+import threading
 import random
+import time
 
 
 
 class Game:
     def __init__(self):
-        self.player = characters.Wizard()
+        self.player = None
         self.game_map = gamemap.GameMap(8, 8)
         self.game_map.create_map()
 
@@ -18,7 +20,7 @@ class Game:
 
     def loot_treasures(self, room):
         content = room.get_contents()
-        for treasure in content['treasure']:
+        for treasure in content['treasures']:
             self.player.backpack.append(treasure)
 
     def attack(self):
@@ -27,7 +29,7 @@ class Game:
         for enemy in content['enemies']:
             if random.randrange(1, 4) == 2:
                 enemy.set_health(0)
-                room.enemies.remove(enemy)
+                room.content['enemies'].remove(enemy)
             if random.randrange(1, 10) == 2:
                 self.player.health -= 1
 
@@ -40,6 +42,7 @@ class Root(tk.Tk):
         self.rowconfigure(0, weight=1)
         self.minsize(1280, 720)
         self.color_mapping = {
+            'flavour_text_color': '#fff757',
             'combat_yellow': '#ffdc00',
             'combat_red': '#ec1c24',
             'dead': '#ec1c24',
@@ -56,9 +59,41 @@ class App(tk.Frame):
     def __init__(self, root):
         super().__init__(root, bg="GREY")
         self.root = root
-        self.build_app()
+        self.build_start_screen()
         self.update()
+        self.set_rowconfigure()
+        self.set_columnconfigure()
+        self.grid(sticky="nswe")
 
+    def switch_frame(self, to_show, to_destroy):
+        to_show()
+        to_destroy.destroy()
+        
+    def exit_popup(self):
+        self.exit_popup_image = tk.PhotoImage(file='data/images/exit_popup.png')
+        win = tk.Toplevel(bg="GREY")
+        win.wm_title("EXIT?")
+        win.grid()
+        win.grab_set()
+        win.columnconfigure(0, weight=1)
+        win.columnconfigure(1, weight=1)
+        win.rowconfigure(0, weight=1)
+        win.rowconfigure(1, weight=1)
+        x = self.root.winfo_x()
+        y = self.root.winfo_y()
+        width = self.root.winfo_width()
+        heigth = self.root.winfo_height()
+        win.geometry("+%d+%d" % (x+(width/2)-200, (y+(heigth/2)-75)))
+        #exit
+        exit_label = tk.Label(win, image=self.exit_popup_image, bg="GREY", font=(16))
+        exit_label.grid(row=0, column=0, columnspan=2)
+        #quit
+        quit_button = tk.Button(win, text="Yes",  bg="GREY", font=("Times", 14, 'bold'), command=lambda:exit())
+        quit_button.grid(row=1, column=0, sticky="we")
+        #return
+        return_button = tk.Button(win, text="No", bg="GREY", font=("Times", 14, 'bold'), command=lambda:win.destroy())
+        return_button.grid(row=1, column=1, sticky="we")
+        
     def set_start_position(self, direction):
         self.root.game.game_map.set_start_position(direction)
         room = self.root.game.game_map.get_room_at_grid()
@@ -74,20 +109,158 @@ class App(tk.Frame):
 
     def update(self):
         self.root.after(1000//30, self.update)
-        self.player.update()
+        try:
+            self.player.update()
+        except Exception:
+            pass
         try:
             self.room.update()
         except Exception:
             pass
         
     def build_app(self):
-        self.set_rowconfigure()
-        self.set_columnconfigure()
-        self.build_game_map_frame()
-        self.build_player_frame()
+        self.app_frame = tk.Frame(self)
+        self.build_game_map_frame(self.app_frame)
+        self.build_player_frame(self.app_frame)
         self.build_movement_frame(self.player_frame)
         self.build_start_corner_frame(self.player_frame)
-        self.grid(sticky="nswe")
+        self.app_frame.grid(row=0, column=0, columnspan=2, sticky="nswe")
+        self.app_frame.rowconfigure(0, weight=1)
+        self.app_frame.columnconfigure(0, weight=1)
+        self.app_frame.columnconfigure(1, weight=1)
+        self.app_frame.lower()
+        time.sleep(1)
+
+    def build_start_menu(self):
+        self.banner_image = tk.PhotoImage(file='data/images/banner.png')
+        self.new_game_image = tk.PhotoImage(file='data/images/new_game.png')
+        self.load_game_image = tk.PhotoImage(file='data/images/load_game.png')
+        self.exit_game_image = tk.PhotoImage(file='data/images/exit.png')
+        self.menu_screen_frame = tk.Frame(self, bg="GREY")
+        self.menu_screen_frame.grid(row=0, columnspan=2, sticky="snew")
+        self.menu_screen_frame.columnconfigure(0, weight=1)
+        self.menu_screen_frame.rowconfigure(0, weight=1)
+        self.menu_screen_frame.rowconfigure(1, weight=0)
+        self.menu_screen_frame.rowconfigure(2, weight=0)
+        self.menu_screen_frame.rowconfigure(3, weight=0)
+        self.menu_screen_frame.rowconfigure(4, weight=1)
+        self.menu_screen_frame.rowconfigure(5, weight=1)
+        self.menu_screen_frame.columnconfigure(0, weight=1)
+        self.menu_screen_frame.columnconfigure(1, weight=1)
+        self.menu_screen_frame.columnconfigure(2, weight=1)
+        #BANNER
+        self.banner_label = tk.Label(self.menu_screen_frame, image=self.banner_image, bg="GREY")
+        self.banner_label.grid(row=0, columnspan=3)
+        #NEW GAME
+        self.new_game_button = tk.Button(self.menu_screen_frame, image=self.new_game_image, bg="GREY",
+            command=lambda:self.switch_frame(self.build_new_game_menu, self.menu_screen_frame)
+        )
+        self.new_game_button.grid(row=1, column=1, pady=10)
+        #LOAD GAME
+        self.load_game_button = tk.Button(self.menu_screen_frame, image=self.load_game_image, bg="GREY",)
+        self.load_game_button.grid(row=2, column=1, pady=10)
+        #EXIT GAME
+        self.exit_game_button = tk.Button(self.menu_screen_frame, image=self.exit_game_image, bg="GREY",
+            command=lambda:self.exit_popup()
+        )
+        self.exit_game_button.grid(row=3, column=1, pady=10)
+
+    def build_new_game_menu(self):
+        self.banner_image = tk.PhotoImage(file='data/images/banner.png')
+        self.new_character_image = tk.PhotoImage(file='data/images/new_character.png')
+        self.load_character_image = tk.PhotoImage(file='data/images/load_character.png')
+        self.back_image = tk.PhotoImage(file='data/images/back.png')
+
+        self.new_game_frame = tk.Frame(self, bg="GREY")
+        self.new_game_frame.grid(row=0, columnspan=2, sticky="snew")
+        self.new_game_frame.columnconfigure(0, weight=1)
+        self.new_game_frame.rowconfigure(0, weight=1)
+        self.new_game_frame.rowconfigure(1, weight=0)
+        self.new_game_frame.rowconfigure(2, weight=0)
+        self.new_game_frame.rowconfigure(3, weight=0)
+        self.new_game_frame.rowconfigure(4, weight=1)
+        self.new_game_frame.rowconfigure(5, weight=1)
+        self.new_game_frame.columnconfigure(0, weight=1)
+        self.new_game_frame.columnconfigure(1, weight=1)
+        self.new_game_frame.columnconfigure(2, weight=1)
+        #BANNER
+        banner_label = tk.Label(self.new_game_frame, image=self.banner_image, bg="GREY")
+        banner_label.grid(row=0, columnspan=3)
+        #NEW CHARACTER
+        new_character_button = tk.Button(self.new_game_frame, image=self.new_character_image, bg="GREY",
+            command=lambda:self.switch_frame(self.build_new_character_menu, self.new_game_frame)
+        )
+        new_character_button.grid(row=1, column=1, pady=10)
+        #LOAD CHARACTER
+        load_character_button = tk.Button(self.new_game_frame, image=self.load_character_image, bg="GREY")
+        load_character_button.grid(row=2, column=1, pady=10)
+        #BACK OPTION
+        back_button = tk.Button(self.new_game_frame, image=self.back_image, bg="GREY",
+            command=lambda:self.switch_frame(self.build_start_menu, self.new_game_frame)
+        )
+        back_button.grid(row=3, column=1, pady=10)
+
+    def build_new_character_menu(self):
+        self.select_hero_image = tk.PhotoImage(file='data/images/select_hero.png')
+        self.hero_select_knight_image = tk.PhotoImage(file='data/images/hero_select_knight.png')
+        self.hero_select_thief_image = tk.PhotoImage(file='data/images/hero_select_thief.png')
+        self.hero_select_wizard_image = tk.PhotoImage(file='data/images/hero_select_wizard.png')
+
+        self.new_character_frame = tk.Frame(self, bg="GREY")
+        self.new_character_frame.grid(row=0, columnspan=2, sticky="snew")
+        self.new_character_frame.columnconfigure(0, weight=1)
+        self.new_character_frame.columnconfigure(1, weight=0)
+        self.new_character_frame.columnconfigure(2, weight=0)
+        self.new_character_frame.columnconfigure(3, weight=0)
+        self.new_character_frame.columnconfigure(4, weight=1)
+        self.new_character_frame.rowconfigure(0, weight=1)
+        self.new_character_frame.rowconfigure(1, weight=1)
+        self.new_character_frame.rowconfigure(2, weight=1)
+
+        def set_player_hero(hero_name):
+            hero_chart = {
+                'knight': characters.Knight(),
+                'wizard': characters.Wizard(),
+                'thief': characters.Thief()
+            }
+            self.root.game.player = hero_chart[hero_name]
+            self.build_app()
+
+
+        #SELECT HERO LABEL
+        self.select_hero_label = tk.Label(self.new_character_frame, image=self.select_hero_image, bg="grey")
+        self.select_hero_label.grid(row=0, column=1, columnspan=3)
+        #hero_select_knight
+        self.hero_select_knight_button = tk.Button(self.new_character_frame, image=self.hero_select_knight_image, bg="grey",
+            command=lambda:self.switch_frame(lambda:set_player_hero('knight'), self.new_character_frame)
+        )
+        self.hero_select_knight_button.grid(row=1, column=1, padx=10)
+        #hero_select_thief
+        self.hero_select_thief_button = tk.Button(self.new_character_frame, image=self.hero_select_thief_image, bg="grey",
+            command=lambda:self.switch_frame(lambda:set_player_hero('thief'), self.new_character_frame)
+            )
+        self.hero_select_thief_button.grid(row=1, column=2, padx=10)
+        #hero_select_wizard
+        self.hero_select_wizard_button = tk.Button(self.new_character_frame, image=self.hero_select_wizard_image, bg="grey",
+            command=lambda:self.switch_frame(lambda:set_player_hero('wizard'), self.new_character_frame)
+        )
+        self.hero_select_wizard_button.grid(row=1, column=3, padx=10)
+
+    def build_start_screen(self):
+        self.btn_image = tk.PhotoImage(file='data/images/welcome.png')
+        self.start_screen_frame = tk.Frame(self, bg="GREY")
+        self.start_screen_frame.grid(columnspan=2, sticky="snew")
+        self.start_screen_frame.columnconfigure(0, weight=1)
+        self.start_screen_frame.rowconfigure(0, weight=1)
+        self.start_screen_frame.rowconfigure(1, weight=1)
+        self.start_screen_frame.rowconfigure(2, weight=1)
+        #button
+        # self.start_game_label = tk.Label(self.start_screen_frame, image=self.btn_image)
+        # self.start_game_label.grid(row=1, sticky="nswe")
+        self.start_game_button = tk.Button(self.start_screen_frame, image=self.btn_image,
+        command=lambda:self.switch_frame(self.build_start_menu, self.start_screen_frame)
+        )
+        self.start_game_button.grid(row=1)
 
     def movement(self, direction):
         room = self.root.game.game_map.make_move(direction)
@@ -108,15 +281,15 @@ class App(tk.Frame):
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         
-    def build_game_map_frame(self):
-        self.game_map_frame = tk.Frame(self, borderwidth=2, relief=tk.SUNKEN, bg="GREY")
+    def build_game_map_frame(self, container):
+        self.game_map_frame = tk.Frame(container, borderwidth=2, relief=tk.SUNKEN, bg="GREY")
         self.game_map_frame.grid(row=0, column=1, sticky="nswe")
         self.game_map_frame.rowconfigure(0, weight=1)
         self.game_map_frame.columnconfigure(0, weight=1)
         self.game_map = GuiGameMap(self.root, self.game_map_frame)
 
-    def build_player_frame(self):
-        self.player_frame = tk.Frame(self, borderwidth=2, relief=tk.SUNKEN, bg="GREY")
+    def build_player_frame(self, container):
+        self.player_frame = tk.Frame(container, borderwidth=2, relief=tk.SUNKEN, bg="GREY")
         self.player_frame.grid(row=0, column=0, sticky="nwes")
         self.player_frame.rowconfigure(0, weight=0)
         self.player_frame.rowconfigure(1, weight=1)
@@ -166,25 +339,25 @@ class App(tk.Frame):
         self.start_corner_frame.columnconfigure(1, weight=0, minsize=50)
         self.start_corner_frame.columnconfigure(2, weight=0, minsize=50)
         self.start_corner_label = tk.Label(self.start_corner_frame, text="Choose a corner to start on!", font=("Times", 14), bg="GREY")
-        self.start_corner_label.grid(row=1, column=0, columnspan=2, sticky="nswe")
+        self.start_corner_label.grid(row=0, column=0, columnspan=2, sticky="nwe")
         #TOP_LEFT_BUTTON
         self.top_left_button = tk.Button(self.start_corner_frame, text="TOP LEFT",
             command=lambda: self.set_start_position('b-l')
             )
-        self.top_left_button.grid(column=0, row=2, sticky="nsew")
+        self.top_left_button.grid(column=0, row=1, sticky="nsew")
         #TOP_RIGHT_BUTTON
         self.top_right_button = tk.Button(self.start_corner_frame, text="TOP RIGHT",
             command=lambda: self.set_start_position('t-l')
             )
-        self.top_right_button.grid(column=1, row=2, sticky="nsew")
+        self.top_right_button.grid(column=1, row=1, sticky="nsew")
         #BOTTOM_RIGHT_BUTTON
         self.bottom_right_button = tk.Button(self.start_corner_frame, text="BOTTOM RIGHT",
             command=lambda: self.set_start_position('t-r'))
-        self.bottom_right_button.grid(column=1, row=3, sticky="NSWE")
+        self.bottom_right_button.grid(column=1, row=2, sticky="NSWE")
         #BOTTOM_LEFT_BUTTON
         self.bottom_left_button = tk.Button(self.start_corner_frame, text="BOTTOM LEFT",
             command=lambda: self.set_start_position('b-r'))
-        self.bottom_left_button.grid(column=0, row=3, sticky="nswe")
+        self.bottom_left_button.grid(column=0, row=2, sticky="nswe")
 
     def build_room_frame(self, room):
         self.room_frame = tk.Frame(self, bg="#2c2c2c")
@@ -194,6 +367,7 @@ class App(tk.Frame):
         self.room = GuiRoom(self.root, self.room_frame, room)
 
     def build_room_description_prompt(self, room):
+        self.room_image = tk.PhotoImage(file='data/images/room_image.png')
         self.room_description_frame = tk.Frame(self, bg="GREY")
         self.room_description_frame.grid(row=0, column=0, columnspan=2, sticky="nswe")
         self.room_description_frame.columnconfigure(0, weight=1)
@@ -205,19 +379,22 @@ class App(tk.Frame):
         self.room_description_label = tk.Label(
             self.room_description_frame,
             text=room.description,
-            font=("Times", 14), bg="GREY",
+            image=self.room_image, 
+            bg="GREY",
+            font=("Times", 30), fg=self.root.color_mapping['flavour_text_color'],
             relief=tk.RAISED,
-            borderwidth=2
+            borderwidth=2,
+            compound='center'
             )
-        self.room_description_label.grid(row=1, sticky="nwes")
+        self.room_description_label.grid(row=1)
         self.enter_room_button = tk.Button(
             self.room_description_frame,
-            text="ENTER ROOM",
+            text="Continue",
+            font=("Times", 14, 'bold'),
             command=lambda:self.enter_room(room, self.room_description_frame)
             )
         self.enter_room_button.grid(row=2, sticky="nswe")
         
-
 
 class GuiGameMap(tk.Frame):
     def __init__(self, root, parent):
@@ -320,7 +497,7 @@ class GuiRoom(tk.Frame):
         self.root = root
         self.parent = parent
         self.room_obj = room
-        self.rowconfigure(0, weight=0)
+        self.rowconfigure(0, weight=0, minsize=250)
         self.rowconfigure(1, weight=1, minsize=50)
         self.rowconfigure(2, weight=1)
         self.rowconfigure(3, weight=1)
@@ -371,7 +548,7 @@ class GuiRoom(tk.Frame):
         self.combat_container.grid(row=2, column=1, sticky="nwe")
         self.combat_container.columnconfigure(0, weight=1)
         self.combat_container.rowconfigure(0, weight=1)
-        self.combat = GuiCombat(self.root, self.combat_container, self.room_obj.enemies)
+        self.combat = GuiCombat(self.root, self.combat_container, self.room_obj.content['enemies'])
 
     def create_player_frames(self):
         self.player_container = tk.Frame(self, bg='GREY')
@@ -385,7 +562,7 @@ class GuiRoom(tk.Frame):
         self.enemy_container.grid(row=0, column=3, sticky="en")
         self.enemy_container.rowconfigure(0, weight=1)
         self.enemy_container.columnconfigure(0, weight=1)
-        for entity_num, enemy in enumerate(self.room_obj.enemies):
+        for entity_num, enemy in enumerate(self.room_obj.content['enemies']):
             self.all_entity_frames.append(GuiEntity(self.root, self.enemy_container, enemy, entity_num))
 
     def create_room_lost_frames(self):
@@ -412,15 +589,18 @@ class GuiRoom(tk.Frame):
         self.victory_container.grid(row=1, rowspan=3, column=0, columnspan=5, sticky="nswe")
         self.victory_container.rowconfigure(0, weight=0)
         self.victory_container.rowconfigure(1, weight=0)
+        self.victory_container.rowconfigure(2, weight=0)
+        self.victory_container.rowconfigure(3, weight=0)
         self.victory_container.columnconfigure(0, weight=1)
         self.victory_container.columnconfigure(1, weight=1)
         self.victory_container.columnconfigure(2, weight=1)
+
         #victory label
         self.victory_label = tk.Label(self.victory_container, text="Room Cleared", font=("Times", 20, 'bold'), relief=tk.RAISED, borderwidth=2)
-        self.victory_label.grid(row=0, column=0, columnspan=3,  sticky="nwe")
+        self.victory_label.grid(row=1, column=0, columnspan=3,  sticky="nwe")
         #treasures
         self.victory_treasure_frame = tk.Frame(self.victory_container, bg=self.root.color_mapping['treasure_green'])
-        self.victory_treasure_frame.grid(row=1, column=1, sticky="nwe")
+        self.victory_treasure_frame.grid(row=2, column=1, sticky="nwe")
         self.victory_treasure_frame.rowconfigure(0, weight=1)
         self.victory_treasure_frame.columnconfigure(0, weight=1)
         self.victory_treasure_frame.columnconfigure(1, weight=1)
@@ -429,7 +609,7 @@ class GuiRoom(tk.Frame):
         self.treasure_label = tk.Label(self.victory_treasure_frame, text="Treasures Found:", font=("Times", 15), bg=self.root.color_mapping['treasure_green'], relief=tk.RAISED, borderwidth=2)
         self.treasure_label.grid(row=0, columnspan=4, sticky='nwe')
         self.treasure_sum = 0
-        for row_num, treasure in enumerate(self.room_obj.treasures):
+        for row_num, treasure in enumerate(self.room_obj.content['treasures']):
             self.treasure_sum += treasure.get_value()
             #filler_num
             num_item_label = tk.Label(
@@ -475,10 +655,10 @@ class GuiRoom(tk.Frame):
             bg=self.root.color_mapping['treasure_green'],
             font=("Times", 15)
             )
-        self.treasure_sum_label.grid(row=len(self.room_obj.treasures)+1, column=0, columnspan=4, sticky="nswe")
+        self.treasure_sum_label.grid(row=len(self.room_obj.content['treasures'])+1, column=0, columnspan=4, sticky="nswe")
         #Exit_button
         self.exit_room_button = tk.Button(self.victory_container, text="Loot Treasures & Continue", font=('Arial', 13, 'bold'), command=lambda:self.room_kill())
-        self.exit_room_button.grid(column=1, row=2, sticky="nswe")
+        self.exit_room_button.grid(column=1, row=3, sticky="nswe")
 
 
 class GuiEntity(tk.Frame):
@@ -489,7 +669,7 @@ class GuiEntity(tk.Frame):
         self.image = tk.PhotoImage(file=self.entity.get_image())
         self.build_entity_frame()
         self.grid(column=entity_num, row=0, padx=15)
-        self.rowconfigure(0, weight=1)
+        self.rowconfigure(0, weight=0)
         self.columnconfigure(0, weight=1)
 
     def update(self):
