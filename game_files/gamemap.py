@@ -1,5 +1,5 @@
 from game_files import randomize_encounters as ran_enc_py
-
+import random
 
 # Class for creating maps
 class GameMap:
@@ -132,7 +132,7 @@ class Room:
         self.name = name
         self.state = '-'
         self.description = ''
-        self.content = {}
+        self.content = {'enemies': [], 'treasures': []}
 
     # Retuns state of grid
     def get_room_state(self):
@@ -161,10 +161,9 @@ class Room:
 class EncounterRoom(Room):
     def __init__(self, name):
         super().__init__(name)
-        self.enemies = self.spawn_enemies()
-        self.treasures = self.spawn_treasures()
-        self.content['enemies'] = self.enemies
-        self.content['treasure'] = self.treasures
+        self.content['enemies'] = self.spawn_enemies()
+        self.content['treasures'] = self.spawn_treasures()
+        self.description = self.get_description()
 
     # Spawns enemyes in room, return list of
     # Enemy objects from enemies.py
@@ -178,12 +177,12 @@ class EncounterRoom(Room):
 
     # Prints name of enemies object
     def enemies_names(self):
-        for i in range(len(self.enemies)):
-            print(self.enemies[i].get_name())
+        for i in range(len(self.content['enemies'])):
+            print(self.content['enemies'][i].get_name())
 
     def treasures_names(self):
-        for i in range(len(self.treasures)):
-            print(self.treasures[i].get_name())
+        for i in range(len(self.content['treasures'])):
+            print(self.content['treasures'][i].get_name())
 
     def won_room(self):
         # save to json something to indicate the room is completed
@@ -191,6 +190,35 @@ class EncounterRoom(Room):
 
         # chnage client side map_grid to "x" (completed)
         pass
+
+    def get_description(self):
+        if len(self.content['enemies']) == 1:
+            description = random.choice([
+                "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
+                "You enter a room but you are instantly\ngreated by an angry snarl, looks like trouble!"])
+            return description
+        if len(self.content['enemies']) >= 2:
+            description = random.choice([
+                "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
+                "You loudly stumble into a room,\nbig mistake!",
+                "As you enter the room you are welcomed by\na growl in the distance.",
+                "As you enter the room several enemies are waiting for you!\nStand and fight or run?"])
+            return description
+        if len(self.content['enemies']) == 0 and len(self.content['treasures']) > 0:
+            description = random.choice([
+                "You see a treasure in the distance!",
+                "It's your lucky day!\nThis room has nothing but gold for you.",
+                "Something in the distance catches your eye..\nsomething shimmering..\nsomething made out of gold!",
+                "You enter a room and the light from your torch\nreflects off something made out of gold..\nYou found a treasure!"])
+            return description
+        else:
+            description = random.choice([
+                "You come to an empty and dark room,\nyou don't see anything of interest..",
+                "The room you entered appears to be empty,\nsuch a disappointment..",
+                "This room looks empty,\nyou sigh and move on.",
+                "You enter a dark room.\nYou shine your torch towards the center of\n the room but you find it to be empty.\nNo luck this time..."])
+            return description
+
 
 class ExitRoom(Room):
     def __init__(self, name):
@@ -238,32 +266,6 @@ playRoom.enemies_name()
 # playMap = GameMap(8, 8)
 # playMap.create_map()
 # playMap.set_start_position('t-l')
-# input_dir = ''
-# while input_dir != 'A':
-#     input_dir = input("choose direction")
-#     print(playMap.make_move(input_dir))
-#     playMap.print_map_grid()
-#     print(playMap.get_room_at_grid().get_contents())
-# playMap.make_step_back()
-# playMap.print_map_grid()
-# input_dir = ''
-# while input_dir != 'A':
-#     input_dir = input("choose direction")
-#     print(playMap.make_move(input_dir))
-#     playMap.print_map_grid()
-#     print(playMap.get_room_at_grid().get_contents())
-
-# playMap = GameMap(8, 8)
-# playMap.create_map()
-# playMap.set_start_position('t-l')
-# input_dir = ''
-# while input_dir != 'A':
-#     input_dir = input("choose direction")
-#     print(playMap.make_move(input_dir))
-#     playMap.print_map_grid()
-#     print(playMap.get_room_at_grid().get_contents())
-# playMap.make_step_back()
-# playMap.print_map_grid()
 # input_dir = ''
 # while input_dir != 'A':
 #     input_dir = input("choose direction")

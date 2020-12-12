@@ -1,0 +1,12 @@
+{
+    "name": "Pelle",
+    "initiative": 5,
+    "health": 10,
+    "attack": 6,
+    "agility": 4,
+    "image": "data/images/knight.png",
+    "room_image": "data/images/knight_on_room.png",
+    "backpack_image": "data/images/backpack.png",
+    "special_ability": "child block",
+    "backpack": []
+}
