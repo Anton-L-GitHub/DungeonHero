@@ -7,6 +7,7 @@ import random
 import time
 import winsound
 import os
+import sys
 
 path = os.path.abspath(os.getcwd())
 path += '/data/music/the_cave.wav'
@@ -95,7 +96,7 @@ class App(tk.Frame):
         exit_label = tk.Label(win, image=self.exit_popup_image, bg="GREY", font=(16))
         exit_label.grid(row=0, column=0, columnspan=2)
         #quit
-        quit_button = tk.Button(win, text="Yes",  bg="GREY", font=("Times", 14, 'bold'), command=lambda:exit())
+        quit_button = tk.Button(win, text="Yes",  bg="GREY", font=("Times", 14, 'bold'), command=lambda:sys.exit())
         quit_button.grid(row=1, column=0, sticky="we")
         #return
         return_button = tk.Button(win, text="No", bg="GREY", font=("Times", 14, 'bold'), command=lambda:win.destroy())
