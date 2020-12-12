@@ -1,4 +1,3 @@
-from game_files import treasures
 from utils.prompts import prompts
 from utils.utils import dice_toss, sort_keys
 
@@ -36,14 +35,23 @@ class Game:
         return prompts.fight_or_flight()
 
     def terminal_print_monster_health(self):
-        monsters_hp = [f'{monster.get_name()}: {monster.get_health()} HP\n' for monster in self._monsters]
-        print(*monsters_hp)
+        monsters_hp = [f' {monster.get_name()}: {monster.get_health()}/{monster.get_start_health()} HP\n' for monster in self.room_get_monsters()]
+        if monsters_hp:
+            print(*monsters_hp) 
 
     def terminal_print_player_health(self):
-        print(f'You have {self.player_get_health()}') 
+        print(f'You have {self.player_get_health()}/{self.player_get_start_health()}') 
 
     def terminal_print_player_backpack(self):
-        print(f'You have {self.player_get_health()}') 
+        print(f'You have {self.player_get_backpack_sum()} worth of treasures') 
+
+    def terminal_print_fight_stats(self):
+        prompts.clear_screen()
+        print(f'Your health: {self.character.get_health()}/{self.character.get_start_health()} HP\n'
+            f'Backpack items: {self.player_get_backpack_items()}\nBackpack value: {self.player_get_backpack_sum()}\n\nMonsters:')
+        self.terminal_print_monster_health()
+
+
     # Map methods
 
     def map_set_start_position(self, position: str):
@@ -52,6 +60,13 @@ class Game:
     def room_get_monsters(self):
         monsters = self._room.content['enemies']
         return monsters
+
+    def room_get_treasures(self):
+        treasures = self._room.content['treasure']
+        return treasures
+
+    def room_set_empty(self):
+        self._room.set_room_cleared()
 
     # Player methods
 
@@ -62,11 +77,17 @@ class Game:
         return next_room
 
     def player_get_backpack_sum(self):
-        return sum([treasure.get_value() for treasure in self.character.backpack])
+        return sum([item.get_value() for item in self.character.get_backpack()])
 
-    def player_steal_treasures(self):
-        [self.character.backpack.append(treasure)
-        for treasure in self._room.room.get_contents()]
+    def player_get_backpack_items(self):
+        return [item.get_name() for item in self.character.get_backpack()]
+
+    def player_gather_treasures(self):
+        for treasure in self.room_get_treasures():
+            self.character.add_to_backpack(treasure)
+
+    def player_get_start_health(self):
+        return self.character.get_start_health()
 
     def player_get_health(self):
         return self.character.get_health()
@@ -75,19 +96,22 @@ class Game:
         for monster in monsters:
             self._player_attack(monster)
 
-    def player_run_away(self):
+    def player_try_run_away(self):
         self.map.make_step_back()
+
+    def player_is_dead(self):
+        return self.character.is_dead()
+
+    # Combat methods
 
     def monster_try_attack(self, monster):
         player_dice_sum = dice_toss(self.character.get_agility())
         monster_dice_sum = dice_toss(monster.get_attack())
-        if player_dice_sum > monster_dice_sum:
+        if player_dice_sum < monster_dice_sum:
             self._damage_player()
             return True
         else: 
             return False
-
-    # Combat methods
 
     def fight_get_turn_order(self) -> list:
         result = {}
@@ -118,7 +142,7 @@ class Game:
 
     def _damage_player(self):
         if self.character.get_health() <= 0:
-            return 'TEMP You dead man'
+            return 'TEMP You dead man TEMP'
         self.character.set_health(self.character.get_health() - 1)
 
     def _kill_monster(self, monster):

@@ -13,6 +13,7 @@ class Enemy:
         self._agility = 0
         self.image = 'data/images/orc.png'
         self._rarity = 0
+        self._start_health = self._health
 
     def get_image(self):
         return self.image
@@ -46,6 +47,9 @@ class Enemy:
         if not isinstance(new_value, int):
             raise TypeError("Rarity has to be of type Integer.")
         self._rarity = new_value
+    
+    def get_start_health(self):
+        return self._start_health
 
     def get_health(self):
         return self._health
@@ -77,6 +81,7 @@ class Giant_spider(Enemy):
         self._agility = 3
         self._rarity = 20
         self.image = 'data/images/giant_spider.png'
+        self._start_health = self._health
 
 
 class Skeleton(Enemy):
@@ -90,6 +95,7 @@ class Skeleton(Enemy):
         self._attack = 3
         self._agility = 3
         self._rarity = 15
+        self._start_health = self._health
         self.image = 'data/images/skeleton.png'
 
 
@@ -104,6 +110,7 @@ class Orc(Enemy):
         self._attack = 4
         self._agility = 4
         self._rarity = 10
+        self._start_health = self._health
         self.image = 'data/images/orc.png'
 
 
@@ -118,4 +125,5 @@ class Troll(Enemy):
         self._attack = 7
         self._agility = 2
         self._rarity = 5
+        self._start_health = self._health
         self.image = 'data/images/troll.png'
