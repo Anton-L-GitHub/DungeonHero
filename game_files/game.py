@@ -16,7 +16,7 @@ class Game:
         self._monsters = None
         self._room = None
 
-    # Terminal
+    # Terminal methods
     @classmethod
     def terminal_new_game(cls):
         character, game_map = prompts.new_game()
@@ -40,12 +40,20 @@ class Game:
         print(*monsters_hp)
 
     def terminal_print_player_health(self):
-        return f'You have {self.player_get_health()}'
+        print(f'You have {self.player_get_health()}') 
 
-    # Map / player
+    def terminal_print_player_backpack(self):
+        print(f'You have {self.player_get_health()}') 
+    # Map methods
 
     def map_set_start_position(self, position: str):
         return self.game_map.set_start_position(position)
+
+    def room_get_monsters(self):
+        monsters = self._room.content['enemies']
+        return monsters
+
+    # Player methods
 
     def player_move_next_room(self, direction: str) -> object:
         next_room = self.game_map.make_move(direction)
@@ -60,37 +68,15 @@ class Game:
         [self.character.backpack.append(treasure)
         for treasure in self._room.room.get_contents()]
 
-    def room_get_monsters(self):
-        monsters = self._room.content['enemies']
-        return monsters
-
-    def fight_get_turn_order(self) -> list:
-        result = {}
-        result[self.character] = dice_toss(self.character.initiative)
-        for monster in self._monsters:
-            result[monster] = dice_toss(monster.get_initiative())
-        result = sort_keys(result)
-        return result
-
+    def player_get_health(self):
+        return self.character.get_health()
 
     def player_try_attack(self, monsters):
         for monster in monsters:
             self._player_attack(monster)
 
-
-    def _player_attack(self, monster):
-        player_dice_sum = dice_toss(self.character.get_attack())
-        monster_dice_sum = dice_toss(monster.get_agility())
-        if player_dice_sum > monster_dice_sum:
-            self._damage_monster(monster)
-            if monster.get_health() <= 0:
-                self._kill_monster(monster)
-        else: 
-            return False
-
-    def player_get_health(self):
-        return self.character.get_health()
-
+    def player_run_away(self):
+        self.map.make_step_back()
 
     def monster_try_attack(self, monster):
         player_dice_sum = dice_toss(self.character.get_agility())
@@ -101,9 +87,23 @@ class Game:
         else: 
             return False
 
-    def player_run_away(self):
-        pass
+    # Combat methods
 
+    def fight_get_turn_order(self) -> list:
+        result = {}
+        result[self.character] = dice_toss(self.character.initiative)
+        for monster in self._monsters:
+            result[monster] = dice_toss(monster.get_initiative())
+        result = sort_keys(result)
+        return result
+
+    def _player_attack(self, monster):
+        player_dice_sum = dice_toss(self.character.get_attack())
+        monster_dice_sum = dice_toss(monster.get_agility())
+        if player_dice_sum > monster_dice_sum:
+            self._damage_monster(monster)
+            if monster.get_health() <= 0:
+                self._kill_monster(monster)
 
     def _monsters_get_all_health(self):
         monsters = {}
@@ -116,14 +116,18 @@ class Game:
             return False
         monster.set_health(monster.get_health() - 1)
 
+    def _damage_player(self):
+        if self.character.get_health() <= 0:
+            return 'TEMP You dead man'
+        self.character.set_health(self.character.get_health() - 1)
+
     def _kill_monster(self, monster):
         try:
             self._monsters.remove(monster)
         except:
             return False
     
-    def _damage_player(self):
-        self.character.set_health(self.character.get_health() - 1)
+    # Cls setters
 
     def _set_monsters(self):
         self._monsters = self.room_get_monsters()

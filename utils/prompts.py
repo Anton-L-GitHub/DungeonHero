@@ -74,7 +74,7 @@ class prompts():
                 return ('D')
             else:
                 print('Wrong input.. Try again!')
-            user_input = input(USER_MOVE)
+            user_input = input(USER_MOVE).upper()
     
     def fight_or_flight():
         user_input = input(FIGHT_OR_FLIGHT)
@@ -86,3 +86,4 @@ class prompts():
             else:
                 print('Wrong input.. Try again!')
             user_input = input(MAP_SPAWN)
+    
