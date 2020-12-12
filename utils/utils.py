@@ -1,9 +1,9 @@
 from random import randint
 
 
-def dice_toss(ability:int):
+def dice_toss(skill:int):
     tot = 0
-    for _ in range(ability):
+    for _ in range(skill):
         tot += randint(1, 7)
     return(tot)
 

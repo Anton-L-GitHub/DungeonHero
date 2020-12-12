@@ -65,7 +65,6 @@ class Enemy:
     def get_rarity(self):
         return self._rarity
 
-
 class Giant_spider(Enemy):
     """ blalbalbal """
 

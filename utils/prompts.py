@@ -5,8 +5,8 @@ from game_files.gamemap import create_map_instance
 CHARACTER_CHOISE = '\nChoose character:\n1: Knight\n2: Wizard\n3: Thief\n--- \n> '
 MAP_MENU = '\nMap Difficulty: \n1: Small \n2: Medium \n3: Large \n--- \n> '
 MAP_SPAWN = '\nSpawn: \n1: Bottom left \n2: Botton right \n\n3: Top Left \n4: Top right\n--- \n> '
-USER_MOVE = "\n\tUp(W)\n Left(A)\tRight(D) \n\tDown(S)\n\r> "
-
+USER_MOVE = '\n\tUp(W)\n Left(A)\tRight(D) \n\tDown(S)\n\r> '
+FIGHT_OR_FLIGHT = "\nWhat do you want to do:\n1: FIGHT!\n2: TRY TO RUN AWAY\n> "
 
 class prompts():
 
@@ -75,3 +75,14 @@ class prompts():
             else:
                 print('Wrong input.. Try again!')
             user_input = input(USER_MOVE)
+    
+    def fight_or_flight():
+        user_input = input(FIGHT_OR_FLIGHT)
+        while user_input != '!QUIT':
+            if user_input == '1':
+                return ('FIGHT')
+            elif user_input == '2':
+                return ('RUN')
+            else:
+                print('Wrong input.. Try again!')
+            user_input = input(MAP_SPAWN)

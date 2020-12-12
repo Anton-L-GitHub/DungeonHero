@@ -20,6 +20,17 @@ class Character:
     def set_name(self, name):
         self.name = name
 
+    def set_health(self, new_value):
+            if not isinstance(new_value, int):
+                raise TypeError("Health has to be of type Integer.")
+            self._health = new_value
+
+    def is_dead(self):
+        if self.get_health() <= 0:
+            return True
+        else:
+            return False
+
     def get_image(self):
         return self.image
 
