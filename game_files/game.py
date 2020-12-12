@@ -62,7 +62,7 @@ class Game:
         return monsters
 
     def room_get_treasures(self):
-        treasures = self._room.content['treasure']
+        treasures = self._room.content['treasures']
         return treasures
 
     def room_set_empty(self):
