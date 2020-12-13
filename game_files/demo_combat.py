@@ -5,6 +5,9 @@ class Combat:
         self.combatants = [entity for entity in combatants]
         self.turn_order = self.set_turn_order(self.combatants)
         self.turn_cycle = 0
+        self.total_turns = 0
+        entity, value = self.get_next_object_in_turn_order()
+        self.current_turn = entity
 
     def flee(self, entity):
         chance_to_flee = entity.get_agility() * 10
@@ -33,6 +36,7 @@ class Combat:
         self.combatants.remove(entity[0])
 
     def get_next_object_in_turn_order(self):
+        self.total_turns += 1
         if self.turn_cycle >= len(self.turn_order):
             self.turn_cycle = 0
         entity, value = self.turn_order[self.turn_cycle]

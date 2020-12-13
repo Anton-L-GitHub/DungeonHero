@@ -7,6 +7,7 @@ class Enemy:
 
     def __init__(self):
         self._health = 0
+        self.max_hp = self._health
         self._name = "Enemy"
         self._initiative = 0
         self._attack = 0
@@ -21,6 +22,8 @@ class Enemy:
     def set_health(self, new_value):
         if not isinstance(new_value, int):
             raise TypeError("Health has to be of type Integer.")
+        if new_value <= 0:
+            new_value = 0
         self._health = new_value
 
     def set_name(self, new_name):
@@ -75,6 +78,7 @@ class Giant_spider(Enemy):
     def __init__(self):
         super().__init__()
         self._health = 1
+        self.max_hp = self._health
         self._name = "Giant Spider"
         self._initiative = 7
         self._attack = 2
@@ -90,6 +94,7 @@ class Skeleton(Enemy):
     def __init__(self):
         super().__init__()
         self._health = 2
+        self.max_hp = self._health
         self._name = "Skeleton"
         self._initiative = 4
         self._attack = 3
@@ -105,6 +110,7 @@ class Orc(Enemy):
     def __init__(self):
         super().__init__()
         self._health = 3
+        self.max_hp = self._health
         self._name = "Orc"
         self._initiative = 6
         self._attack = 4
@@ -120,6 +126,7 @@ class Troll(Enemy):
     def __init__(self):
         super().__init__()
         self._health = 4
+        self.max_hp = self._health
         self._name = "Troll"
         self._initiative = 2
         self._attack = 7
