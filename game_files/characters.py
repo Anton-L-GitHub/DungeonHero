@@ -1,4 +1,3 @@
-
 """ Character module """
 
 
@@ -51,11 +50,6 @@ class Character:
 
     def set_name(self, name):
         self.name = name
-
-    def set_health(self, new_value):
-        if not isinstance(new_value, int):
-            raise TypeError("Health has to be of type Integer.")
-        self._health = new_value
 
     def add_to_backpack(self, item:object):
         return self.backpack.append(item)
