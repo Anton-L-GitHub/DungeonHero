@@ -4,6 +4,7 @@ from game_files import characters
 from game_files import enemies
 from game_files import treasures
 from game_files import demo_combat
+from data.database import database
 import random
 import time
 import winsound
@@ -30,17 +31,6 @@ class Game:
         content = room.get_contents()
         for treasure in content['treasures']:
             self.player.backpack.append(treasure)
-
-    def attack(self):
-        room = self.game_map.get_room_at_grid()
-        content = room.get_contents()
-        for enemy in content['enemies']:
-            if random.randrange(1, 4) == 2:
-                enemy.set_health(0)
-                room.content['enemies'].remove(enemy)
-            if random.randrange(1, 10) == 2:
-                self.player.health -= 1
-
 
 class Root(tk.Tk):
     def __init__(self, root, game):
@@ -103,6 +93,24 @@ class App(tk.Frame):
         return_button = tk.Button(win, text="No", bg="GREY", font=("Times", 14, 'bold'), command=lambda:win.destroy())
         return_button.grid(row=1, column=1, sticky="we")
         
+    def save_game_progress(self, return_to, to_destroy):
+        database.disc_save_progress(self.root.game.player, self.root.game.game_map)
+        del self.root.game
+        self.root.game = None
+        self.switch_frame(return_to, self.app_frame)
+        to_destroy.destroy()
+
+    def delete_game_progress(self, return_to, to_destroy):
+        json_path = f'data/database/characters_ongoing/character_{self.root.game.player.name}.json'
+        if os.path.exists(json_path):
+            os.remove(json_path)
+        del self.root.game
+        self.root.game = None
+        if return_to:
+            self.switch_frame(return_to, self.app_frame)
+        to_destroy.destroy()
+
+
     def exit_dungeon_popup(self):
         self.exit_dungeon_popup_image = tk.PhotoImage(file='data/images/exit_dungeon.png')
         win = tk.Toplevel(bg="GREY")
@@ -122,7 +130,9 @@ class App(tk.Frame):
         exit_label = tk.Label(win, image=self.exit_dungeon_popup_image, bg="GREY", font=(16))
         exit_label.grid(row=0, column=0, columnspan=2)
         #quit
-        quit_button = tk.Button(win, text="Yes",  bg="GREY", font=("Times", 14, 'bold'), command=lambda:win.destroy()) #disc_save_progress(self.player, self.player_map)) # Spara spel återgå till main menu
+        quit_button = tk.Button(win, text="Yes",  bg="GREY", font=("Times", 14, 'bold'),
+            command=lambda:self.save_game_progress(self.build_start_menu, win)
+        )
         quit_button.grid(row=1, column=0, sticky="we")
         #return
         return_button = tk.Button(win, text="No", bg="GREY", font=("Times", 14, 'bold'), command=lambda:win.destroy())
@@ -137,8 +147,6 @@ class App(tk.Frame):
         self.game_map = GuiGameMap(self.root, self.game_map_frame)
         self.place_holder.destroy()
         
-        
-
     def enter_room(self, room, frame_to_destroy):
         frame_to_destroy.destroy()
         self.build_room_frame(room)
@@ -243,6 +251,7 @@ class App(tk.Frame):
         back_button.grid(row=3, column=1, pady=10)
 
     def build_new_character_menu(self):
+        self.root.game = Game()
         self.select_hero_image = tk.PhotoImage(file='data/images/select_hero.png')
         self.hero_select_knight_image = tk.PhotoImage(file='data/images/hero_select_knight.png')
         self.hero_select_thief_image = tk.PhotoImage(file='data/images/hero_select_thief.png')
@@ -424,7 +433,7 @@ class App(tk.Frame):
         self.bottom_left_button.grid(column=2, row=2, sticky="nswe")
 
     def build_room_frame(self, room):
-        self.room_frame = tk.Frame(self, bg="#2c2c2c")
+        self.room_frame = tk.Frame(self.app_frame, bg="#2c2c2c")
         self.room_frame.grid(row=0, column=0, columnspan=3, sticky="nswe")
         self.room_frame.rowconfigure(0, weight=1)
         self.room_frame.columnconfigure(0, weight=1)
@@ -649,21 +658,23 @@ class GuiRoom(tk.Frame):
             self.all_entity_frames.append(GuiEntity(self.root, self.enemy_container, enemy, entity_num))
 
     def create_room_lost_frames(self):
+        self.game_over_image = tk.PhotoImage(file='data/images/game_over.png')
         self.lose_container = tk.Frame(self, bg=self.root.color_mapping['victory_grey'], relief=tk.RAISED, borderwidth=5)
-        self.lose_container.grid(row=1, rowspan=3, column=0, columnspan=5, sticky="nswe")
+        self.lose_container.grid(row=0, rowspan=4, column=0, columnspan=5, sticky="nswe")
         self.lose_container.rowconfigure(0, weight=0)
         self.lose_container.rowconfigure(1, weight=0)
         self.lose_container.columnconfigure(0, weight=1)
         self.lose_container.columnconfigure(1, weight=1)
         self.lose_container.columnconfigure(2, weight=1)
+        #app.delete_game_progress
         #lose label
-        self.lose_label = tk.Label(self.lose_container, text="GAME OVER!", font=("Times", 20, 'bold'), relief=tk.RAISED, borderwidth=2) # GAME OVER BILD?
-        self.lose_label.grid(row=0, column=0, columnspan=3,  sticky="nwe")
+        self.lose_label = tk.Label(self.lose_container, image=self.game_over_image, text="GAME OVER!", font=("Times", 20, 'bold'), relief=tk.RAISED, borderwidth=2) # GAME OVER BILD?
+        self.lose_label.grid(row=0, column=0, columnspan=3)
         #Exit_to_menu
-        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.room_kill()) # Radera character
+        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.app.delete_game_progress(self.app.build_start_menu, self.app.app_frame)) # Radera character
         self.exit_room_button.grid(column=1, row=2, sticky="nswe")
         #Exit_button
-        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Game", font=('Arial', 13, 'bold'), command=lambda:exit()) # Radera character
+        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Game", font=('Arial', 13, 'bold'), command=lambda:self.app.delete_game_progress(None, self.root)) # Radera character
         self.exit_room_button.grid(column=1, row=3, sticky="nswe")
 
     def create_room_won_frames(self):
