@@ -1,4 +1,3 @@
-
 """ Character module """
 
 

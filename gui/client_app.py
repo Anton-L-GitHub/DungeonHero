@@ -1085,8 +1085,3 @@ class GuiCombat(tk.Frame):
             command=lambda:self.player_turn_action('Flee')
         )
         self.combat_flee_button.grid(row=2, column=0, sticky="nwe")
-
-    
-
-
-        
