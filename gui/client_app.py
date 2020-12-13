@@ -110,7 +110,6 @@ class App(tk.Frame):
             self.switch_frame(return_to, self.app_frame)
         to_destroy.destroy()
 
-
     def exit_dungeon_popup(self):
         self.exit_dungeon_popup_image = tk.PhotoImage(file='data/images/exit_dungeon.png')
         win = tk.Toplevel(bg="GREY")
@@ -207,7 +206,9 @@ class App(tk.Frame):
         )
         self.new_game_button.grid(row=1, column=1, pady=10)
         #LOAD GAME
-        self.load_game_button = tk.Button(self.menu_screen_frame, image=self.load_game_image, bg="GREY",)
+        self.load_game_button = tk.Button(self.menu_screen_frame, image=self.load_game_image, bg="GREY",
+            command=lambda:self.switch_frame(self.build_load_game_menu, self.menu_screen_frame)
+        )
         self.load_game_button.grid(row=2, column=1, pady=10)
         #EXIT GAME
         self.exit_game_button = tk.Button(self.menu_screen_frame, image=self.exit_game_image, bg="GREY",
@@ -242,13 +243,103 @@ class App(tk.Frame):
         )
         new_character_button.grid(row=1, column=1, pady=10)
         #LOAD CHARACTER
-        load_character_button = tk.Button(self.new_game_frame, image=self.load_character_image, bg="GREY")
+        load_character_button = tk.Button(self.new_game_frame, image=self.load_character_image, bg="GREY",
+            command=lambda:self.switch_frame(self.build_load_character_menu, self.new_game_frame)
+        )
         load_character_button.grid(row=2, column=1, pady=10)
         #BACK OPTION
         back_button = tk.Button(self.new_game_frame, image=self.back_image, bg="GREY",
             command=lambda:self.switch_frame(self.build_start_menu, self.new_game_frame)
         )
         back_button.grid(row=3, column=1, pady=10)
+
+    def build_input_new_game(self):
+        self.input_player_image = tk.PhotoImage(file=self.root.game.player.get_image())
+        self.input_frame = tk.Toplevel(self.root, bg="GREY")
+        self.input_frame.grid()
+        self.input_frame.columnconfigure(0, weight=0)
+        self.input_frame.columnconfigure(1, weight=0)
+        self.input_frame.columnconfigure(2, weight=0)
+        self.input_frame.rowconfigure(0, weight=0)
+        self.input_frame.rowconfigure(1, weight=0)
+        self.input_frame.rowconfigure(2, weight=0)
+        self.input_frame.grab_set()
+        self.input_frame.minsize(300, 300)
+        x = self.root.winfo_x()
+        y = self.root.winfo_y()
+        width = self.root.winfo_width()
+        heigth = self.root.winfo_height()
+        self.input_frame.geometry("+%d+%d" % (x+(width/2)-200, (y+(heigth/2)-75)))
+
+        hero_label = tk.Label(self.input_frame, image=self.input_player_image)
+        hero_label.grid(column=0, row=0, rowspan=3)
+        hero_name_label = tk.Label(self.input_frame, text="Enter name:", bg="GREY")
+        hero_name_label.grid(column=1, row=0, sticky="nwe", pady=15, padx=2)
+        hero_name = tk.Entry(self.input_frame)
+        hero_name.grid(column=2, row=0, sticky="new", pady=15, ipady=2, ipadx=10, padx=2)
+
+        hero_submit = tk.Button(self.input_frame, text="Submit and continue",
+            command=lambda:print("Start game, check if player_name exists")
+        )
+        hero_submit.grid(column=2, row=2)
+
+
+    def build_load_character_menu(self):
+        self.banner_image = tk.PhotoImage(file='data/images/banner.png')
+        self.load_character_image = tk.PhotoImage(file='data/images/load_character.png')
+        self.back_image = tk.PhotoImage(file='data/images/back.png')
+
+        self.load_character_frame = tk.Frame(self, bg="GREY")
+        self.load_character_frame.grid(row=0, columnspan=2, sticky="snew")
+        self.load_character_frame.columnconfigure(0, weight=1)
+        self.load_character_frame.rowconfigure(0, weight=1)
+        self.load_character_frame.rowconfigure(1, weight=0)
+        self.load_character_frame.rowconfigure(2, weight=0, minsize=125)
+        self.load_character_frame.rowconfigure(3, weight=0)
+        self.load_character_frame.rowconfigure(4, weight=1)
+        self.load_character_frame.rowconfigure(5, weight=1)
+        self.load_character_frame.columnconfigure(0, weight=1)
+        self.load_character_frame.columnconfigure(1, weight=1)
+        self.load_character_frame.columnconfigure(2, weight=1)
+        #BANNER
+        banner_label = tk.Label(self.load_character_frame, image=self.banner_image, bg="GREY")
+        banner_label.grid(row=0, columnspan=3)
+        #LOAD CHARACTER
+        load_character_button = tk.Button(self.load_character_frame, image=self.load_character_image, bg="GREY")
+        load_character_button.grid(row=1, column=0, pady=10)
+        #BACK OPTION
+        back_button = tk.Button(self.load_character_frame, image=self.back_image, bg="GREY",
+            command=lambda:self.switch_frame(self.build_new_game_menu, self.load_character_frame)
+        )
+        back_button.grid(row=3, column=0, pady=10)
+
+    def build_load_game_menu(self):
+        self.banner_image = tk.PhotoImage(file='data/images/banner.png')
+        self.load_game_image = tk.PhotoImage(file='data/images/load_game.png')
+        self.back_button_image = tk.PhotoImage(file='data/images/back.png')
+        self.load_game_frame = tk.Frame(self, bg="GREY")
+        self.load_game_frame.grid(row=0, columnspan=2, sticky="snew")
+        self.load_game_frame.columnconfigure(0, weight=1)
+        self.load_game_frame.rowconfigure(0, weight=1)
+        self.load_game_frame.rowconfigure(1, weight=0)
+        self.load_game_frame.rowconfigure(2, weight=0, minsize=125)
+        self.load_game_frame.rowconfigure(3, weight=0)
+        self.load_game_frame.rowconfigure(4, weight=1)
+        self.load_game_frame.rowconfigure(5, weight=1)
+        self.load_game_frame.columnconfigure(0, weight=1)
+        self.load_game_frame.columnconfigure(1, weight=1)
+        self.load_game_frame.columnconfigure(2, weight=1)
+        #BANNER
+        self.banner_label = tk.Label(self.load_game_frame, image=self.banner_image, bg="GREY")
+        self.banner_label.grid(row=0, columnspan=3)
+        #LOAD GAME
+        self.load_game_button = tk.Button(self.load_game_frame, image=self.load_game_image, bg="GREY",)
+        self.load_game_button.grid(row=1, column=0, pady=10)
+        #BACK OPTION
+        back_button = tk.Button(self.load_game_frame, image=self.back_button_image, bg="GREY",
+            command=lambda:self.switch_frame(self.build_start_menu, self.load_game_frame)
+        )
+        back_button.grid(row=3, column=0, pady=10)
 
     def build_new_character_menu(self):
         self.root.game = Game()
@@ -275,7 +366,8 @@ class App(tk.Frame):
                 'thief': characters.Thief()
             }
             self.root.game.player = hero_chart[hero_name]
-            self.build_app()
+            self.build_input_new_game()
+            # self.build_app()
 
 
         #SELECT HERO LABEL
@@ -283,7 +375,7 @@ class App(tk.Frame):
         self.select_hero_label.grid(row=0, column=1, columnspan=3)
         #hero_select_knight
         self.hero_select_knight_button = tk.Button(self.new_character_frame, image=self.hero_select_knight_image, bg="grey",
-            command=lambda:self.switch_frame(lambda:set_player_hero('knight'), self.new_character_frame)
+            command=lambda:set_player_hero('knight')
         )
         self.hero_select_knight_button.grid(row=1, column=1, padx=10)
         #hero_select_thief
