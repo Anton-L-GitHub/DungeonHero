@@ -267,7 +267,11 @@ class App(tk.Frame):
                 'medium': (6, 6),
                 'large': (8, 8)
             }
-            x, y = map_sizes[map_size]
+            try:
+                x, y = map_sizes[map_size]
+            except Exception:
+                x = 4
+                y = 4
             self.root.game.game_map = gamemap.GameMap(x, y)
             
             self.root.game.player.name = player_name
