@@ -12,7 +12,7 @@ import sys
 path = os.path.abspath(os.getcwd())
 path += '/data/music/the_cave.wav'
 
-winsound.PlaySound(path, winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC)
+#winsound.PlaySound(path, winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC)
 
 
 
@@ -135,6 +135,8 @@ class App(tk.Frame):
         self.place_holder.destroy()
         self.get_room_content(room)
         self.start_corner_frame.destroy()
+        self.build_save_exit_frame(self.player_frame)
+        self.build_movement_frame(self.player_frame)
 
     def enter_room(self, room, frame_to_destroy):
         frame_to_destroy.destroy()
@@ -155,8 +157,6 @@ class App(tk.Frame):
         self.app_frame = tk.Frame(self)
         self.build_game_map_frame(self.app_frame)
         self.build_player_frame(self.app_frame)
-        self.build_movement_frame(self.player_frame)
-        self.build_save_exit_frame(self.player_frame)
         self.build_start_corner_frame(self.player_frame)
         self.app_frame.grid(row=0, column=0, columnspan=2, sticky="nswe")
         self.app_frame.rowconfigure(0, weight=1)
