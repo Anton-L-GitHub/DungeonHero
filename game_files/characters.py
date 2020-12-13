@@ -17,6 +17,13 @@ class Character:
         self.special_ability = None
         self.backpack = []
 
+    def set_health(self, new_value):
+        if not isinstance(new_value, int):
+            raise TypeError("Health has to be of type Integer")
+        if new_value <= 0:
+            new_value = 0
+        self.health = new_value
+
     def get_image(self):
         return self.image
 
