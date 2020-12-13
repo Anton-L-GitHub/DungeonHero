@@ -35,6 +35,7 @@ MANIFEST
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+cmd_command_pyinstaller.txt
 
 # Unit test / coverage reports
 htmlcov/

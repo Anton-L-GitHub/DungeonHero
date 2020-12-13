@@ -7,12 +7,14 @@ class Enemy:
 
     def __init__(self):
         self._health = 0
+        self.max_hp = self._health
         self._name = "Enemy"
         self._initiative = 0
         self._attack = 0
         self._agility = 0
         self.image = 'data/images/orc.png'
         self._rarity = 0
+        self._start_health = self._health
 
     def get_image(self):
         return self.image
@@ -20,6 +22,8 @@ class Enemy:
     def set_health(self, new_value):
         if not isinstance(new_value, int):
             raise TypeError("Health has to be of type Integer.")
+        if new_value <= 0:
+            new_value = 0
         self._health = new_value
 
     def set_name(self, new_name):
@@ -46,6 +50,9 @@ class Enemy:
         if not isinstance(new_value, int):
             raise TypeError("Rarity has to be of type Integer.")
         self._rarity = new_value
+    
+    def get_start_health(self):
+        return self._start_health
 
     def get_health(self):
         return self._health
@@ -65,19 +72,20 @@ class Enemy:
     def get_rarity(self):
         return self._rarity
 
-
 class Giant_spider(Enemy):
     """ blalbalbal """
 
     def __init__(self):
         super().__init__()
         self._health = 1
+        self.max_hp = self._health
         self._name = "Giant Spider"
         self._initiative = 7
         self._attack = 2
         self._agility = 3
         self._rarity = 20
         self.image = 'data/images/giant_spider.png'
+        self._start_health = self._health
 
 
 class Skeleton(Enemy):
@@ -86,11 +94,13 @@ class Skeleton(Enemy):
     def __init__(self):
         super().__init__()
         self._health = 2
+        self.max_hp = self._health
         self._name = "Skeleton"
         self._initiative = 4
         self._attack = 3
         self._agility = 3
         self._rarity = 15
+        self._start_health = self._health
         self.image = 'data/images/skeleton.png'
 
 
@@ -100,11 +110,13 @@ class Orc(Enemy):
     def __init__(self):
         super().__init__()
         self._health = 3
+        self.max_hp = self._health
         self._name = "Orc"
         self._initiative = 6
         self._attack = 4
         self._agility = 4
         self._rarity = 10
+        self._start_health = self._health
         self.image = 'data/images/orc.png'
 
 
@@ -114,9 +126,11 @@ class Troll(Enemy):
     def __init__(self):
         super().__init__()
         self._health = 4
+        self.max_hp = self._health
         self._name = "Troll"
         self._initiative = 2
         self._attack = 7
         self._agility = 2
         self._rarity = 5
+        self._start_health = self._health
         self.image = 'data/images/troll.png'
