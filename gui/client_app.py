@@ -129,7 +129,8 @@ class App(tk.Frame):
         return_button.grid(row=1, column=1, sticky="we")
     
     def set_start_position(self, direction):
-        self.start_corner_frame.grid_forget()
+        self.start_corner_frame.destroy()
+        self.after(350, self.temp_move_label.destroy)
         self.root.game.game_map.set_start_position(direction)
         room = self.root.game.game_map.get_room_at_grid()
         self.place_holder = self.game_map
@@ -153,12 +154,17 @@ class App(tk.Frame):
         except Exception:
             pass
         
+    def build_temp_lbl(self, container):
+        self.temp_move_label = tk.Frame(container, bg="GREY")
+        self.temp_move_label.grid(row=1, column=0, columnspan=2, sticky="nswe")
+
     def build_app(self):
         self.app_frame = tk.Frame(self)
         self.build_game_map_frame(self.app_frame)
         self.build_player_frame(self.app_frame)
         self.build_movement_frame(self.player_frame)
         self.build_save_exit_frame(self.player_frame)
+        self.build_temp_lbl(self.player_frame)
         self.build_start_corner_frame(self.player_frame)
         self.app_frame.grid(row=0, column=0, columnspan=2, sticky="nswe")
         self.app_frame.rowconfigure(0, weight=1)
@@ -366,22 +372,22 @@ class App(tk.Frame):
         self.movement_frame.columnconfigure(1, weight=0)
         self.movement_frame.columnconfigure(2, weight=0)
         #UP_BUTTON
-        self.movement_up_button = tk.Button(self.movement_frame, text="UP", image=self.up_image, bg="BLACK",
+        self.movement_up_button = tk.Button(self.movement_frame, image=self.up_image, bg="BLACK",
             command=lambda:self.movement("A")
             )
         self.movement_up_button.grid(column=1, row=0, sticky="nsew")
         #DOWN_BUTTON
-        self.movement_down_button = tk.Button(self.movement_frame, text="DOWN", image=self.down_image, bg="BLACK",
+        self.movement_down_button = tk.Button(self.movement_frame, image=self.down_image, bg="BLACK",
             command=lambda:self.movement("D")
             )
         self.movement_down_button.grid(column=1, row=2, sticky="nswe")
         #LEFT_BUTTON
-        self.movement_left_button = tk.Button(self.movement_frame, text="LEFT", image=self.left_image, bg="BLACK",
+        self.movement_left_button = tk.Button(self.movement_frame, image=self.left_image, bg="BLACK",
             command=lambda:self.movement("S")
             )
         self.movement_left_button.grid(column=0, row=1, sticky="nswe")
         #RIGHT BUTTON
-        self.movement_right_button = tk.Button(self.movement_frame, text="RIGHT", image=self.right_image, bg="BLACK",
+        self.movement_right_button = tk.Button(self.movement_frame, image=self.right_image, bg="BLACK",
             command=lambda:self.movement("W")
             )
         self.movement_right_button.grid(column=2, row=1, sticky="nswe")
@@ -843,7 +849,7 @@ class GuiCombat(tk.Frame):
                         if self.combat_session.is_entity_dead(enemy):
                             self.update_text_field(f'{enemy.get_name()} died!')
                             self.combat_session.remove_entity((enemy, value))
-                        self.after(500, self.update_text_field(message))
+                        self.update_text_field(message)
                     else:
                         message = f"{enemy.get_name()} sucessfully defended and took no damage."
                         self.update_text_field(message)
