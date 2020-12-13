@@ -101,6 +101,31 @@ class App(tk.Frame):
         #return
         return_button = tk.Button(win, text="No", bg="GREY", font=("Times", 14, 'bold'), command=lambda:win.destroy())
         return_button.grid(row=1, column=1, sticky="we")
+
+    def exit_dungeon_popup(self):
+        self.exit_dungeon_popup_image = tk.PhotoImage(file='data/images/exit_dungeon.png')
+        win = tk.Toplevel(bg="GREY")
+        win.wm_title("EXIT DUNGEON?")
+        win.grid()
+        win.grab_set()
+        win.columnconfigure(0, weight=1)
+        win.columnconfigure(1, weight=1)
+        win.rowconfigure(0, weight=1)
+        win.rowconfigure(1, weight=1)
+        x = self.root.winfo_x()
+        y = self.root.winfo_y()
+        width = self.root.winfo_width()
+        heigth = self.root.winfo_height()
+        win.geometry("+%d+%d" % (x+(width/2)-200, (y+(heigth/2)-75)))
+        #exit
+        exit_label = tk.Label(win, image=self.exit_dungeon_popup_image, bg="GREY", font=(16))
+        exit_label.grid(row=0, column=0, columnspan=2)
+        #quit
+        quit_button = tk.Button(win, text="Yes",  bg="GREY", font=("Times", 14, 'bold'), command=lambda:win.destroy()) #disc_save_progress(self.player, self.player_map)) # Spara spel återgå till main menu
+        quit_button.grid(row=1, column=0, sticky="we")
+        #return
+        return_button = tk.Button(win, text="No", bg="GREY", font=("Times", 14, 'bold'), command=lambda:win.destroy())
+        return_button.grid(row=1, column=1, sticky="we")
         
     def set_start_position(self, direction):
         self.root.game.game_map.set_start_position(direction)
@@ -131,6 +156,7 @@ class App(tk.Frame):
         self.build_game_map_frame(self.app_frame)
         self.build_player_frame(self.app_frame)
         self.build_movement_frame(self.player_frame)
+        self.build_save_exit_frame(self.player_frame)
         self.build_start_corner_frame(self.player_frame)
         self.app_frame.grid(row=0, column=0, columnspan=2, sticky="nswe")
         self.app_frame.rowconfigure(0, weight=1)
@@ -270,6 +296,19 @@ class App(tk.Frame):
         )
         self.start_game_button.grid(row=1)
 
+    def build_death_screen(self):
+        self.btn_image = tk.PhotoImage(file='data/images/game_over.png')
+        self.death_screen_frame = tk.Frame(self, bg="GREY")
+        self.death_screen_frame.grid(columnspan=2, sticky="snew")
+        self.death_screen_frame.columnconfigure(0, weight=1)
+        self.death_screen_frame.rowconfigure(0, weight=1)
+        self.death_screen_frame.rowconfigure(1, weight=1)
+        self.death_screen_frame.rowconfigure(2, weight=1)
+        self.start_game_button = tk.Button(self.death_screen_frame, image=self.btn_image,
+        command=lambda:self.switch_frame(self.build_start_menu, self.death_screen_frame) # måste radera nuvarande character
+        )
+        self.start_game_button.grid(row=1)
+
     def movement(self, direction):
         room = self.root.game.game_map.make_move(direction)
         if room:
@@ -305,7 +344,24 @@ class App(tk.Frame):
         self.player_frame.columnconfigure(1, weight=1)
         self.player_frame.columnconfigure(2, weight=1)
         self.player = GuiPlayer(self.root, self.player_frame)
-    
+
+    def build_save_exit_frame(self, container):
+        self.save_exit_image = tk.PhotoImage(file="data/images/save_and_exit2.png")
+        self.save_exit_frame = tk.Frame(container, bg="GREY")
+        self.save_exit_frame.grid(row=1, column=0, sticky="n", pady=20)
+        self.save_exit_frame.rowconfigure(0, weight=0)
+        self.save_exit_frame.rowconfigure(1, weight=0)
+        self.save_exit_frame.rowconfigure(2, weight=0)
+        self.save_exit_frame.columnconfigure(0, weight=0)
+        self.save_exit_frame.columnconfigure(1, weight=0)
+        self.save_exit_frame.columnconfigure(2, weight=0)
+        #EXIT_BUTTON
+        self.save_exit_button = tk.Button(self.save_exit_frame, text="EXIT", image=self.save_exit_image, bg="GREY",
+            command=lambda:self.exit_dungeon_popup()
+            )
+        self.save_exit_button.grid(column=1, row=1, sticky="nsew")
+
+
     def build_movement_frame(self, container):
         self.up_image = tk.PhotoImage(file="data/images/arrow_up.png")
         self.down_image = tk.PhotoImage(file="data/images/arrow_down.png")
@@ -342,7 +398,7 @@ class App(tk.Frame):
 
     def build_start_corner_frame(self, container):
         self.start_corner_frame = tk.Frame(container, bg="GREY")
-        self.start_corner_frame.grid(row=1, column=1, sticky="n", pady=10)
+        self.start_corner_frame.grid(row=1, column=0, columnspan=2, sticky="n", pady=10)
         self.start_corner_frame.rowconfigure(0, weight=0, minsize=50)
         self.start_corner_frame.rowconfigure(1, weight=0, minsize=50)
         self.start_corner_frame.rowconfigure(2, weight=0, minsize=50)
@@ -350,26 +406,29 @@ class App(tk.Frame):
         self.start_corner_frame.columnconfigure(0, weight=0, minsize=50)
         self.start_corner_frame.columnconfigure(1, weight=0, minsize=50)
         self.start_corner_frame.columnconfigure(2, weight=0, minsize=50)
+        self.start_corner_frame.columnconfigure(3, weight=0, minsize=50)
+        self.start_corner_frame.columnconfigure(4, weight=0, minsize=50)
+        self.start_corner_frame.columnconfigure(5, weight=0, minsize=50)
         self.start_corner_label = tk.Label(self.start_corner_frame, text="Choose a corner to start on!", font=("Times", 14), bg="GREY")
-        self.start_corner_label.grid(row=0, column=0, columnspan=2, sticky="nwe")
+        self.start_corner_label.grid(row=0, column=2, columnspan=2, sticky="nwe")
         #TOP_LEFT_BUTTON
         self.top_left_button = tk.Button(self.start_corner_frame, text="TOP LEFT",
             command=lambda: self.set_start_position('b-l')
             )
-        self.top_left_button.grid(column=0, row=1, sticky="nsew")
+        self.top_left_button.grid(column=2, row=1, sticky="nsew")
         #TOP_RIGHT_BUTTON
         self.top_right_button = tk.Button(self.start_corner_frame, text="TOP RIGHT",
             command=lambda: self.set_start_position('t-l')
             )
-        self.top_right_button.grid(column=1, row=1, sticky="nsew")
+        self.top_right_button.grid(column=3, row=1, sticky="nsew")
         #BOTTOM_RIGHT_BUTTON
         self.bottom_right_button = tk.Button(self.start_corner_frame, text="BOTTOM RIGHT",
             command=lambda: self.set_start_position('t-r'))
-        self.bottom_right_button.grid(column=1, row=2, sticky="NSWE")
+        self.bottom_right_button.grid(column=3, row=2, sticky="NSWE")
         #BOTTOM_LEFT_BUTTON
         self.bottom_left_button = tk.Button(self.start_corner_frame, text="BOTTOM LEFT",
             command=lambda: self.set_start_position('b-r'))
-        self.bottom_left_button.grid(column=0, row=2, sticky="nswe")
+        self.bottom_left_button.grid(column=2, row=2, sticky="nswe")
 
     def build_room_frame(self, room):
         self.room_frame = tk.Frame(self, bg="#2c2c2c")
@@ -776,10 +835,10 @@ class GuiCombat(tk.Frame):
         self.combat_flee_button = tk.Button(self.combat_menu_frame, text="Flee")
         self.combat_flee_button.grid(row=2, column=0, sticky="nwe")
         #Exit_room_button
-        self.combat_exit_room_button = tk.Button(self.combat_menu_frame, text="Leave",
-            command=lambda:print("exit?")
-            )
-        self.combat_exit_room_button.grid(row=3, column=0, sticky="nwe")
+        #self.combat_exit_room_button = tk.Button(self.combat_menu_frame, text="Leave",
+            #command=lambda:print("exit?")
+           # )
+        #self.combat_exit_room_button.grid(row=3, column=0, sticky="nwe")
 
     
 
