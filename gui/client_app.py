@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from game_files import gamemap
 from game_files import characters
 from game_files import enemies
@@ -277,6 +278,7 @@ class App(tk.Frame):
             self.root.game.player.name = player_name
             self.build_app()
         else:
+            messagebox.showwarning("Error", "Name already taken" )
             print("ANOTHER NAME PLEASE")
 
     def build_input_new_game(self):
@@ -296,15 +298,14 @@ class App(tk.Frame):
         self.input_frame.rowconfigure(1, weight=0)
         self.input_frame.rowconfigure(2, weight=0)
         self.input_frame.rowconfigure(3, weight=0)
-        # self.input_frame.grab_set()
+        self.input_frame.grab_set()
         self.input_frame.minsize(700, 600)
         self.input_frame.maxsize(700, 600)
         x = self.root.winfo_x()
         y = self.root.winfo_y()
         width = self.root.winfo_width()
         heigth = self.root.winfo_height()
-        self.input_frame.geometry("+%d+%d" % (x+(width/2)-200, (y+(heigth/2)-75)))
-
+        self.input_frame.geometry("+%d+%d" % (x+(width/2)-350, (y+(heigth/2)-285)))
         hero_label = tk.Label(self.input_frame, image=self.input_player_image)
         hero_label.grid(column=2, row=0, pady=15)
         hero_name_label = tk.Label(self.input_frame, text="Enter name:", bg="GREY", font=("times", 16, "bold"))
