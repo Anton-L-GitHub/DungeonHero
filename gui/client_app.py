@@ -267,7 +267,11 @@ class App(tk.Frame):
                 'medium': (6, 6),
                 'large': (8, 8)
             }
-            x, y = map_sizes[map_size]
+            try:
+                x, y = map_sizes[map_size]
+            except Exception:
+                x = 4
+                y = 4
             self.root.game.game_map = gamemap.GameMap(x, y)
             
             self.root.game.player.name = player_name
@@ -420,12 +424,12 @@ class App(tk.Frame):
         self.hero_select_knight_button.grid(row=1, column=1, padx=10)
         #hero_select_thief
         self.hero_select_thief_button = tk.Button(self.new_character_frame, image=self.hero_select_thief_image, bg="grey",
-            command=lambda:self.switch_frame(lambda:set_player_hero('thief'), self.new_character_frame)
+            command=lambda:set_player_hero('thief')
             )
         self.hero_select_thief_button.grid(row=1, column=2, padx=10)
         #hero_select_wizard
         self.hero_select_wizard_button = tk.Button(self.new_character_frame, image=self.hero_select_wizard_image, bg="grey",
-            command=lambda:self.switch_frame(lambda:set_player_hero('wizard'), self.new_character_frame)
+            command=lambda:set_player_hero('wizard')
         )
         self.hero_select_wizard_button.grid(row=1, column=3, padx=10)
 
@@ -975,7 +979,6 @@ class GuiCombat(tk.Frame):
                 self.combat_escaped = True
                 for enemy in self.combat_session.combatants:
                     if isinstance(enemy, enemies.Enemy):
-                        print("MAX", enemy.max_hp)
                         enemy.set_health(enemy.max_hp)
             else:
                 self.update_text_field(f'{self.root.game.player.get_name()} did not escape.')
