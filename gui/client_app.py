@@ -13,7 +13,7 @@ import sys
 path = os.path.abspath(os.getcwd())
 path += '/data/music/the_cave.wav'
 
-winsound.PlaySound(path, winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC)
+#winsound.PlaySound(path, winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC)
 
 
 class Game:
@@ -135,9 +135,10 @@ class App(tk.Frame):
         self.place_holder = self.game_map
         self.game_map = GuiGameMap(self.root, self.game_map_frame)
         self.place_holder.destroy()
+        self.after(500)
+        self.build_movement_frame(self.player_frame)
+        self.build_save_exit_frame(self.player_frame)
         
-        
-
     def enter_room(self, room, frame_to_destroy):
         frame_to_destroy.destroy()
         self.build_room_frame(room)
@@ -157,8 +158,6 @@ class App(tk.Frame):
         self.app_frame = tk.Frame(self)
         self.build_game_map_frame(self.app_frame)
         self.build_player_frame(self.app_frame)
-        self.build_movement_frame(self.player_frame)
-        self.build_save_exit_frame(self.player_frame)
         self.build_start_corner_frame(self.player_frame)
         self.app_frame.grid(row=0, column=0, columnspan=2, sticky="nswe")
         self.app_frame.rowconfigure(0, weight=1)
@@ -193,7 +192,9 @@ class App(tk.Frame):
         )
         self.new_game_button.grid(row=1, column=1, pady=10)
         #LOAD GAME
-        self.load_game_button = tk.Button(self.menu_screen_frame, image=self.load_game_image, bg="GREY",)
+        self.load_game_button = tk.Button(self.menu_screen_frame, image=self.load_game_image, bg="GREY",
+            command=lambda:self.switch_frame(self.build_load_game_menu, self.menu_screen_frame)
+        )
         self.load_game_button.grid(row=2, column=1, pady=10)
         #EXIT GAME
         self.exit_game_button = tk.Button(self.menu_screen_frame, image=self.exit_game_image, bg="GREY",
@@ -228,13 +229,72 @@ class App(tk.Frame):
         )
         new_character_button.grid(row=1, column=1, pady=10)
         #LOAD CHARACTER
-        load_character_button = tk.Button(self.new_game_frame, image=self.load_character_image, bg="GREY")
+        load_character_button = tk.Button(self.new_game_frame, image=self.load_character_image, bg="GREY",
+            command=lambda:self.switch_frame(self.build_load_character_menu, self.new_game_frame)
+        )
         load_character_button.grid(row=2, column=1, pady=10)
         #BACK OPTION
         back_button = tk.Button(self.new_game_frame, image=self.back_image, bg="GREY",
             command=lambda:self.switch_frame(self.build_start_menu, self.new_game_frame)
         )
         back_button.grid(row=3, column=1, pady=10)
+
+    def build_load_game_menu(self):
+        self.banner_image = tk.PhotoImage(file='data/images/banner.png')
+        self.load_game_image = tk.PhotoImage(file='data/images/load_game.png')
+        self.back_button_image = tk.PhotoImage(file='data/images/back.png')
+        self.load_game_frame = tk.Frame(self, bg="GREY")
+        self.load_game_frame.grid(row=0, columnspan=2, sticky="snew")
+        self.load_game_frame.columnconfigure(0, weight=1)
+        self.load_game_frame.rowconfigure(0, weight=1)
+        self.load_game_frame.rowconfigure(1, weight=0)
+        self.load_game_frame.rowconfigure(2, weight=0, minsize=125)
+        self.load_game_frame.rowconfigure(3, weight=0)
+        self.load_game_frame.rowconfigure(4, weight=1)
+        self.load_game_frame.rowconfigure(5, weight=1)
+        self.load_game_frame.columnconfigure(0, weight=1)
+        self.load_game_frame.columnconfigure(1, weight=1)
+        self.load_game_frame.columnconfigure(2, weight=1)
+        #BANNER
+        self.banner_label = tk.Label(self.load_game_frame, image=self.banner_image, bg="GREY")
+        self.banner_label.grid(row=0, columnspan=3)
+        #LOAD GAME
+        self.load_game_button = tk.Button(self.load_game_frame, image=self.load_game_image, bg="GREY",)
+        self.load_game_button.grid(row=1, column=0, pady=10)
+        #BACK OPTION
+        back_button = tk.Button(self.load_game_frame, image=self.back_button_image, bg="GREY",
+            command=lambda:self.switch_frame(self.build_start_menu, self.load_game_frame)
+        )
+        back_button.grid(row=3, column=0, pady=10)
+
+    def build_load_character_menu(self):
+        self.banner_image = tk.PhotoImage(file='data/images/banner.png')
+        self.load_character_image = tk.PhotoImage(file='data/images/load_character.png')
+        self.back_image = tk.PhotoImage(file='data/images/back.png')
+
+        self.load_character_frame = tk.Frame(self, bg="GREY")
+        self.load_character_frame.grid(row=0, columnspan=2, sticky="snew")
+        self.load_character_frame.columnconfigure(0, weight=1)
+        self.load_character_frame.rowconfigure(0, weight=1)
+        self.load_character_frame.rowconfigure(1, weight=0)
+        self.load_character_frame.rowconfigure(2, weight=0, minsize=125)
+        self.load_character_frame.rowconfigure(3, weight=0)
+        self.load_character_frame.rowconfigure(4, weight=1)
+        self.load_character_frame.rowconfigure(5, weight=1)
+        self.load_character_frame.columnconfigure(0, weight=1)
+        self.load_character_frame.columnconfigure(1, weight=1)
+        self.load_character_frame.columnconfigure(2, weight=1)
+        #BANNER
+        banner_label = tk.Label(self.load_character_frame, image=self.banner_image, bg="GREY")
+        banner_label.grid(row=0, columnspan=3)
+        #LOAD CHARACTER
+        load_character_button = tk.Button(self.load_character_frame, image=self.load_character_image, bg="GREY")
+        load_character_button.grid(row=1, column=0, pady=10)
+        #BACK OPTION
+        back_button = tk.Button(self.load_character_frame, image=self.back_image, bg="GREY",
+            command=lambda:self.switch_frame(self.build_new_game_menu, self.load_character_frame)
+        )
+        back_button.grid(row=3, column=0, pady=10)
 
     def build_new_character_menu(self):
         self.select_hero_image = tk.PhotoImage(file='data/images/select_hero.png')
@@ -452,7 +512,6 @@ class App(tk.Frame):
             command=lambda:self.enter_room(room, self.room_description_frame)
             )
         self.enter_room_button.grid(row=2, sticky="nswe")
-        
 
 class GuiGameMap(tk.Frame):
     def __init__(self, root, parent):

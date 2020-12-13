@@ -76,7 +76,7 @@ class Knight(Character):
     def __init__(self):
         super().__init__()
         self.initiative = 5
-        self.health = 10
+        self.health = 9
         self.attack = 6
         self.agility = 4
         self.image = 'data/images/knight.png'
