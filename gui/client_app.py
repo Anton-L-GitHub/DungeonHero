@@ -289,23 +289,8 @@ class App(tk.Frame):
         self.start_screen_frame.rowconfigure(1, weight=1)
         self.start_screen_frame.rowconfigure(2, weight=1)
         #button
-        # self.start_game_label = tk.Label(self.start_screen_frame, image=self.btn_image)
-        # self.start_game_label.grid(row=1, sticky="nswe")
         self.start_game_button = tk.Button(self.start_screen_frame, image=self.btn_image,
         command=lambda:self.switch_frame(self.build_start_menu, self.start_screen_frame)
-        )
-        self.start_game_button.grid(row=1)
-
-    def build_death_screen(self):
-        self.btn_image = tk.PhotoImage(file='data/images/game_over.png')
-        self.death_screen_frame = tk.Frame(self, bg="GREY")
-        self.death_screen_frame.grid(columnspan=2, sticky="snew")
-        self.death_screen_frame.columnconfigure(0, weight=1)
-        self.death_screen_frame.rowconfigure(0, weight=1)
-        self.death_screen_frame.rowconfigure(1, weight=1)
-        self.death_screen_frame.rowconfigure(2, weight=1)
-        self.start_game_button = tk.Button(self.death_screen_frame, image=self.btn_image,
-        command=lambda:self.switch_frame(self.build_start_menu, self.death_screen_frame) # måste radera nuvarande character
         )
         self.start_game_button.grid(row=1)
 
@@ -645,13 +630,13 @@ class GuiRoom(tk.Frame):
         self.lose_container.columnconfigure(1, weight=1)
         self.lose_container.columnconfigure(2, weight=1)
         #lose label
-        self.lose_label = tk.Label(self.lose_container, text="GAME OVER!", font=("Times", 20, 'bold'), relief=tk.RAISED, borderwidth=2)
+        self.lose_label = tk.Label(self.lose_container, text="GAME OVER!", font=("Times", 20, 'bold'), relief=tk.RAISED, borderwidth=2) # GAME OVER BILD?
         self.lose_label.grid(row=0, column=0, columnspan=3,  sticky="nwe")
         #Exit_to_menu
-        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.room_kill())
+        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.room_kill()) # Radera character
         self.exit_room_button.grid(column=1, row=2, sticky="nswe")
         #Exit_button
-        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Game", font=('Arial', 13, 'bold'), command=lambda:exit())
+        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Game", font=('Arial', 13, 'bold'), command=lambda:exit()) # Radera character
         self.exit_room_button.grid(column=1, row=3, sticky="nswe")
 
     def create_room_won_frames(self):
