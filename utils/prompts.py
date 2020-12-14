@@ -53,7 +53,7 @@ class prompts():
                 return ('b-r')
             elif user_input == '3':
                 return ('t-l')
-            elif user_input == '3':
+            elif user_input == '4':
                 return ('t-r')
             print('Wrong input.. Try again!')
             user_input = input(MAP_SPAWN)
