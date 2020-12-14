@@ -5,6 +5,7 @@ from game_files import characters
 from game_files import enemies
 from game_files import treasures
 from game_files import demo_combat
+from tkinter import messagebox
 from data.database import database
 import random
 import time
@@ -14,7 +15,6 @@ import sys
 
 path = os.path.abspath(os.getcwd())
 path += '/data/music/the_cave.wav'
-
 winsound.PlaySound(path, winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC)
 
 
@@ -31,6 +31,7 @@ class Game:
         content = room.get_contents()
         for treasure in content['treasures']:
             self.player.backpack.append(treasure)
+
 
 class Root(tk.Tk):
     def __init__(self, root, game):
@@ -266,7 +267,10 @@ class App(tk.Frame):
         if player_name == "":
             messagebox.showwarning("Error", "Name cannot be empty")
             print("Name cannot be empty")
-        if player_name != "" and player_name not in existing_names:
+        if map_size == '0':
+            messagebox.showwarning("Error", "No map size selected")
+            print("Map cannot be empty")
+        if player_name != "" and player_name not in existing_names and map_size != '0':
             self.input_frame.destroy()
             self.new_character_frame.destroy()
             map_sizes = {
@@ -274,13 +278,8 @@ class App(tk.Frame):
                 'medium': (6, 6),
                 'large': (8, 8)
             }
-            try:
-                x, y = map_sizes[map_size]
-            except Exception:
-                x = 4
-                y = 4
+            x, y = map_sizes[map_size]
             self.root.game.game_map = gamemap.GameMap(x, y)
-            
             self.root.game.player.name = player_name
             self.build_app()
 
@@ -309,6 +308,7 @@ class App(tk.Frame):
         width = self.root.winfo_width()
         heigth = self.root.winfo_height()
         self.input_frame.geometry("+%d+%d" % (x+(width/2)-350, (y+(heigth/2)-285)))
+
         hero_label = tk.Label(self.input_frame, image=self.input_player_image)
         hero_label.grid(column=2, row=0, pady=15)
         hero_name_label = tk.Label(self.input_frame, text="Enter name:", bg="GREY", font=("times", 16, "bold"))
@@ -330,7 +330,6 @@ class App(tk.Frame):
             command=lambda:self.handle_new_game_input(hero_name.get(), map_size.get())
         )
         hero_submit.grid(column=3, row=1)
-
 
     def build_load_character_menu(self):
         self.banner_image = tk.PhotoImage(file='data/images/banner.png')
@@ -415,7 +414,6 @@ class App(tk.Frame):
             }
             self.root.game.player = hero_chart[hero_name]
             self.build_input_new_game()
-            # self.build_app()
 
 
         #SELECT HERO LABEL
@@ -957,7 +955,6 @@ class GuiCombat(tk.Frame):
         self.enemy_turn_action(self.combat_session.current_turn)
         entity, value = self.combat_session.get_next_object_in_turn_order()
         self.combat_session.current_turn = entity
-        
 
     def enemy_turn_action(self, enemy):
         player = self.root.game.player
