@@ -32,6 +32,8 @@ class Game:
         if user_choice == 'CHARACTER':
             character = cls.disc_load_game_character()
             game_map = prompts.create_new_map()
+            position = prompts.map_spawn_prompt()
+            game_map.set_start_position(position)
             return  cls(character, game_map)
         elif user_choice == 'GAME':
             game_map, character = cls.disc_load_game_progress()
