@@ -1,0 +1,862 @@
+{
+    "map" : {
+        "x_max" : 6,
+        "y_max" : 6,
+        "player_x" : 2,
+        "player_y" : 1,
+        "player_prev" : [
+            1,
+            1
+        ],
+        "map_grid" : [
+            [
+                {
+                    "name" : "00",
+                    "state" : "O",
+                    "description" : "You enter a dark room.\nYou shine your torch towards the center of\n the room but you find it to be empty.\nNo luck this time...",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : true
+                },
+                {
+                    "name" : "01",
+                    "state" : "O",
+                    "description" : "This room looks empty,\nyou sigh and move on.",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : true
+                },
+                {
+                    "name" : "02",
+                    "state" : "-",
+                    "description" : "It's your lucky day!\nThis room has nothing but gold for you.",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "03",
+                    "state" : "-",
+                    "description" : "It's your lucky day!\nThis room has nothing but gold for you.",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "04",
+                    "state" : "-",
+                    "description" : "You enter a dark room.\nYou shine your torch towards the center of\n the room but you find it to be empty.\nNo luck this time...",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "05",
+                    "state" : "-",
+                    "description" : "It's your lucky day!\nThis room has nothing but gold for you.",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coin pouch",
+                                "_value" : 6,
+                                "_rarity" : 20,
+                                "image" : "data/images/coin_pouch.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                }
+            ],
+            [
+                {
+                    "name" : "10",
+                    "state" : "-",
+                    "description" : "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 1,
+                                "max_hp" : 1,
+                                "_name" : "Giant Spider",
+                                "_initiative" : 7,
+                                "_attack" : 2,
+                                "_agility" : 3,
+                                "image" : "data/images/giant_spider.png",
+                                "_rarity" : 20,
+                                "_start_health" : 1
+                            },
+                            {
+                                "_health" : 2,
+                                "max_hp" : 2,
+                                "_name" : "Skeleton",
+                                "_initiative" : 4,
+                                "_attack" : 3,
+                                "_agility" : 3,
+                                "image" : "data/images/skeleton.png",
+                                "_rarity" : 15,
+                                "_start_health" : 2
+                            },
+                            {
+                                "_health" : 3,
+                                "max_hp" : 3,
+                                "_name" : "Orc",
+                                "_initiative" : 6,
+                                "_attack" : 4,
+                                "_agility" : 4,
+                                "image" : "data/images/orc.png",
+                                "_rarity" : 10,
+                                "_start_health" : 3
+                            }
+                        ],
+                        "treasures" : []
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "11",
+                    "state" : "O",
+                    "description" : "You enter a room but you are instantly\ngreated by an angry snarl, looks like trouble!",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : true
+                },
+                {
+                    "name" : "12",
+                    "state" : "O",
+                    "description" : "You see a treasure in the distance!",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : true
+                },
+                {
+                    "name" : "13",
+                    "state" : "-",
+                    "description" : "You enter a room but you are instantly\ngreated by an angry snarl, looks like trouble!",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 2,
+                                "max_hp" : 2,
+                                "_name" : "Skeleton",
+                                "_initiative" : 4,
+                                "_attack" : 3,
+                                "_agility" : 3,
+                                "image" : "data/images/skeleton.png",
+                                "_rarity" : 15,
+                                "_start_health" : 2
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Treasure chest",
+                                "_value" : 20,
+                                "_rarity" : 5,
+                                "image" : "data/images/treasure_chest.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "14",
+                    "state" : "-",
+                    "description" : "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 3,
+                                "max_hp" : 3,
+                                "_name" : "Orc",
+                                "_initiative" : 6,
+                                "_attack" : 4,
+                                "_agility" : 4,
+                                "image" : "data/images/orc.png",
+                                "_rarity" : 10,
+                                "_start_health" : 3
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            },
+                            {
+                                "_name" : "Coin pouch",
+                                "_value" : 6,
+                                "_rarity" : 20,
+                                "image" : "data/images/coin_pouch.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "15",
+                    "state" : "-",
+                    "description" : "You see a treasure in the distance!",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            },
+                            {
+                                "_name" : "Coin pouch",
+                                "_value" : 6,
+                                "_rarity" : 20,
+                                "image" : "data/images/coin_pouch.png"
+                            },
+                            {
+                                "_name" : "Gemstone",
+                                "_value" : 14,
+                                "_rarity" : 10,
+                                "image" : "data/images/gemstone.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                }
+            ],
+            [
+                {
+                    "name" : "20",
+                    "state" : "-",
+                    "description" : "You enter a room but you are instantly\ngreated by an angry snarl, looks like trouble!",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 2,
+                                "max_hp" : 2,
+                                "_name" : "Skeleton",
+                                "_initiative" : 4,
+                                "_attack" : 3,
+                                "_agility" : 3,
+                                "image" : "data/images/skeleton.png",
+                                "_rarity" : 15,
+                                "_start_health" : 2
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            },
+                            {
+                                "_name" : "Coin pouch",
+                                "_value" : 6,
+                                "_rarity" : 20,
+                                "image" : "data/images/coin_pouch.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "21",
+                    "state" : "-",
+                    "description" : "This room looks empty,\nyou sigh and move on.",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "22",
+                    "state" : "-",
+                    "description" : "Something in the distance catches your eye..\nsomething shimmering..\nsomething made out of gold!",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Treasure chest",
+                                "_value" : 20,
+                                "_rarity" : 5,
+                                "image" : "data/images/treasure_chest.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "23",
+                    "state" : "-",
+                    "description" : "You enter a room and the light from your torch\nreflects off something made out of gold..\nYou found a treasure!",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            },
+                            {
+                                "_name" : "Coin pouch",
+                                "_value" : 6,
+                                "_rarity" : 20,
+                                "image" : "data/images/coin_pouch.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "24",
+                    "state" : "-",
+                    "description" : "You enter a room but you are instantly\ngreated by an angry snarl, looks like trouble!",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 1,
+                                "max_hp" : 1,
+                                "_name" : "Giant Spider",
+                                "_initiative" : 7,
+                                "_attack" : 2,
+                                "_agility" : 3,
+                                "image" : "data/images/giant_spider.png",
+                                "_rarity" : 20,
+                                "_start_health" : 1
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "25",
+                    "state" : "-",
+                    "description" : "You enter a room but you are instantly\ngreated by an angry snarl, looks like trouble!",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 2,
+                                "max_hp" : 2,
+                                "_name" : "Skeleton",
+                                "_initiative" : 4,
+                                "_attack" : 3,
+                                "_agility" : 3,
+                                "image" : "data/images/skeleton.png",
+                                "_rarity" : 15,
+                                "_start_health" : 2
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                }
+            ],
+            [
+                {
+                    "name" : "30",
+                    "state" : "-",
+                    "description" : "It's your lucky day!\nThis room has nothing but gold for you.",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            },
+                            {
+                                "_name" : "Coin pouch",
+                                "_value" : 6,
+                                "_rarity" : 20,
+                                "image" : "data/images/coin_pouch.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "31",
+                    "state" : "-",
+                    "description" : "You come to an empty and dark room,\nyou don't see anything of interest..",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "32",
+                    "state" : "-",
+                    "description" : "You enter a dark room.\nYou shine your torch towards the center of\n the room but you find it to be empty.\nNo luck this time...",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "33",
+                    "state" : "-",
+                    "description" : "You enter a room and the light from your torch\nreflects off something made out of gold..\nYou found a treasure!",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "34",
+                    "state" : "-",
+                    "description" : "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 2,
+                                "max_hp" : 2,
+                                "_name" : "Skeleton",
+                                "_initiative" : 4,
+                                "_attack" : 3,
+                                "_agility" : 3,
+                                "image" : "data/images/skeleton.png",
+                                "_rarity" : 15,
+                                "_start_health" : 2
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "35",
+                    "state" : "-",
+                    "description" : "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 3,
+                                "max_hp" : 3,
+                                "_name" : "Orc",
+                                "_initiative" : 6,
+                                "_attack" : 4,
+                                "_agility" : 4,
+                                "image" : "data/images/orc.png",
+                                "_rarity" : 10,
+                                "_start_health" : 3
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coin pouch",
+                                "_value" : 6,
+                                "_rarity" : 20,
+                                "image" : "data/images/coin_pouch.png"
+                            },
+                            {
+                                "_name" : "Gold jewelry",
+                                "_value" : 10,
+                                "_rarity" : 15,
+                                "image" : "data/images/gold_jewelry.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                }
+            ],
+            [
+                {
+                    "name" : "40",
+                    "state" : "-",
+                    "description" : "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 1,
+                                "max_hp" : 1,
+                                "_name" : "Giant Spider",
+                                "_initiative" : 7,
+                                "_attack" : 2,
+                                "_agility" : 3,
+                                "image" : "data/images/giant_spider.png",
+                                "_rarity" : 20,
+                                "_start_health" : 1
+                            },
+                            {
+                                "_health" : 2,
+                                "max_hp" : 2,
+                                "_name" : "Skeleton",
+                                "_initiative" : 4,
+                                "_attack" : 3,
+                                "_agility" : 3,
+                                "image" : "data/images/skeleton.png",
+                                "_rarity" : 15,
+                                "_start_health" : 2
+                            },
+                            {
+                                "_health" : 3,
+                                "max_hp" : 3,
+                                "_name" : "Orc",
+                                "_initiative" : 6,
+                                "_attack" : 4,
+                                "_agility" : 4,
+                                "image" : "data/images/orc.png",
+                                "_rarity" : 10,
+                                "_start_health" : 3
+                            },
+                            {
+                                "_health" : 4,
+                                "max_hp" : 4,
+                                "_name" : "Troll",
+                                "_initiative" : 2,
+                                "_attack" : 7,
+                                "_agility" : 2,
+                                "image" : "data/images/troll.png",
+                                "_rarity" : 5,
+                                "_start_health" : 4
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Gold jewelry",
+                                "_value" : 10,
+                                "_rarity" : 15,
+                                "image" : "data/images/gold_jewelry.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "41",
+                    "state" : "-",
+                    "description" : "You enter a room but you are instantly\ngreated by an angry snarl, looks like trouble!",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 2,
+                                "max_hp" : 2,
+                                "_name" : "Skeleton",
+                                "_initiative" : 4,
+                                "_attack" : 3,
+                                "_agility" : 3,
+                                "image" : "data/images/skeleton.png",
+                                "_rarity" : 15,
+                                "_start_health" : 2
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            },
+                            {
+                                "_name" : "Coin pouch",
+                                "_value" : 6,
+                                "_rarity" : 20,
+                                "image" : "data/images/coin_pouch.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "42",
+                    "state" : "-",
+                    "description" : "You enter a room but you are instantly\ngreated by an angry snarl, looks like trouble!",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 1,
+                                "max_hp" : 1,
+                                "_name" : "Giant Spider",
+                                "_initiative" : 7,
+                                "_attack" : 2,
+                                "_agility" : 3,
+                                "image" : "data/images/giant_spider.png",
+                                "_rarity" : 20,
+                                "_start_health" : 1
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            },
+                            {
+                                "_name" : "Gold jewelry",
+                                "_value" : 10,
+                                "_rarity" : 15,
+                                "image" : "data/images/gold_jewelry.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "43",
+                    "state" : "-",
+                    "description" : "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 1,
+                                "max_hp" : 1,
+                                "_name" : "Giant Spider",
+                                "_initiative" : 7,
+                                "_attack" : 2,
+                                "_agility" : 3,
+                                "image" : "data/images/giant_spider.png",
+                                "_rarity" : 20,
+                                "_start_health" : 1
+                            }
+                        ],
+                        "treasures" : []
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "44",
+                    "state" : "-",
+                    "description" : "The room you entered appears to be empty,\nsuch a disappointment..",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "45",
+                    "state" : "-",
+                    "description" : "The room you entered appears to be empty,\nsuch a disappointment..",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : false
+                }
+            ],
+            [
+                {
+                    "name" : "50",
+                    "state" : "-",
+                    "description" : "Something in the distance catches your eye..\nsomething shimmering..\nsomething made out of gold!",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coin pouch",
+                                "_value" : 6,
+                                "_rarity" : 20,
+                                "image" : "data/images/coin_pouch.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "51",
+                    "state" : "-",
+                    "description" : "You see a treasure in the distance!",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "52",
+                    "state" : "-",
+                    "description" : "You enter a room but you are instantly\ngreated by an angry snarl, looks like trouble!",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 1,
+                                "max_hp" : 1,
+                                "_name" : "Giant Spider",
+                                "_initiative" : 7,
+                                "_attack" : 2,
+                                "_agility" : 3,
+                                "image" : "data/images/giant_spider.png",
+                                "_rarity" : 20,
+                                "_start_health" : 1
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "53",
+                    "state" : "-",
+                    "description" : "You see a treasure in the distance!",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            },
+                            {
+                                "_name" : "Gemstone",
+                                "_value" : 14,
+                                "_rarity" : 10,
+                                "image" : "data/images/gemstone.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "54",
+                    "state" : "-",
+                    "description" : "You enter a room but you are instantly\ngreated by an angry snarl, looks like trouble!",
+                    "content" : {
+                        "enemies" : [
+                            {
+                                "_health" : 2,
+                                "max_hp" : 2,
+                                "_name" : "Skeleton",
+                                "_initiative" : 4,
+                                "_attack" : 3,
+                                "_agility" : 3,
+                                "image" : "data/images/skeleton.png",
+                                "_rarity" : 15,
+                                "_start_health" : 2
+                            }
+                        ],
+                        "treasures" : [
+                            {
+                                "_name" : "Coins",
+                                "_value" : 2,
+                                "_rarity" : 40,
+                                "image" : "data/images/coins.png"
+                            }
+                        ]
+                    },
+                    "cleared" : false
+                },
+                {
+                    "name" : "55",
+                    "state" : "E",
+                    "description" : "",
+                    "content" : {
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : false
+                }
+            ]
+        ]
+    },
+    "player" : {
+        "name" : "Rasmus",
+        "initiative" : 6,
+        "health" : 2,
+        "attack" : 9,
+        "agility" : 5,
+        "image" : "data/images/wizard.png",
+        "room_image" : "data/images/wizard_on_room.png",
+        "backpack_image" : "data/images/backpack.png",
+        "special_ability" : "Glow!",
+        "backpack" : [
+            {
+                "_name" : "Coins",
+                "_value" : 2,
+                "_rarity" : 40,
+                "image" : "data/images/coins.png"
+            },
+            {
+                "_name" : "Coins",
+                "_value" : 2,
+                "_rarity" : 40,
+                "image" : "data/images/coins.png"
+            },
+            {
+                "_name" : "Gold jewelry",
+                "_value" : 10,
+                "_rarity" : 15,
+                "image" : "data/images/gold_jewelry.png"
+            }
+        ],
+        "start_health" : 4
+    }
+}

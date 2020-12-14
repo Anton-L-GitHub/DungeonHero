@@ -2,7 +2,7 @@
     "map" : {
         "x_max" : 4,
         "y_max" : 4,
-        "player_x" : 0,
+        "player_x" : 1,
         "player_y" : 0,
         "player_prev" : [
             0,
@@ -12,26 +12,13 @@
             [
                 {
                     "name" : "00",
-                    "state" : "X",
+                    "state" : "O",
                     "description" : "You enter a room and the light from your torch\nreflects off something made out of gold..\nYou found a treasure!",
                     "content" : {
                         "enemies" : [],
-                        "treasures" : [
-                            {
-                                "_name" : "Coins",
-                                "_value" : 2,
-                                "_rarity" : 40,
-                                "image" : "data/images/coins.png"
-                            },
-                            {
-                                "_name" : "Coin pouch",
-                                "_value" : 6,
-                                "_rarity" : 20,
-                                "image" : "data/images/coin_pouch.png"
-                            }
-                        ]
+                        "treasures" : []
                     },
-                    "cleared" : false,
+                    "cleared" : true,
                     "_name" : "Coin pouch",
                     "_value" : 6,
                     "_rarity" : 20,
@@ -44,25 +31,13 @@
                 },
                 {
                     "name" : "01",
-                    "state" : "-",
+                    "state" : "O",
                     "description" : "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
                     "content" : {
-                        "enemies" : [
-                            {
-                                "_health" : 1,
-                                "max_hp" : 1,
-                                "_name" : "Giant Spider",
-                                "_initiative" : 7,
-                                "_attack" : 2,
-                                "_agility" : 3,
-                                "image" : "data/images/giant_spider.png",
-                                "_rarity" : 20,
-                                "_start_health" : 1
-                            }
-                        ],
+                        "enemies" : [],
                         "treasures" : []
                     },
-                    "cleared" : false,
+                    "cleared" : true,
                     "_health" : 1,
                     "max_hp" : 1,
                     "_name" : "Giant Spider",

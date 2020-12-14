@@ -2,11 +2,11 @@
     "map" : {
         "x_max" : 6,
         "y_max" : 6,
-        "player_x" : 3,
+        "player_x" : 2,
         "player_y" : 1,
         "player_prev" : [
-            0,
-            3
+            1,
+            2
         ],
         "map_grid" : [
             [
@@ -242,32 +242,13 @@
                 },
                 {
                     "name" : "12",
-                    "state" : "-",
+                    "state" : "X",
                     "description" : "You enter a room but you are instantly\ngreated by an angry snarl, looks like trouble!",
                     "content" : {
-                        "enemies" : [
-                            {
-                                "_health" : 1,
-                                "max_hp" : 1,
-                                "_name" : "Giant Spider",
-                                "_initiative" : 7,
-                                "_attack" : 2,
-                                "_agility" : 3,
-                                "image" : "data/images/giant_spider.png",
-                                "_rarity" : 20,
-                                "_start_health" : 1
-                            }
-                        ],
-                        "treasures" : [
-                            {
-                                "_name" : "Coins",
-                                "_value" : 2,
-                                "_rarity" : 40,
-                                "image" : "data/images/coins.png"
-                            }
-                        ]
+                        "enemies" : [],
+                        "treasures" : []
                     },
-                    "cleared" : false,
+                    "cleared" : true,
                     "_health" : 1,
                     "max_hp" : 1,
                     "_name" : "Coins",
@@ -287,7 +268,7 @@
                 },
                 {
                     "name" : "13",
-                    "state" : "X",
+                    "state" : "O",
                     "description" : "It's your lucky day!\nThis room has nothing but gold for you.",
                     "content" : {
                         "enemies" : [],
@@ -1119,6 +1100,12 @@
                 "_value" : 14,
                 "_rarity" : 10,
                 "image" : "data/images/gemstone.png"
+            },
+            {
+                "_name" : "Coins",
+                "_value" : 2,
+                "_rarity" : 40,
+                "image" : "data/images/coins.png"
             },
             {
                 "_name" : "Coins",

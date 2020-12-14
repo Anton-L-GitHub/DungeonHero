@@ -3,9 +3,9 @@
         "x_max" : 6,
         "y_max" : 6,
         "player_x" : 1,
-        "player_y" : 4,
+        "player_y" : 3,
         "player_prev" : [
-            5,
+            4,
             1
         ],
         "map_grid" : [
@@ -716,13 +716,13 @@
                 },
                 {
                     "name" : "31",
-                    "state" : "-",
+                    "state" : "O",
                     "description" : "You enter a dark room.\nYou shine your torch towards the center of\n the room but you find it to be empty.\nNo luck this time...",
                     "content" : {
                         "enemies" : [],
                         "treasures" : []
                     },
-                    "cleared" : false,
+                    "cleared" : true,
                     "enemies" : [],
                     "treasures" : []
                 },
@@ -836,7 +836,7 @@
                 },
                 {
                     "name" : "41",
-                    "state" : "X",
+                    "state" : "O",
                     "description" : "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
                     "content" : {
                         "enemies" : [],
