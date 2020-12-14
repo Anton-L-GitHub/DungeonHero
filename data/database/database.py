@@ -54,7 +54,15 @@ def disc_load_character(player_name):
         player_dict = json.load(f)
 
     newPlayer = characters.Character()
+    temp_backpack = []
+    for backpack in player_dict['player']['backpack']:
+        temp_treasure = treasures.Treasure()
+        json.loads(json.dumps(backpack), object_hook=temp_treasure.parse_data)
+        temp_backpack.append(temp_treasure)
+
     json.loads(json.dumps(player_dict['player']), object_hook=newPlayer.parse_data) 
+
+    newPlayer.backpack = temp_backpack
 
     return newPlayer
 
@@ -65,6 +73,12 @@ def disc_load_progress(player_name):
         data_dict = json.load(f)
     
     newPlayer = characters.Character()
+    temp_backpack = []
+    for backpack in data_dict['player']['backpack']:
+        temp_treasure = treasures.Treasure()
+        json.loads(json.dumps(backpack), object_hook=temp_treasure.parse_data)
+        temp_backpack.append(temp_treasure)
+
     newMap = gamemap.GameMap(0, 0)
     newMap.create_map()
     map_dict = data_dict['map']
@@ -97,6 +111,8 @@ def disc_load_progress(player_name):
 
     json.loads(json.dumps(data_dict['player']), object_hook=newPlayer.parse_data) 
 
+    newPlayer.backpack = temp_backpack
+    
     return (newMap, newPlayer)
     
 

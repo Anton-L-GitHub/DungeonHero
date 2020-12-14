@@ -1,6 +1,6 @@
 {
     "player" : {
-        "name" : "Leo",
+        "name" : "Anton",
         "initiative" : 7,
         "health" : 5,
         "attack" : 5,
@@ -17,16 +17,28 @@
                 "image" : "data/images/coins.png"
             },
             {
+                "_name" : "Coin pouch",
+                "_value" : 6,
+                "_rarity" : 20,
+                "image" : "data/images/coin_pouch.png"
+            },
+            {
                 "_name" : "Gemstone",
                 "_value" : 14,
                 "_rarity" : 10,
                 "image" : "data/images/gemstone.png"
             },
             {
-                "_name" : "Gold jewelry",
-                "_value" : 10,
-                "_rarity" : 15,
-                "image" : "data/images/gold_jewelry.png"
+                "_name" : "Coin pouch",
+                "_value" : 6,
+                "_rarity" : 20,
+                "image" : "data/images/coin_pouch.png"
+            },
+            {
+                "_name" : "Coin pouch",
+                "_value" : 6,
+                "_rarity" : 20,
+                "image" : "data/images/coin_pouch.png"
             },
             {
                 "_name" : "Coins",
@@ -35,10 +47,10 @@
                 "image" : "data/images/coins.png"
             },
             {
-                "_name" : "Coin pouch",
-                "_value" : 6,
-                "_rarity" : 20,
-                "image" : "data/images/coin_pouch.png"
+                "_name" : "Treasure chest",
+                "_value" : 20,
+                "_rarity" : 5,
+                "image" : "data/images/treasure_chest.png"
             }
         ],
         "start_health" : 5

@@ -1,0 +1,46 @@
+{
+    "player" : {
+        "name" : "Martin",
+        "initiative" : 5,
+        "health" : 6,
+        "attack" : 6,
+        "agility" : 4,
+        "image" : "data/images/knight.png",
+        "room_image" : "data/images/knight_on_room.png",
+        "backpack_image" : "data/images/backpack.png",
+        "special_ability" : "Sheild block",
+        "backpack" : [
+            {
+                "_name" : "Coins",
+                "_value" : 2,
+                "_rarity" : 40,
+                "image" : "data/images/coins.png"
+            },
+            {
+                "_name" : "Coin pouch",
+                "_value" : 6,
+                "_rarity" : 20,
+                "image" : "data/images/coin_pouch.png"
+            },
+            {
+                "_name" : "Coins",
+                "_value" : 2,
+                "_rarity" : 40,
+                "image" : "data/images/coins.png"
+            },
+            {
+                "_name" : "Coins",
+                "_value" : 2,
+                "_rarity" : 40,
+                "image" : "data/images/coins.png"
+            },
+            {
+                "_name" : "Coins",
+                "_value" : 2,
+                "_rarity" : 40,
+                "image" : "data/images/coins.png"
+            }
+        ],
+        "start_health" : 9
+    }
+}
