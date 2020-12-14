@@ -324,10 +324,53 @@ class App(tk.Frame):
         )
         back_button.grid(row=3, column=1, pady=10)
 
-    def handle_new_game_input(self, player_name, map_size):
+    def handle_load_character_input(self, player_name, map_size):
         json_path = f'data/database/characters_ongoing/'
         existing_names = []
         for file in os.listdir(json_path):
+            file = file.replace('character_', '')
+            file = file.replace('.json', '')
+            existing_names.append(file)
+        if player_name in existing_names:
+            messagebox.showwarning("Error", "Name already taken")
+            print("Name already taken")
+        if player_name == "":
+            messagebox.showwarning("Error", "Name cannot be empty")
+            print("Name cannot be empty")
+        if map_size == '0':
+            messagebox.showwarning("Error", "No map size selected")
+            print("Map cannot be empty")
+        if player_name != "" and player_name not in existing_names and map_size != '0':
+            self.input_frame.destroy()
+            
+            try:
+                self.load_character_frame.destroy()
+            except:
+                pass
+            try:
+                self.new_character_frame.destroy()
+            except:
+                pass
+            finally:
+                map_sizes = {
+                    'small': (4, 4),
+                    'medium': (6, 6),
+                    'large': (8, 8)
+                }
+                x, y = map_sizes[map_size]
+                self.root.game.game_map = gamemap.GameMap(x, y)
+                self.root.game.player.name = player_name
+                self.build_app()
+
+    def handle_new_game_input(self, player_name, map_size):
+        json_path1 = f'data/database/characters_ongoing/'
+        json_path2 = f'data/database/characters/'
+        existing_names = []
+        for file in os.listdir(json_path1):
+            file = file.replace('character_', '')
+            file = file.replace('.json', '')
+            existing_names.append(file)
+        for file in os.listdir(json_path2):
             file = file.replace('character_', '')
             file = file.replace('.json', '')
             existing_names.append(file)
@@ -408,11 +451,16 @@ class App(tk.Frame):
         map_large = tk.Checkbutton(self.input_frame, image=self.large_map, variable=map_size, onvalue='large', bg="GREY")
         map_large.grid(column=3, row=2, sticky="n", pady=10, padx=5)
 
-
-        hero_submit = tk.Button(self.input_frame, text="Submit and continue", image=self.start_image, bg="grey",
-            command=lambda:self.handle_new_game_input(hero_name.get(), map_size.get())
-        )
-        hero_submit.grid(column=3, row=1)
+        if not self.root.game.player.name:
+            hero_submit = tk.Button(self.input_frame, text="Submit and continue", image=self.start_image, bg="grey",
+                command=lambda:self.handle_new_game_input(hero_name.get(), map_size.get())
+            )
+            hero_submit.grid(column=3, row=1)
+        else:
+            hero_submit = tk.Button(self.input_frame, text="Submit and continue", image=self.start_image, bg="grey",
+                command=lambda:self.handle_load_character_input(hero_name.get(), map_size.get())
+            )
+            hero_submit.grid(column=3, row=1)
 
     def handle_load_character(self, player_name):
         new_player = database.disc_load_character(player_name)
