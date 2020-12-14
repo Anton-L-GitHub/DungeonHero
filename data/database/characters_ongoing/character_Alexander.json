@@ -31,7 +31,16 @@
                             }
                         ]
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "_name" : "Coin pouch",
+                    "_value" : 6,
+                    "_rarity" : 20,
+                    "image" : "data/images/coin_pouch.png",
+                    "enemies" : [],
+                    "treasures" : [
+                        null,
+                        null
+                    ]
                 },
                 {
                     "name" : "01",
@@ -53,7 +62,20 @@
                         ],
                         "treasures" : []
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "_health" : 1,
+                    "max_hp" : 1,
+                    "_name" : "Giant Spider",
+                    "_initiative" : 7,
+                    "_attack" : 2,
+                    "_agility" : 3,
+                    "image" : "data/images/giant_spider.png",
+                    "_rarity" : 20,
+                    "_start_health" : 1,
+                    "enemies" : [
+                        null
+                    ],
+                    "treasures" : []
                 },
                 {
                     "name" : "02",
@@ -93,7 +115,24 @@
                             }
                         ]
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "_health" : 3,
+                    "max_hp" : 3,
+                    "_name" : "Coins",
+                    "_initiative" : 6,
+                    "_attack" : 4,
+                    "_agility" : 4,
+                    "image" : "data/images/coins.png",
+                    "_rarity" : 40,
+                    "_start_health" : 3,
+                    "_value" : 2,
+                    "enemies" : [
+                        null,
+                        null
+                    ],
+                    "treasures" : [
+                        null
+                    ]
                 },
                 {
                     "name" : "03",
@@ -122,7 +161,23 @@
                             }
                         ]
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "_health" : 1,
+                    "max_hp" : 1,
+                    "_name" : "Coins",
+                    "_initiative" : 7,
+                    "_attack" : 2,
+                    "_agility" : 3,
+                    "image" : "data/images/coins.png",
+                    "_rarity" : 40,
+                    "_start_health" : 1,
+                    "_value" : 2,
+                    "enemies" : [
+                        null
+                    ],
+                    "treasures" : [
+                        null
+                    ]
                 }
             ],
             [
@@ -134,7 +189,9 @@
                         "enemies" : [],
                         "treasures" : []
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "enemies" : [],
+                    "treasures" : []
                 },
                 {
                     "name" : "11",
@@ -178,7 +235,22 @@
                         ],
                         "treasures" : []
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "_health" : 4,
+                    "max_hp" : 4,
+                    "_name" : "Troll",
+                    "_initiative" : 2,
+                    "_attack" : 7,
+                    "_agility" : 2,
+                    "image" : "data/images/troll.png",
+                    "_rarity" : 5,
+                    "_start_health" : 4,
+                    "enemies" : [
+                        null,
+                        null,
+                        null
+                    ],
+                    "treasures" : []
                 },
                 {
                     "name" : "12",
@@ -195,7 +267,15 @@
                             }
                         ]
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "_name" : "Coin pouch",
+                    "_value" : 6,
+                    "_rarity" : 20,
+                    "image" : "data/images/coin_pouch.png",
+                    "enemies" : [],
+                    "treasures" : [
+                        null
+                    ]
                 },
                 {
                     "name" : "13",
@@ -212,7 +292,15 @@
                             }
                         ]
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "_name" : "Gold jewelry",
+                    "_value" : 10,
+                    "_rarity" : 15,
+                    "image" : "data/images/gold_jewelry.png",
+                    "enemies" : [],
+                    "treasures" : [
+                        null
+                    ]
                 }
             ],
             [
@@ -224,7 +312,9 @@
                         "enemies" : [],
                         "treasures" : []
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "enemies" : [],
+                    "treasures" : []
                 },
                 {
                     "name" : "21",
@@ -247,7 +337,16 @@
                             }
                         ]
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "_name" : "Gold jewelry",
+                    "_value" : 10,
+                    "_rarity" : 15,
+                    "image" : "data/images/gold_jewelry.png",
+                    "enemies" : [],
+                    "treasures" : [
+                        null,
+                        null
+                    ]
                 },
                 {
                     "name" : "22",
@@ -276,7 +375,23 @@
                             }
                         ]
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "_health" : 3,
+                    "max_hp" : 3,
+                    "_name" : "Coins",
+                    "_initiative" : 6,
+                    "_attack" : 4,
+                    "_agility" : 4,
+                    "image" : "data/images/coins.png",
+                    "_rarity" : 40,
+                    "_start_health" : 3,
+                    "_value" : 2,
+                    "enemies" : [
+                        null
+                    ],
+                    "treasures" : [
+                        null
+                    ]
                 },
                 {
                     "name" : "23",
@@ -311,7 +426,24 @@
                             }
                         ]
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "_health" : 2,
+                    "max_hp" : 2,
+                    "_name" : "Gold jewelry",
+                    "_initiative" : 4,
+                    "_attack" : 3,
+                    "_agility" : 3,
+                    "image" : "data/images/gold_jewelry.png",
+                    "_rarity" : 15,
+                    "_start_health" : 2,
+                    "_value" : 10,
+                    "enemies" : [
+                        null
+                    ],
+                    "treasures" : [
+                        null,
+                        null
+                    ]
                 }
             ],
             [
@@ -336,7 +468,16 @@
                             }
                         ]
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "_name" : "Gemstone",
+                    "_value" : 14,
+                    "_rarity" : 10,
+                    "image" : "data/images/gemstone.png",
+                    "enemies" : [],
+                    "treasures" : [
+                        null,
+                        null
+                    ]
                 },
                 {
                     "name" : "31",
@@ -359,7 +500,16 @@
                             }
                         ]
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "_name" : "Gold jewelry",
+                    "_value" : 10,
+                    "_rarity" : 15,
+                    "image" : "data/images/gold_jewelry.png",
+                    "enemies" : [],
+                    "treasures" : [
+                        null,
+                        null
+                    ]
                 },
                 {
                     "name" : "32",
@@ -369,7 +519,9 @@
                         "enemies" : [],
                         "treasures" : []
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "enemies" : [],
+                    "treasures" : []
                 },
                 {
                     "name" : "33",
@@ -379,10 +531,29 @@
                         "enemies" : [],
                         "treasures" : []
                     },
-                    "cleared" : false
+                    "cleared" : false,
+                    "enemies" : [],
+                    "treasures" : []
                 }
             ]
-        ]
+        ],
+        "_name" : "Gold jewelry",
+        "_value" : 10,
+        "_rarity" : 15,
+        "image" : "data/images/gold_jewelry.png",
+        "enemies" : [],
+        "treasures" : [],
+        "name" : "33",
+        "state" : "E",
+        "description" : "",
+        "content" : null,
+        "cleared" : false,
+        "_health" : 2,
+        "max_hp" : 2,
+        "_initiative" : 4,
+        "_attack" : 3,
+        "_agility" : 3,
+        "_start_health" : 2
     },
     "player" : {
         "name" : "Alexander",
