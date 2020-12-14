@@ -118,8 +118,8 @@ class App(tk.Frame):
         self.exit_room_button = tk.Button(self.win_container, text="Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.end_won_game(self.build_start_menu))
         self.exit_room_button.grid(column=1, row=2, sticky="nswe")
         #Exit_button
-        self.exit_room_button = tk.Button(self.win_container, text="Exit Game", font=('Arial', 13, 'bold'), command=lambda:self.switch_frame(None, self.root))
-        self.exit_room_button.grid(column=1, row=3, sticky="nswe")
+        #self.exit_room_button = tk.Button(self.win_container, text="Exit Game", font=('Arial', 13, 'bold'), command=lambda:self.switch_frame(None, self.root))
+        #self.exit_room_button.grid(column=1, row=3, sticky="nswe")
 
     def save_game_progress(self, return_to, to_destroy):
         database.disc_save_progress(self.root.game.player, self.root.game.game_map)
@@ -457,7 +457,7 @@ class App(tk.Frame):
         self.save_files_frame.grid(row=1, rowspan=3, column=1, columnspan=3, sticky="wnes")
         self.save_files_frame.columnconfigure(0, weight=1)
         self.save_files_frame.columnconfigure(1, weight=0)
-        save_files_label = tk.Label(self.save_files_frame, text="Saved Games", font=("times", 22), fg="white", bg="black")
+        save_files_label = tk.Label(self.save_files_frame, text="Saved Characters", font=("times", 22), fg="white", bg="black")
         save_files_label.grid(row=0, columnspan=2, sticky="we")
         self.checked_file = tk.StringVar(value=0)
 
