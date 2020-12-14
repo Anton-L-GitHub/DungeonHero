@@ -2,7 +2,7 @@ import os
 from game_files.characters import Knight, Thief, Wizard
 from game_files.gamemap import create_map_instance
 
-NEW_OR_LOAD = '\nWelcome to Dungeon Crawler!\n1: New game \n2: Load game \n3: Quit\n> '
+NEW_OR_LOAD = '\nWelcome to Dungeon Crawler!\n1: New game \n2: Load game \n> '
 CHARACTER_CHOISE = '\nChoose character:\n1: Knight\n2: Wizard\n3: Thief\n--- \n> '
 MAP_MENU = '\nMap Difficulty: \n1: Small \n2: Medium \n3: Large \n--- \n> '
 MAP_SPAWN = '\nSpawn on map: \n1: Bottom left \n2: Botton right \n\n3: Top Left \n4: Top right\n--- \n> '
@@ -32,8 +32,6 @@ class prompts():
                 return 'NEW'
             elif user_choise == '2':
                 return 'LOAD'
-            elif user_choise == '3':
-                'QUIT'
             user_choise = input(NEW_OR_LOAD)
 
     def new_game():
