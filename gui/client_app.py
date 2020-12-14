@@ -93,7 +93,26 @@ class App(tk.Frame):
         #return
         return_button = tk.Button(win, text="No", bg="GREY", font=("Times", 14, 'bold'), command=lambda:win.destroy())
         return_button.grid(row=1, column=1, sticky="we")
-        
+    
+    def create_game_won_frames(self):
+        self.game_won_image = tk.PhotoImage(file='data/images/game_won.png')
+        self.win_container = tk.Frame(self.app_frame, bg=self.root.color_mapping['victory_grey'], relief=tk.RAISED, borderwidth=5)
+        self.win_container.grid(row=0, rowspan=4, column=0, columnspan=5, sticky="nswe")
+        self.win_container.rowconfigure(0, weight=0)
+        self.win_container.rowconfigure(1, weight=0)
+        self.win_container.columnconfigure(0, weight=1)
+        self.win_container.columnconfigure(1, weight=1)
+        self.win_container.columnconfigure(2, weight=1)
+        #win label
+        self.win_label = tk.Label(self.win_container, image=self.game_won_image, text="GAME WON!", font=("Times", 20, 'bold'), relief=tk.RAISED, borderwidth=2)
+        self.win_label.grid(row=0, column=0, columnspan=3)
+        #Exit_to_menu
+        self.exit_room_button = tk.Button(self.win_container, text="Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.switch_frame(self.build_start_menu, self.app_frame))
+        self.exit_room_button.grid(column=1, row=2, sticky="nswe")
+        #Exit_button
+        self.exit_room_button = tk.Button(self.win_container, text="Exit Game", font=('Arial', 13, 'bold'), command=lambda:self.switch_frame(None, self.root))
+        self.exit_room_button.grid(column=1, row=3, sticky="nswe")
+
     def save_game_progress(self, return_to, to_destroy):
         database.disc_save_progress(self.root.game.player, self.root.game.game_map)
         del self.root.game
@@ -102,10 +121,13 @@ class App(tk.Frame):
         to_destroy.destroy()
 
     def save_game_character(self, return_to, to_destroy):
+        json_path = f'data/database/characters_ongoing/character_{self.root.game.player.name}.json'
+        if os.path.exists(json_path):
+            os.remove(json_path)
         database.disc_save_character(self.root.game.player)
         del self.root.game
         self.root.game = None
-        self.switch_frame(return_to, self.app_frame)
+        self.switch_frame(return_to, to_destroy)
         to_destroy.destroy()
 
     def delete_game_progress(self, return_to, to_destroy):
@@ -140,7 +162,7 @@ class App(tk.Frame):
         exit_label.grid(row=0, column=0, columnspan=2)
         #quit
         quit_button = tk.Button(win, text="Yes",  bg="GREY", font=("Times", 14, 'bold'),
-            command=lambda:self.save_game_character()
+            command=lambda:self.save_game_character(self.create_game_won_frames, win)
         )
         quit_button.grid(row=1, column=0, sticky="we")
         #return
@@ -495,7 +517,7 @@ class App(tk.Frame):
             if room == 'exit':
                 print("HERE")
                 self.finish_dungeon_popup()
-            if room:
+            if isinstance(room, gamemap.Room):
                 self.place_holder = self.game_map
                 self.game_map = GuiGameMap(self.root, self.game_map_frame)
                 self.place_holder.destroy()
