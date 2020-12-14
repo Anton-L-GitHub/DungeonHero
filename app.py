@@ -1,4 +1,3 @@
-from game_files import characters
 from utils.prompts import prompts
 from game_files.game import Game
 

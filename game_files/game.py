@@ -72,6 +72,7 @@ class Game:
         return sum()
 
     def terminal_player_death(self):
+        self.terminal_print_fight_stats()
         print('You died 🤕')
         self.terminal_exit()
 
@@ -102,7 +103,7 @@ class Game:
 
             elif fighter == self.character:
                 choice = prompts.fight_or_flight()
-
+                self.terminal_print_fight_stats()
                 if choice == 'FIGHT':
                     self.player_try_attack(self._monsters)
 
