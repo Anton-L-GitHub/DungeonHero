@@ -5,7 +5,7 @@ class Character:
     """ Character blalbalbal """
 
     def __init__(self):
-        self.name = "Player"
+        self.name = None
         self.initiative = 0
         self.health = 0
         self.attack = 0
