@@ -260,7 +260,13 @@ class App(tk.Frame):
             file = file.replace('character_', '')
             file = file.replace('.json', '')
             existing_names.append(file)
-        if player_name not in existing_names:        
+        if player_name in existing_names:
+            messagebox.showwarning("Error", "Name already taken")
+            print("Name already taken")
+        if player_name == "":
+            messagebox.showwarning("Error", "Name cannot be empty")
+            print("Name cannot be empty")
+        if player_name != "" and player_name not in existing_names:
             self.input_frame.destroy()
             self.new_character_frame.destroy()
             map_sizes = {
@@ -277,9 +283,6 @@ class App(tk.Frame):
             
             self.root.game.player.name = player_name
             self.build_app()
-        else:
-            messagebox.showwarning("Error", "Name already taken" )
-            print("ANOTHER NAME PLEASE")
 
     def build_input_new_game(self):
         self.input_player_image = tk.PhotoImage(file=self.root.game.player.get_image())
