@@ -16,10 +16,10 @@ def disc_get(json_file):
 def disc_save_character(player):
     json_path = f'data/database/characters/character_{player.name}.json'
     player_dict = {}
-    player_dict['player'] = player.__dict__
+    player_dict['player'] = player
     try:
         with open(json_path, 'w+') as f:
-            json.dump(player_dict, f, indent=4)
+            f.write(to_json(player_dict))
     except FileNotFoundError as F:
         print(F)
 
