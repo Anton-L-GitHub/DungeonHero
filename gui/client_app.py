@@ -777,7 +777,7 @@ class GuiRoom(tk.Frame):
             )
         self.combat_status_label.grid(column=1, stick="wesn")
         self.combat_container = tk.Frame(self, bg="GREY")
-        self.combat_container.grid(row=2, column=1, sticky="nwe")
+        self.combat_container.grid(row=2, column=1, columnspan=len(self.all_entity_frames), sticky="nwe")
         self.combat_container.columnconfigure(0, weight=1)
         self.combat_container.rowconfigure(0, weight=1)
         self.combat = GuiCombat(self.root, self.combat_container, self.room_obj.content['enemies'])
