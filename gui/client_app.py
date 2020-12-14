@@ -808,13 +808,13 @@ class GuiRoom(tk.Frame):
         self.lose_container.columnconfigure(2, weight=1)
         #app.delete_game_progress
         #lose label
-        self.lose_label = tk.Label(self.lose_container, image=self.game_over_image, text="GAME OVER!", font=("Times", 20, 'bold'), relief=tk.RAISED, borderwidth=2) # GAME OVER BILD?
+        self.lose_label = tk.Label(self.lose_container, image=self.game_over_image, text="GAME OVER!", font=("Times", 20, 'bold'), relief=tk.RAISED, borderwidth=2)
         self.lose_label.grid(row=0, column=0, columnspan=3)
         #Exit_to_menu
-        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.app.delete_game_progress(self.app.build_start_menu, self.app.app_frame)) # Radera character
+        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.app.delete_game_progress(self.app.build_start_menu, self.app.app_frame))
         self.exit_room_button.grid(column=1, row=2, sticky="nswe")
         #Exit_button
-        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Game", font=('Arial', 13, 'bold'), command=lambda:self.app.delete_game_progress(None, self.root)) # Radera character
+        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Game", font=('Arial', 13, 'bold'), command=lambda:self.app.delete_game_progress(None, self.root))
         self.exit_room_button.grid(column=1, row=3, sticky="nswe")
 
     def create_room_won_frames(self):
