@@ -11,6 +11,8 @@ class Combat:
 
     def flee(self, entity):
         chance_to_flee = entity.get_agility() * 10
+        if entity.special_ability == 'Glow!':
+            chance_to_flee = 80
         return chance_to_flee
 
     def attack(self, attacker, defender):
