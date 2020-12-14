@@ -1,15 +1,15 @@
-from os import truncate
+from game_files.characters import Character
+from os import stat
+from data.database.database import disc_load_character, disc_load_progress, disc_save_character, disc_save_progress
 from game_files.gamemap import Room
 from utils.prompts import prompts
 from utils.utils import dice_toss, sort_keys
 from random import randint
-from time import sleep
 
 """ Concerned with blabla """
 
 
 class Game:
-
     """ Concerned with blabla """
 
     def __init__(self, Character, GameMap):
@@ -19,24 +19,29 @@ class Game:
         self._monsters = []
 
     @classmethod
-    def terminal_game(cls):
-        hero = prompts.new_or_load_game()
-        if hero == 'LOAD':
-            pass 
-        elif hero == 'NEW':
-            character, game_map = prompts.new_game()
-            new_game = cls(character, game_map)
-            new_game.terminal_map_print()
-            position = prompts.map_spawn_prompt()
-            new_game.game_map.set_start_position(position)
-            return new_game
+    def new_character(cls):
+        character, game_map = prompts.new_game()
+        new_game = cls(character, game_map)
+        new_game.terminal_map_print()
+        position = prompts.map_spawn_prompt()
+        new_game.game_map.set_start_position(position)
+        return new_game
+
+    @classmethod
+    def load_game(cls):
+        user_choice = prompts.load_game()
+        if user_choice == 'CHARACTER':
+            return cls.disc_load_game_character()
+        elif user_choice == 'GAME':
+            return cls.disc_load_game_progress()
+
 
     def terminal_map_print(self):
         return self.game_map.print_map_grid()
 
     def terminal_walk(self):
         self.terminal_map_print()
-        next_room = self.player_move_next_room(prompts.map_move_direction())        
+        next_room = self.player_move_next_room(prompts.map_move_direction())
         if not next_room:
             return False
         elif next_room == 'exit':
@@ -69,9 +74,6 @@ class Game:
         print('You died 🤕')
         self.terminal_exit()
 
-
-#################################################### 
-
     def terminal_start_main(self):
         prompts.clear_screen()
         print('The game has started')
@@ -89,10 +91,13 @@ class Game:
                     self.player_gather_treasures()
 
     def terminal_combat(self, fighters):
-        for fighter in fighters:        
-            
-            if self.character.is_dead():
-                self.terminal_player_death()  
+        for fighter in fighters:
+
+            if self.player_is_dead():
+                self.terminal_player_death()
+
+            elif not self.monster_in_room():
+                break
 
             elif fighter == self.character:
                 choice = prompts.fight_or_flight()
@@ -104,14 +109,9 @@ class Game:
                     if self.player_try_run_away():
                         print('\nYou ran away!')
                         return 'ESCAPED'
-    
-                self.terminal_print_fight_stats()            
+                self.terminal_print_fight_stats()
             else:
                 self.monster_try_attack(fighter)
-
-
-####################################################  
-
 
     def player_get_backpack_sum(self):
         return sum([item.get_value() for item in self.character.get_backpack()])
@@ -130,7 +130,7 @@ class Game:
         if chance <= randint(1, 101):
             self.game_map.make_step_back()
             return True
-    
+
     def player_gather_treasures(self):
         for treasure in self.room_get_treasures():
             self.character.add_to_backpack(treasure)
@@ -138,6 +138,10 @@ class Game:
     def player_try_attack(self, monsters):
         for monster in monsters:
             self._player_attack(monster)
+
+    def player_is_dead(self):
+        if self.character.get_health() <= 0:
+            return True
 
 #########################################################################
 
@@ -157,16 +161,14 @@ class Game:
 
 #########################################################################
 
-
     def room_get_monsters(self):
         try:
             return self._room.content.get('enemies', [])
         except Exception:
             return False
-    
+
     def room_get_treasures(self):
         return self._room.content.get('treasures', [])
-
 
     def fight_get_turn_order(self) -> list:
         result = {}
@@ -179,6 +181,23 @@ class Game:
 
 #########################################################################
 
+
+    def disc_save_character(self):
+        disc_save_character(self.character)
+
+    def disc_save_progress(self):
+        return disc_save_progress(self.character, self.game_map)
+
+    @staticmethod
+    def disc_load_game_character():
+        character_name = input('Name hero: ')
+        return disc_load_character(character_name)
+
+    @staticmethod
+    def disc_load_game_progress():
+        character_name = input('Name hero: ')
+        return disc_load_progress(character_name)
+    
 
     def _player_attack(self, monster):
         player_dice_sum = dice_toss(self.character.get_attack())
@@ -210,7 +229,7 @@ class Game:
 
     def _set_room(self, room):
         self._room = room
-          
+
     def _set_monsters(self):
         if isinstance(self._room, Room):
             self._monsters = self._room.content.get('enemies', [])

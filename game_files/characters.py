@@ -55,7 +55,7 @@ class Character:
         return self.backpack.append(item)
 
     def is_dead(self):
-        if self.get_health() <= 0:
+        if self.get_health() == 0:
             return True
         else:
             return False

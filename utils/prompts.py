@@ -2,17 +2,31 @@ import os
 from game_files.characters import Knight, Thief, Wizard
 from game_files.gamemap import create_map_instance
 
-NEW_OR_LOAD = 'Welcome to Dungeon Crawler!\n1:New game \n2: Load game \n3: Quit'
+NEW_OR_LOAD = '\nWelcome to Dungeon Crawler!\n1: New game \n2: Load game \n3: Quit\n> '
 CHARACTER_CHOISE = '\nChoose character:\n1: Knight\n2: Wizard\n3: Thief\n--- \n> '
 MAP_MENU = '\nMap Difficulty: \n1: Small \n2: Medium \n3: Large \n--- \n> '
 MAP_SPAWN = '\nSpawn on map: \n1: Bottom left \n2: Botton right \n\n3: Top Left \n4: Top right\n--- \n> '
 USER_MOVE = '\n\tUp(W)\n Left(A)\tRight(D) \n\tDown(S)\n\r> '
 FIGHT_OR_FLIGHT = "\nWhat do you want to do:\n1: FIGHT!\n2: TRY TO RUN AWAY\n> "
+LOAD_GAME = ('1. Load character \n2. Load game\n> ')
+
+
 
 class prompts():
 
+    def load_game():
+        prompts.clear_screen()
+        user_choise = input(LOAD_GAME)
+        while user_choise != '!QUIT':
+            if user_choise == '1':
+                return 'CHARACTER'
+            elif user_choise == '2':
+                return 'GAME'
+            user_choise = input(LOAD_GAME)
+
     def new_or_load_game():
-        user_choise = input(CHARACTER_CHOISE)
+        prompts.clear_screen()
+        user_choise = input(NEW_OR_LOAD)
         while user_choise != '!QUIT':
             if user_choise == '1':
                 return 'NEW'
@@ -20,12 +34,13 @@ class prompts():
                 return 'LOAD'
             elif user_choise == '3':
                 'QUIT'
-            user_choise = input(CHARACTER_CHOISE)
+            user_choise = input(NEW_OR_LOAD)
 
     def new_game():
         prompts.clear_screen()
         new_hero = prompts.choose_hero()
-        new_hero.set_name(input(f'{new_hero.__class__.__name__} name: '))
+        new_hero.set_name(input(f'Choose name for {new_hero.__class__.__name__}: '))
+        prompts.clear_screen()
         new_map = prompts.create_new_map()
         return new_hero, new_map
 
@@ -52,6 +67,7 @@ class prompts():
             user_input = input(MAP_MENU)
     
     def map_spawn_prompt():
+        prompts.clear_screen()
         user_input = input(MAP_SPAWN)
         while user_input != '!QUIT':
             if user_input == '1':
@@ -87,6 +103,7 @@ class prompts():
             elif user_input == '2':
                 return ('RUN')
             user_input = input(FIGHT_OR_FLIGHT)
-    
+        prompts.clear_screen()
+
     def clear_screen():
         os.system('cls' if os.name=='nt' else 'clear') 
