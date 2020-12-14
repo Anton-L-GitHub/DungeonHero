@@ -102,8 +102,8 @@ class Game:
                 break
 
             elif fighter == self.character:
-                choice = prompts.fight_or_flight()
                 self.terminal_print_fight_stats()
+                choice = prompts.fight_or_flight()
                 if choice == 'FIGHT':
                     self.player_try_attack(self._monsters)
 
