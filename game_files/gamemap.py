@@ -121,7 +121,6 @@ class GameMap:
                 self.player_x = x
                 self.player_y = y
                 self.map_grid[y][x].set_state('X')
-
                 return self.get_room_at_grid()
         else:
             print("Not a position, you donkey!")
@@ -137,6 +136,7 @@ class Room:
         self.state = '-'
         self.description = ''
         self.content = {'enemies': [], 'treasures': []}
+        self.cleared = False
 
     # Retuns state of grid
     def get_room_state(self):
@@ -160,7 +160,11 @@ class Room:
 
     def set_room_cleared(self):
         self.set_state('O')
-        self.content = {}
+        self.cleared = True
+        self.content = {
+            'enemies':[],
+            'treasures':[]
+            }
     
     def parse_data(self, room_dict):
         self.__dict__.update(room_dict)
