@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from game_files import gamemap
 from game_files import characters
 from game_files import enemies
@@ -413,7 +414,6 @@ class App(tk.Frame):
             }
             self.root.game.player = hero_chart[hero_name]
             self.build_input_new_game()
-            # self.build_app()
 
 
         #SELECT HERO LABEL
@@ -1086,8 +1086,3 @@ class GuiCombat(tk.Frame):
             command=lambda:self.player_turn_action('Flee')
         )
         self.combat_flee_button.grid(row=2, column=0, sticky="nwe")
-
-    
-
-
-        
