@@ -96,6 +96,12 @@ class App(tk.Frame):
         return_button = tk.Button(win, text="No", bg="GREY", font=("Times", 14, 'bold'), command=lambda:win.destroy())
         return_button.grid(row=1, column=1, sticky="we")
     
+    def end_won_game(self, to_show):
+        self.app_frame.destroy()
+        del self.root.game
+        self.root.game = None
+        to_show()
+
     def create_game_won_frames(self):
         self.game_won_image = tk.PhotoImage(file='data/images/game_won.png')
         self.win_container = tk.Frame(self.app_frame, bg=self.root.color_mapping['victory_grey'], relief=tk.RAISED, borderwidth=5)
@@ -109,7 +115,7 @@ class App(tk.Frame):
         self.win_label = tk.Label(self.win_container, image=self.game_won_image, text="GAME WON!", font=("Times", 20, 'bold'), relief=tk.RAISED, borderwidth=2)
         self.win_label.grid(row=0, column=0, columnspan=3)
         #Exit_to_menu
-        self.exit_room_button = tk.Button(self.win_container, text="Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.switch_frame(self.build_start_menu, self.app_frame))
+        self.exit_room_button = tk.Button(self.win_container, text="Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.end_won_game(self.build_start_menu))
         self.exit_room_button.grid(column=1, row=2, sticky="nswe")
         #Exit_button
         self.exit_room_button = tk.Button(self.win_container, text="Exit Game", font=('Arial', 13, 'bold'), command=lambda:self.switch_frame(None, self.root))
@@ -135,14 +141,18 @@ class App(tk.Frame):
     def delete_game_progress(self, return_to, to_destroy):
         json_path = f'data/database/characters_ongoing/character_{self.root.game.player.name}.json'
         json_path_character = f'data/database/characters/character_{self.root.game.player.name}.json'
-        if os.path.exists(json_path) or os.path.exists(json_path_character):
+        if os.path.exists(json_path):
             os.remove(json_path)
+        if os.path.exists(json_path_character):
             os.remove(json_path_character)
         del self.root.game
         self.root.game = None
         if return_to:
             self.switch_frame(return_to, self.app_frame)
-        to_destroy.destroy()
+        try:
+            to_destroy.destroy()
+        except:
+            to_destroy()
 
     def finish_dungeon_popup(self):
         self.finish_dungeon_popup_image = tk.PhotoImage(file='data/images/exit_dungeon.png')
@@ -332,10 +342,15 @@ class App(tk.Frame):
             print("Map cannot be empty")
         if player_name != "" and player_name not in existing_names and map_size != '0':
             self.input_frame.destroy()
+            
+            try:
+                self.load_character_frame.destroy()
+            except:
+                pass
             try:
                 self.new_character_frame.destroy()
             except:
-                self.load_character_frame.destroy()
+                pass
             finally:
                 map_sizes = {
                     'small': (4, 4),
@@ -594,7 +609,6 @@ class App(tk.Frame):
             self.place_holder.destroy()
         else:
             room = self.root.game.game_map.make_move(direction)
-            print(room)
             if room == 'exit':
                 self.finish_dungeon_popup()
             if isinstance(room, gamemap.Room):
@@ -955,7 +969,7 @@ class GuiRoom(tk.Frame):
         self.exit_room_button = tk.Button(self.lose_container, text="Exit: Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.app.delete_game_progress(self.app.build_start_menu, self.app.app_frame))
         self.exit_room_button.grid(column=1, row=2, sticky="nswe")
         #Exit_button
-        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Game", font=('Arial', 13, 'bold'), command=lambda:self.app.delete_game_progress(None, self.root))
+        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Game", font=('Arial', 13, 'bold'), command=lambda:self.app.delete_game_progress(None, sys.exit))
         self.exit_room_button.grid(column=1, row=3, sticky="nswe")
 
     def create_room_won_frames(self):
