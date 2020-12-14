@@ -1,6 +1,7 @@
+from game_files.gamemap import Room
 from utils.prompts import prompts
 from utils.utils import dice_toss, sort_keys
-
+from random import randint
 
 """ Concerned with blabla """
 
@@ -12,12 +13,13 @@ class Game:
     def __init__(self, Character, GameMap):
         self.character = Character
         self.game_map = GameMap
-        self._monsters = None
-        self._room = None
+        self._room = Room('ERROR_ROOM')
+        self._monsters = self._room.content.get('enemies')
+        
 
     # Terminal methods
     @classmethod
-    def terminal_new_game(cls):
+    def terminal_create_hero(cls):
         character, game_map = prompts.new_game()
         new_game = cls(character, game_map)
         new_game.terminal_map_print()
@@ -26,7 +28,18 @@ class Game:
         return new_game
 
     def terminal_make_move(self):
-        return self.player_move_next_room(prompts.map_move_direction())
+        next_room = self.player_move_next_room(prompts.map_move_direction())
+        if next_room == 'exit':
+            self.terminal_exit()
+        else:
+            self._set_room(next_room)
+            self._set_monsters()
+            return next_room
+            
+
+    def terminal_exit(self):
+        # disc_save_character(self.character)
+        exit()
 
     def terminal_map_print(self):
         return f'{self.game_map.print_map_grid()}'
@@ -47,9 +60,50 @@ class Game:
 
     def terminal_print_fight_stats(self):
         prompts.clear_screen()
-        print(f'Your health: {self.character.get_health()}/{self.character.get_start_health()} HP\n'
+        print(f'You are in trouble! \nYour health: {self.character.get_health()}/{self.character.get_start_health()} HP\n'
             f'Backpack items: {self.player_get_backpack_items()}\nBackpack value: {self.player_get_backpack_sum()}\n\nMonsters:')
         self.terminal_print_monster_health()
+
+    def terminal_player_death(self):
+        prompts.clear_screen()
+        print('You died 🤕')
+        self.terminal_exit()
+
+    def terminal_start_game(self):
+        print('The game has begun!')
+        while True:
+            self.terminal_map_print()
+            next_room = self.terminal_make_move()
+            if not next_room:
+                continue
+            else:
+                turn_order = self.fight_get_turn_order()
+                while len(self._monsters) > 0:
+                    if self.terminal_combat(turn_order) == 'ESCAPED':
+                        break 
+                    self.player_gather_treasures()
+
+        
+    def terminal_combat(self, turn_order):
+            for fighter in turn_order:
+
+                if self.player_check_is_dead():
+                    self.terminal_player_death()
+
+                elif fighter == self.character:
+                    choice = self.terminal_fight_or_flight()
+                    
+                    if choice == 'FIGHT':
+                        self.player_try_attack(self._monsters)
+
+                    elif choice == 'RUN':
+                        if self.player_try_run_away():
+                            print('\nYou ran away!')
+                            return 'ESCAPED'
+
+                    self.terminal_print_fight_stats()
+                else:
+                    self.monster_try_attack(fighter)
 
 
     # Map methods
@@ -58,12 +112,13 @@ class Game:
         return self.game_map.set_start_position(position)
 
     def room_get_monsters(self):
-        monsters = self._room.content['enemies']
-        return monsters
+        try:
+            return self._room.content.get('enemies', [])
+        except Exception:
+            return False
 
     def room_get_treasures(self):
-        treasures = self._room.content['treasures']
-        return treasures
+        return self._room.content.get('treasures', [])
 
     def room_set_empty(self):
         self._room.set_room_cleared()
@@ -97,9 +152,14 @@ class Game:
             self._player_attack(monster)
 
     def player_try_run_away(self):
-        self.map.make_step_back()
+        chance = self.character.get_agility() * 10
+        if chance <= randint(1,101):
+            self.game_map.make_step_back()
+            return True
+        else:
+            return False
 
-    def player_is_dead(self):
+    def player_check_is_dead(self):
         return self.character.is_dead()
 
     # Combat methods
@@ -162,3 +222,4 @@ class Game:
 
 # set_room_cleared = om du vinner
 # make_step_back = om du flyr
+# exit_room = retunerar 'exit'

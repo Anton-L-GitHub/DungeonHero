@@ -14,7 +14,7 @@ class prompts():
     def new_game():
         prompts.clear_screen()
         new_hero = prompts.choose_hero()
-        new_hero.set_name(input(f'{new_hero} name: '))
+        new_hero.set_name(input(f'{new_hero.__class__.__name__} name: '))
         new_map = prompts.create_new_map()
         return new_hero, new_map
 
@@ -73,6 +73,7 @@ class prompts():
                 return ('D')
             user_input = input(USER_MOVE).upper()
             prompts.clear_screen()
+            # Save in game.
     
     def fight_or_flight():
         # prompts.clear_screen()
