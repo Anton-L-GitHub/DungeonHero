@@ -113,7 +113,10 @@ class GameMap:
 
         if self.check_bound(x, y):
             if self.check_if_exit(x, y):
-                self.map_grid[y][x].exit()
+                prev_x = self.player_x
+                prev_y = self.player_y
+                self.map_grid[prev_y][prev_x].set_state('X')
+                return self.map_grid[y][x].exit()
             else:
                 self.map_grid[self.player_prev[0]][self.player_prev[1]].set_room_cleared()
                 self.player_x = x
@@ -226,11 +229,7 @@ class ExitRoom(Room):
         self.state = 'E'
     
     def exit(self):
-        input_string = input('Do you want to exit the cave? ')
-        if input_string.lower() == 'yes':
-            # Save character
-            print("Congratulations you escaped!")
-        print("Do you want to exit? No ok then.")
+        return "exit"
 
 
 # Create map instance
