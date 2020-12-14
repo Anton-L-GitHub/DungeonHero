@@ -116,7 +116,7 @@ class App(tk.Frame):
     def save_game_progress(self, return_to, to_destroy):
         database.disc_save_progress(self.root.game.player, self.root.game.game_map)
         del self.root.game
-        self.root.game = None
+        self.root.game = "TEST"
         self.switch_frame(return_to, self.app_frame)
         to_destroy.destroy()
 
@@ -419,9 +419,23 @@ class App(tk.Frame):
         back_button.grid(row=3, column=0, pady=10)
 
     def handle_load_game(self, player_name):
-        self.root.game.game_map = gamemap.GameMap(x, y)
+        new_gamemap, player = database.disc_load_progress(player_name)
+        x = new_gamemap.player_x
+        y = new_gamemap.player_y
+        new_gamemap.map_grid[y][x].set_state('X')
+        self.root.game = Game()
         self.root.game.player = player
-        self.build_app()
+        self.root.game.game_map = new_gamemap
+        self.app_frame = tk.Frame(self)
+        self.build_game_map_frame(self.app_frame)
+        self.build_player_frame(self.app_frame)
+        self.build_movement_frame(self.player_frame)
+        self.build_save_exit_frame(self.player_frame)
+        self.app_frame.grid(row=0, column=0, columnspan=2, sticky="nswe")
+        self.app_frame.rowconfigure(0, weight=1)
+        self.app_frame.columnconfigure(0, weight=1)
+        self.app_frame.columnconfigure(1, weight=1)
+        self.app_frame.lower()
 
     def build_load_game_menu(self):
         self.banner_image = tk.PhotoImage(file='data/images/banner.png')
@@ -446,7 +460,7 @@ class App(tk.Frame):
         self.banner_label.grid(row=0, columnspan=5)
         #LOAD GAME
         self.load_game_button = tk.Button(self.load_game_frame, image=self.load_game_image, bg="GREY",
-            command=lambda:self.handle_load_game(self.checked_file.get())
+            command=lambda:self.switch_frame(lambda:self.handle_load_game(self.checked_file.get()), self.load_game_frame)
         )
         self.load_game_button.grid(row=1, column=0, pady=10)
         #BACK OPTION
@@ -548,7 +562,8 @@ class App(tk.Frame):
                 self.place_holder = self.game_map
                 self.game_map = GuiGameMap(self.root, self.game_map_frame)
                 self.place_holder.destroy()
-                self.get_room_content(room)
+                if not room.cleared:
+                    self.get_room_content(room)
 
     def get_room_content(self, room):
         if room.get_contents():
