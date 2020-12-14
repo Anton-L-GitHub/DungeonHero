@@ -60,8 +60,11 @@ class Character:
         else:
             return False
 
-    def __repr__(self):
-        return self.__class__.__name__
+    def parse_data(self, player_dict):
+        self.__dict__.update(player_dict)
+
+    # def __repr__(self):
+    #     return self.__class__.__name__
 
 
 class Knight(Character):

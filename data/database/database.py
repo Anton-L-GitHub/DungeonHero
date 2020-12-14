@@ -58,6 +58,16 @@ def disc_load_character(player_name):
 
     return newPlayer
 
+def disc_load_progress(player_name):
+    json_path = f'data/database/characters/character_{player_name}.json'
+
+    with open(json_path, 'r') as f:
+        data_dict = json.load(f)
+    
+    newPlayer = characters.Character()
+    newMap = gamemap.GameMap(0, 0)
+    newMap.create_map()
+    
 
 def disc_save_map(list_of_dicts):
     """ Takes list of instances attributes in form of a py-dict and writes it to a json file """
