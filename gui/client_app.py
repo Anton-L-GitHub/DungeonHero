@@ -101,15 +101,51 @@ class App(tk.Frame):
         self.switch_frame(return_to, self.app_frame)
         to_destroy.destroy()
 
+    def save_game_character(self, return_to, to_destroy):
+        database.disc_save_character(self.root.game.player)
+        del self.root.game
+        self.root.game = None
+        self.switch_frame(return_to, self.app_frame)
+        to_destroy.destroy()
+
     def delete_game_progress(self, return_to, to_destroy):
         json_path = f'data/database/characters_ongoing/character_{self.root.game.player.name}.json'
-        if os.path.exists(json_path):
+        json_path_character = f'data/database/characters/character_{self.root.game.player.name}.json'
+        if os.path.exists(json_path) or os.path.exists(json_path_character):
             os.remove(json_path)
+            os.remove(json_path_character)
         del self.root.game
         self.root.game = None
         if return_to:
             self.switch_frame(return_to, self.app_frame)
         to_destroy.destroy()
+
+    def finish_dungeon_popup(self):
+        self.finish_dungeon_popup_image = tk.PhotoImage(file='data/images/exit_dungeon.png')
+        win = tk.Toplevel(bg="GREY")
+        win.wm_title("EXIT DUNGEON?")
+        win.grid()
+        win.grab_set()
+        win.columnconfigure(0, weight=1)
+        win.columnconfigure(1, weight=1)
+        win.rowconfigure(0, weight=1)
+        win.rowconfigure(1, weight=1)
+        x = self.root.winfo_x()
+        y = self.root.winfo_y()
+        width = self.root.winfo_width()
+        heigth = self.root.winfo_height()
+        win.geometry("+%d+%d" % (x+(width/2)-200, (y+(heigth/2)-75)))
+        #exit
+        exit_label = tk.Label(win, image=self.finish_dungeon_popup_image, bg="GREY", font=(16))
+        exit_label.grid(row=0, column=0, columnspan=2)
+        #quit
+        quit_button = tk.Button(win, text="Yes",  bg="GREY", font=("Times", 14, 'bold'),
+            command=lambda:self.save_game_character()
+        )
+        quit_button.grid(row=1, column=0, sticky="we")
+        #return
+        return_button = tk.Button(win, text="No", bg="GREY", font=("Times", 14, 'bold'), command=lambda:win.destroy())
+        return_button.grid(row=1, column=1, sticky="we")
 
     def exit_dungeon_popup(self):
         self.exit_dungeon_popup_image = tk.PhotoImage(file='data/images/exit_dungeon.png')
@@ -455,6 +491,10 @@ class App(tk.Frame):
             self.place_holder.destroy()
         else:
             room = self.root.game.game_map.make_move(direction)
+            print(room)
+            if room == 'exit':
+                print("HERE")
+                self.finish_dungeon_popup()
             if room:
                 self.place_holder = self.game_map
                 self.game_map = GuiGameMap(self.root, self.game_map_frame)
