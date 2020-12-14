@@ -1093,6 +1093,9 @@ class GuiCombat(tk.Frame):
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
         self.combat_escaped = False
+        self.block = False
+        if self.root.game.player.special_ability == 'Sheild block':
+            self.block = True
        
     def next_turn(self):
         self.enemy_turn_action(self.combat_session.current_turn)
@@ -1105,9 +1108,15 @@ class GuiCombat(tk.Frame):
         attack_value, defend_value = self.combat_session.attack(enemy, player)
         rolls = f"{enemy.get_name()} attacked for {attack_value} and {player.get_name()} defended for {defend_value}"
         if attack_value > defend_value:
-            message = f"{enemy.get_name()} dealt 1 damage to {player.get_name()}."
-            new_health = player.get_health() - 1
+            special = ""
+            damage = 1
+            if self.block:
+                self.block = False
+                damage = 0
+                special = "Shield Block: "
+            new_health = player.get_health() - damage
             player.set_health(new_health)
+            message = f"{special}{enemy.get_name()} dealt {damage} damage to {player.get_name()}."
             if self.combat_session.is_entity_dead(player):
                 self.update_text_field(f'{player.get_name()} died!')
         else:
@@ -1133,8 +1142,14 @@ class GuiCombat(tk.Frame):
                     attack_value, defend_value = self.combat_session.attack(self.combat_session.current_turn, enemy)
                     rolls = f"{self.combat_session.current_turn.get_name()} attacked for {attack_value} and {enemy.get_name()} defended for {defend_value}"
                     if attack_value > defend_value:
-                        message = f"{self.combat_session.current_turn.get_name()} dealt 1 damage to {enemy.get_name()}."
-                        new_health = enemy.get_health() - 1
+                        damage = 1
+                        special = ""
+                        if self.root.game.player.special_ability == 'Critical strike!':
+                            if random.randrange(0, 4) == 1:
+                                damage *= 2
+                                special = "Critical Strike: "
+                        message = f"{special}{self.combat_session.current_turn.get_name()} dealt {damage} damage to {enemy.get_name()}."
+                        new_health = enemy.get_health() - damage
                         enemy.set_health(new_health)
                         if self.combat_session.is_entity_dead(enemy):
                             self.update_text_field(f'{enemy.get_name()} died!')
