@@ -37,6 +37,9 @@ class Treasure:
 
     def get_rarity(self):
         return self._rarity
+    
+    def parse_data(self, treasure_dict):
+        self.__dict__.update(treasure_dict)
 
 
 class Coins(Treasure):

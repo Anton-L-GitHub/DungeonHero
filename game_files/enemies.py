@@ -72,6 +72,9 @@ class Enemy:
     def get_rarity(self):
         return self._rarity
 
+    def parse_data(self, enemy_dict):
+        self.__dict__.update(enemy_dict)
+
 class Giant_spider(Enemy):
     """ blalbalbal """
 
