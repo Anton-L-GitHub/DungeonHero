@@ -118,8 +118,8 @@ class App(tk.Frame):
         self.exit_room_button = tk.Button(self.win_container, text="Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.end_won_game(self.build_start_menu))
         self.exit_room_button.grid(column=1, row=2, sticky="nswe")
         #Exit_button
-        self.exit_room_button = tk.Button(self.win_container, text="Exit Game", font=('Arial', 13, 'bold'), command=lambda:self.switch_frame(None, self.root))
-        self.exit_room_button.grid(column=1, row=3, sticky="nswe")
+        #self.exit_room_button = tk.Button(self.win_container, text="Exit Game", font=('Arial', 13, 'bold'), command=lambda:self.switch_frame(None, self.root))
+        #self.exit_room_button.grid(column=1, row=3, sticky="nswe")
 
     def save_game_progress(self, return_to, to_destroy):
         database.disc_save_progress(self.root.game.player, self.root.game.game_map)

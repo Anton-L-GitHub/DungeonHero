@@ -10,36 +10,14 @@
         "backpack_image" : "data/images/backpack.png",
         "special_ability" : "Critical strike!",
         "backpack" : [
-            {
-                "_name" : "Treasure chest",
-                "_value" : 20,
-                "_rarity" : 5,
-                "image" : "data/images/treasure_chest.png"
-            },
-            {
-                "_name" : "Coins",
-                "_value" : 2,
-                "_rarity" : 40,
-                "image" : "data/images/coins.png"
-            },
-            {
-                "_name" : "Gold jewelry",
-                "_value" : 10,
-                "_rarity" : 15,
-                "image" : "data/images/gold_jewelry.png"
-            },
-            {
-                "_name" : "Coin pouch",
-                "_value" : 6,
-                "_rarity" : 20,
-                "image" : "data/images/coin_pouch.png"
-            },
-            {
-                "_name" : "Gemstone",
-                "_value" : 14,
-                "_rarity" : 10,
-                "image" : "data/images/gemstone.png"
-            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
             {
                 "_name" : "Coins",
                 "_value" : 2,
@@ -47,10 +25,10 @@
                 "image" : "data/images/coins.png"
             },
             {
-                "_name" : "Gold jewelry",
-                "_value" : 10,
-                "_rarity" : 15,
-                "image" : "data/images/gold_jewelry.png"
+                "_name" : "Coins",
+                "_value" : 2,
+                "_rarity" : 40,
+                "image" : "data/images/coins.png"
             },
             {
                 "_name" : "Coins",
@@ -59,6 +37,9 @@
                 "image" : "data/images/coins.png"
             }
         ],
-        "start_health" : 5
+        "start_health" : 5,
+        "_name" : "Coins",
+        "_value" : 2,
+        "_rarity" : 40
     }
 }
