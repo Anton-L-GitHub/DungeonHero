@@ -20,7 +20,6 @@ class prompts():
 
 
     def choose_hero() -> object:
-        # prompts.clear_screen()
         user_choise = input(CHARACTER_CHOISE)
         while user_choise != '!QUIT':
             if user_choise == '1':
@@ -32,7 +31,6 @@ class prompts():
             user_choise = input(CHARACTER_CHOISE)
     
     def create_new_map():
-        # prompts.clear_screen()
         user_input = input(MAP_MENU)
         while user_input != '!QUIT':
             if user_input == '1':
@@ -44,7 +42,6 @@ class prompts():
             user_input = input(MAP_MENU)
     
     def map_spawn_prompt():
-        # prompts.clear_screen()
         user_input = input(MAP_SPAWN)
         while user_input != '!QUIT':
             if user_input == '1':
@@ -57,7 +54,6 @@ class prompts():
                 return ('t-r')
             print('Wrong input.. Try again!')
             user_input = input(MAP_SPAWN)
-            prompts.clear_screen()
 
 
     def map_move_direction():
@@ -72,11 +68,8 @@ class prompts():
             elif user_input == 'D':
                 return ('D')
             user_input = input(USER_MOVE).upper()
-            prompts.clear_screen()
-            # Save in game.
     
     def fight_or_flight():
-        # prompts.clear_screen()
         user_input = input(FIGHT_OR_FLIGHT)
         while user_input != '!QUIT':
             if user_input == '1':

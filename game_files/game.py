@@ -20,6 +20,7 @@ class Game:
     # Terminal methods
 
     def terminal_start_game(self):
+        prompts.clear_screen()
         print('The game has begun!')
         while True:
             next_room = self.terminal_make_move()
@@ -98,13 +99,11 @@ class Game:
         print(f'You have {self.player_get_backpack_sum()} worth of treasures')
 
     def terminal_print_fight_stats(self):
-        prompts.clear_screen()
-        print(f'\nYour health: {self.character.get_health()}/{self.character.get_start_health()} HP\n'
+        print(f'BATTLE\nYour health: {self.character.get_health()}/{self.character.get_start_health()} HP\n'
               f'Backpack items: {self.player_get_backpack_items()}\nBackpack value: {self.player_get_backpack_sum()}\n\nMonsters:')
         self.terminal_print_monster_health()
 
     def terminal_player_death(self):
-        prompts.clear_screen()
         print('You died 🤕')
         self.terminal_exit()
 
