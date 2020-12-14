@@ -53,7 +53,9 @@ class Root(tk.Tk):
             'health': '#8bc53f',
             'treasure_green': '#8bc53f'
         }
-
+        height = self.winfo_screenheight()
+        width = self.winfo_screenwidth()
+        self.geometry("+%d+%d" % (0+(width/2)-640, (0+height/2)-360))
 
 class App(tk.Frame):
     def __init__(self, root):
