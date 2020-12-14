@@ -102,7 +102,6 @@ class GameMap:
         self.player_x = self.player_prev[1]
         self.player_y = self.player_prev[0]
 
-
     # Move the player
     def make_move(self, direction):
 
@@ -129,6 +128,8 @@ class GameMap:
 
             return False
 
+    def parse_data(self, map_dict):
+        self.__dict__.update(map_dict)
 
 class Room:
     def __init__(self, name):
@@ -160,6 +161,9 @@ class Room:
     def set_room_cleared(self):
         self.set_state('O')
         self.content = {}
+    
+    def parse_data(self, room_dict):
+        self.__dict__.update(room_dict)
 
 class EncounterRoom(Room):
     def __init__(self, name):
@@ -244,32 +248,3 @@ def create_map_instance(index):
     playMap.create_map()
 
     return playMap
-
-
-# test methods
-'''
-playMap = GameMap(8, 8)
-playMap.create_map()
-playMap.set_start_position('t-r')
-playMap.print_map_grid()
-room00 = playMap.get_room_at_grid(0, 0)
-print(room00.get_room_name())
-print(room00.get_room_state())
-'''
-
-'''
-playRoom = Room("hej")
-playRoom.treasures_name()
-playRoom.enemies_name()
-'''
-# playMap = GameMap(8, 8)
-# playMap.create_map()
-# playMap.set_start_position('t-l')
-# input_dir = ''
-# while input_dir != 'A':
-#     input_dir = input("choose direction")
-#     print(playMap.make_move(input_dir))
-#     playMap.print_map_grid()
-#     print(playMap.get_room_at_grid().get_contents())
-
-
