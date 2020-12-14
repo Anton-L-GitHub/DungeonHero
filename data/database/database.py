@@ -50,10 +50,10 @@ def disc_save_map(list_of_dicts):
     with open(json_file, 'w') as file:
         json.dump(list_of_dicts, file)
 
-newPlayer = characters.Knight()
-newPlayer.name = 'Pelle'
-tempMap = gamemap.create_map_instance('medium')
-tempMap.set_start_position('t-l')
+# newPlayer = characters.Knight()
+# newPlayer.name = 'Pelle'
+# tempMap = gamemap.create_map_instance('medium')
+# tempMap.set_start_position('t-l')
 
 # disc_save_character(newPlayer)
-disc_save_progress(newPlayer, tempMap)
+# disc_save_progress(newPlayer, tempMap)
