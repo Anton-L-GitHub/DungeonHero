@@ -118,7 +118,7 @@ class App(tk.Frame):
     def save_game_progress(self, return_to, to_destroy):
         database.disc_save_progress(self.root.game.player, self.root.game.game_map)
         del self.root.game
-        self.root.game = "TEST"
+        self.root.game = None
         self.switch_frame(return_to, self.app_frame)
         to_destroy.destroy()
 
