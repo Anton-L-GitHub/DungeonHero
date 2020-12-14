@@ -418,6 +418,11 @@ class App(tk.Frame):
         )
         back_button.grid(row=3, column=0, pady=10)
 
+    def handle_load_game(self, player_name):
+        self.root.game.game_map = gamemap.GameMap(x, y)
+        self.root.game.player = player
+        self.build_app()
+
     def build_load_game_menu(self):
         self.banner_image = tk.PhotoImage(file='data/images/banner.png')
         self.load_game_image = tk.PhotoImage(file='data/images/load_game.png')
@@ -434,17 +439,40 @@ class App(tk.Frame):
         self.load_game_frame.columnconfigure(0, weight=1)
         self.load_game_frame.columnconfigure(1, weight=1)
         self.load_game_frame.columnconfigure(2, weight=1)
+        self.load_game_frame.columnconfigure(3, weight=1)
+        self.load_game_frame.columnconfigure(4, weight=1)
         #BANNER
         self.banner_label = tk.Label(self.load_game_frame, image=self.banner_image, bg="GREY")
-        self.banner_label.grid(row=0, columnspan=3)
+        self.banner_label.grid(row=0, columnspan=5)
         #LOAD GAME
-        self.load_game_button = tk.Button(self.load_game_frame, image=self.load_game_image, bg="GREY",)
+        self.load_game_button = tk.Button(self.load_game_frame, image=self.load_game_image, bg="GREY",
+            command=lambda:self.handle_load_game(self.checked_file.get())
+        )
         self.load_game_button.grid(row=1, column=0, pady=10)
         #BACK OPTION
         back_button = tk.Button(self.load_game_frame, image=self.back_button_image, bg="GREY",
             command=lambda:self.switch_frame(self.build_start_menu, self.load_game_frame)
         )
         back_button.grid(row=3, column=0, pady=10)
+        #FILE FRAME
+        self.save_files_frame = tk.Frame(self.load_game_frame, bg="BLACK")
+        self.save_files_frame.grid(row=1, rowspan=3, column=1, columnspan=3, sticky="wnes")
+        self.save_files_frame.columnconfigure(0, weight=1)
+        self.save_files_frame.columnconfigure(1, weight=0)
+        save_files_label = tk.Label(self.save_files_frame, text="Saved Games", font=("times", 22), fg="white", bg="black")
+        save_files_label.grid(row=0, columnspan=2, sticky="we")
+        self.checked_file = tk.StringVar(value=0)
+
+        for row, filename in enumerate(os.listdir('data/database/characters_ongoing/')):
+            char_name = filename.replace('character_', '')
+            char_name = char_name.replace('.json', '')
+            temp_frame = tk.Frame(self.save_files_frame, relief=tk.RAISED, borderwidth=2)
+            temp_frame.grid(row=row+1, columnspan=2, sticky="we")
+            temp_frame.columnconfigure(0, minsize=210)
+            file_checkbutton = tk.Checkbutton(temp_frame, variable=self.checked_file, onvalue=char_name, offvalue=None)
+            file_checkbutton.grid(row=row, column=0, sticky="e")
+            file_label = tk.Label(temp_frame, text=char_name, font=(18))
+            file_label.grid(row=row, column=1, sticky="we")
 
     def build_new_character_menu(self):
         self.root.game = Game()
