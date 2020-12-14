@@ -19,6 +19,42 @@ class Game:
 
     # Terminal methods
 
+    def terminal_start_game(self):
+        print('The game has begun!')
+        while True:
+            next_room = self.terminal_make_move()
+            if next_room:
+                turn_order = self.fight_get_turn_order()
+                while len(self._monsters) > 0:
+                    if self.terminal_combat(turn_order) == 'ESCAPED':
+                        break
+                    else:
+                        self.player_gather_treasures()
+
+    def terminal_combat(self, turn_order):
+        for fighter in turn_order:
+            if self.player_check_is_dead():
+                self.terminal_player_death()
+
+            elif self.monsters_is_killed():
+                self.player_gather_treasures()
+                break
+            
+            elif fighter == self.character:
+                choice = self.terminal_fight_or_flight()
+                
+                if choice == 'FIGHT':
+                    print('You attack!')
+                    self.player_try_attack(self._monsters)
+
+                elif choice == 'RUN':
+                    if self.player_try_run_away():
+                        print('\nYou ran away!')
+                        return 'ESCAPED'
+                self.terminal_print_fight_stats()
+            else:
+                self.monster_try_attack(fighter)
+    
     @classmethod
     def terminal_create_hero(cls):
         character, game_map = prompts.new_game()
@@ -29,6 +65,7 @@ class Game:
         return new_game
 
     def terminal_make_move(self):
+        self.terminal_map_print()
         next_room = self.player_move_next_room(prompts.map_move_direction())
         if next_room == 'exit':
             self.terminal_exit()
@@ -71,43 +108,6 @@ class Game:
         print('You died 🤕')
         self.terminal_exit()
 
-    def terminal_start_game(self):
-        print('The game has begun!')
-        while True:
-            self.terminal_map_print()
-            next_room = self.terminal_make_move()
-            if next_room:
-                turn_order = self.fight_get_turn_order()
-                while len(self._monsters) > 0:
-                    if self.terminal_combat(turn_order) == 'ESCAPED':
-                        break
-                    else:
-                        self.player_gather_treasures()
-
-    def terminal_combat(self, turn_order):
-        for fighter in turn_order:
-
-            if self.player_check_is_dead():
-                self.terminal_player_death()
-
-            elif len(self._monsters) <= 0:
-                break
-
-            elif fighter == self.character:
-                choice = self.terminal_fight_or_flight()
-
-                if choice == 'FIGHT':
-                    prompts.clear_screen()
-                    self.player_try_attack(self._monsters)
-
-                elif choice == 'RUN':
-                    if self.player_try_run_away():
-                        print('\nYou ran away!')
-                        return 'ESCAPED'
-
-                self.terminal_print_fight_stats()
-            else:
-                self.monster_try_attack(fighter)
 
     # Map methods
 
