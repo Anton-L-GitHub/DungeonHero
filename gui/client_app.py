@@ -4,6 +4,7 @@ from game_files import characters
 from game_files import enemies
 from game_files import treasures
 from game_files import demo_combat
+from tkinter import messagebox
 from data.database import database
 import random
 import time
@@ -13,7 +14,6 @@ import sys
 
 path = os.path.abspath(os.getcwd())
 path += '/data/music/the_cave.wav'
-
 winsound.PlaySound(path, winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC)
 
 
@@ -30,6 +30,7 @@ class Game:
         content = room.get_contents()
         for treasure in content['treasures']:
             self.player.backpack.append(treasure)
+
 
 class Root(tk.Tk):
     def __init__(self, root, game):
@@ -259,7 +260,16 @@ class App(tk.Frame):
             file = file.replace('character_', '')
             file = file.replace('.json', '')
             existing_names.append(file)
-        if player_name not in existing_names:        
+        if player_name in existing_names:
+            messagebox.showwarning("Error", "Name already taken")
+            print("Name already taken")
+        if player_name == "":
+            messagebox.showwarning("Error", "Name cannot be empty")
+            print("Name cannot be empty")
+        if map_size == '0':
+            messagebox.showwarning("Error", "No map size selected")
+            print("Map cannot be empty")
+        if player_name != "" and player_name not in existing_names and map_size != '0':
             self.input_frame.destroy()
             self.new_character_frame.destroy()
             map_sizes = {
@@ -267,17 +277,10 @@ class App(tk.Frame):
                 'medium': (6, 6),
                 'large': (8, 8)
             }
-            try:
-                x, y = map_sizes[map_size]
-            except Exception:
-                x = 4
-                y = 4
+            x, y = map_sizes[map_size]
             self.root.game.game_map = gamemap.GameMap(x, y)
-            
             self.root.game.player.name = player_name
             self.build_app()
-        else:
-            print("ANOTHER NAME PLEASE")
 
     def build_input_new_game(self):
         self.input_player_image = tk.PhotoImage(file=self.root.game.player.get_image())
@@ -296,14 +299,14 @@ class App(tk.Frame):
         self.input_frame.rowconfigure(1, weight=0)
         self.input_frame.rowconfigure(2, weight=0)
         self.input_frame.rowconfigure(3, weight=0)
-        # self.input_frame.grab_set()
+        self.input_frame.grab_set()
         self.input_frame.minsize(700, 600)
         self.input_frame.maxsize(700, 600)
         x = self.root.winfo_x()
         y = self.root.winfo_y()
         width = self.root.winfo_width()
         heigth = self.root.winfo_height()
-        self.input_frame.geometry("+%d+%d" % (x+(width/2)-200, (y+(heigth/2)-75)))
+        self.input_frame.geometry("+%d+%d" % (x+(width/2)-350, (y+(heigth/2)-285)))
 
         hero_label = tk.Label(self.input_frame, image=self.input_player_image)
         hero_label.grid(column=2, row=0, pady=15)
@@ -326,7 +329,6 @@ class App(tk.Frame):
             command=lambda:self.handle_new_game_input(hero_name.get(), map_size.get())
         )
         hero_submit.grid(column=3, row=1)
-
 
     def build_load_character_menu(self):
         self.banner_image = tk.PhotoImage(file='data/images/banner.png')
@@ -773,7 +775,7 @@ class GuiRoom(tk.Frame):
             )
         self.combat_status_label.grid(column=1, stick="wesn")
         self.combat_container = tk.Frame(self, bg="GREY")
-        self.combat_container.grid(row=2, column=1, sticky="nwe")
+        self.combat_container.grid(row=2, column=1, columnspan=len(self.all_entity_frames), sticky="nwe")
         self.combat_container.columnconfigure(0, weight=1)
         self.combat_container.rowconfigure(0, weight=1)
         self.combat = GuiCombat(self.root, self.combat_container, self.room_obj.content['enemies'])
@@ -953,7 +955,6 @@ class GuiCombat(tk.Frame):
         self.enemy_turn_action(self.combat_session.current_turn)
         entity, value = self.combat_session.get_next_object_in_turn_order()
         self.combat_session.current_turn = entity
-        
 
     def enemy_turn_action(self, enemy):
         player = self.root.game.player
