@@ -1,5 +1,4 @@
-from game_files.characters import Character
-from os import stat
+from game_files import gamemap
 from data.database.database import disc_load_character, disc_load_progress, disc_save_character, disc_save_progress
 from game_files.gamemap import Room
 from utils.prompts import prompts
@@ -31,10 +30,12 @@ class Game:
     def load_game(cls):
         user_choice = prompts.load_game()
         if user_choice == 'CHARACTER':
-            return cls.disc_load_game_character()
+            character = cls.disc_load_game_character()
+            game_map = prompts.create_new_map()
+            return  cls(character, game_map)
         elif user_choice == 'GAME':
-            return cls.disc_load_game_progress()
-
+            game_map, character = cls.disc_load_game_progress()
+            return cls(character, game_map)
 
     def terminal_map_print(self):
         return self.game_map.print_map_grid()
