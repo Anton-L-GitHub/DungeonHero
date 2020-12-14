@@ -85,5 +85,5 @@ class prompts():
                 return ('RUN')
             user_input = input(FIGHT_OR_FLIGHT)
     
-    def clear_screen():
-         os.system('clear' if 'posix' else 'cls')
+    def clear():
+        os.system('cls' if os.name=='nt' else 'clear') 

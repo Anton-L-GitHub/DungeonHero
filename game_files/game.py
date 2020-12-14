@@ -80,8 +80,10 @@ class Game:
                 turn_order = self.fight_get_turn_order()
                 while len(self._monsters) > 0:
                     if self.terminal_combat(turn_order) == 'ESCAPED':
+                        print('\nYou have escaped the dungeon!')
                         break 
                     self.player_gather_treasures()
+                    print('\nYou killed the monsters')
 
         
     def terminal_combat(self, turn_order):
