@@ -2,11 +2,11 @@
     "map" : {
         "x_max" : 4,
         "y_max" : 4,
-        "player_x" : 3,
-        "player_y" : 0,
+        "player_x" : 2,
+        "player_y" : 1,
         "player_prev" : [
             0,
-            3
+            2
         ],
         "map_grid" : [
             [
@@ -48,7 +48,26 @@
                                 "image" : "data/images/gemstone.png"
                             }
                         ]
-                    }
+                    },
+                    "cleared" : false,
+                    "_health" : 3,
+                    "max_hp" : 3,
+                    "_name" : "Gemstone",
+                    "_initiative" : 6,
+                    "_attack" : 4,
+                    "_agility" : 4,
+                    "image" : "data/images/gemstone.png",
+                    "_rarity" : 10,
+                    "_start_health" : 3,
+                    "_value" : 14,
+                    "enemies" : [
+                        null
+                    ],
+                    "treasures" : [
+                        null,
+                        null,
+                        null
+                    ]
                 },
                 {
                     "name" : "01",
@@ -64,44 +83,54 @@
                                 "image" : "data/images/gold_jewelry.png"
                             }
                         ]
-                    }
+                    },
+                    "cleared" : false,
+                    "_name" : "Gold jewelry",
+                    "_value" : 10,
+                    "_rarity" : 15,
+                    "image" : "data/images/gold_jewelry.png",
+                    "enemies" : [],
+                    "treasures" : [
+                        null
+                    ]
                 },
                 {
                     "name" : "02",
-                    "state" : "-",
+                    "state" : "O",
                     "description" : "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
                     "content" : {
-                        "enemies" : [
-                            {
-                                "_health" : 2,
-                                "max_hp" : 2,
-                                "_name" : "Skeleton",
-                                "_initiative" : 4,
-                                "_attack" : 3,
-                                "_agility" : 3,
-                                "image" : "data/images/skeleton.png",
-                                "_rarity" : 15,
-                                "_start_health" : 2
-                            }
-                        ],
-                        "treasures" : [
-                            {
-                                "_name" : "Coins",
-                                "_value" : 2,
-                                "_rarity" : 40,
-                                "image" : "data/images/coins.png"
-                            }
-                        ]
-                    }
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : true,
+                    "_health" : 2,
+                    "max_hp" : 2,
+                    "_name" : "Coins",
+                    "_initiative" : 4,
+                    "_attack" : 3,
+                    "_agility" : 3,
+                    "image" : "data/images/coins.png",
+                    "_rarity" : 40,
+                    "_start_health" : 2,
+                    "_value" : 2,
+                    "enemies" : [
+                        null
+                    ],
+                    "treasures" : [
+                        null
+                    ]
                 },
                 {
                     "name" : "03",
-                    "state" : "X",
+                    "state" : "O",
                     "description" : "You enter a dark room.\nYou shine your torch towards the center of\n the room but you find it to be empty.\nNo luck this time...",
                     "content" : {
                         "enemies" : [],
                         "treasures" : []
-                    }
+                    },
+                    "cleared" : true,
+                    "enemies" : [],
+                    "treasures" : []
                 }
             ],
             [
@@ -112,7 +141,10 @@
                     "content" : {
                         "enemies" : [],
                         "treasures" : []
-                    }
+                    },
+                    "cleared" : false,
+                    "enemies" : [],
+                    "treasures" : []
                 },
                 {
                     "name" : "11",
@@ -144,35 +176,48 @@
                             }
                         ],
                         "treasures" : []
-                    }
+                    },
+                    "cleared" : false,
+                    "_health" : 2,
+                    "max_hp" : 2,
+                    "_name" : "Skeleton",
+                    "_initiative" : 4,
+                    "_attack" : 3,
+                    "_agility" : 3,
+                    "image" : "data/images/skeleton.png",
+                    "_rarity" : 15,
+                    "_start_health" : 2,
+                    "enemies" : [
+                        null,
+                        null
+                    ],
+                    "treasures" : []
                 },
                 {
                     "name" : "12",
-                    "state" : "-",
+                    "state" : "O",
                     "description" : "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
                     "content" : {
-                        "enemies" : [
-                            {
-                                "_health" : 2,
-                                "max_hp" : 2,
-                                "_name" : "Skeleton",
-                                "_initiative" : 4,
-                                "_attack" : 3,
-                                "_agility" : 3,
-                                "image" : "data/images/skeleton.png",
-                                "_rarity" : 15,
-                                "_start_health" : 2
-                            }
-                        ],
-                        "treasures" : [
-                            {
-                                "_name" : "Gemstone",
-                                "_value" : 14,
-                                "_rarity" : 10,
-                                "image" : "data/images/gemstone.png"
-                            }
-                        ]
-                    }
+                        "enemies" : [],
+                        "treasures" : []
+                    },
+                    "cleared" : true,
+                    "_health" : 2,
+                    "max_hp" : 2,
+                    "_name" : "Gemstone",
+                    "_initiative" : 4,
+                    "_attack" : 3,
+                    "_agility" : 3,
+                    "image" : "data/images/gemstone.png",
+                    "_rarity" : 10,
+                    "_start_health" : 2,
+                    "_value" : 14,
+                    "enemies" : [
+                        null
+                    ],
+                    "treasures" : [
+                        null
+                    ]
                 },
                 {
                     "name" : "13",
@@ -206,7 +251,25 @@
                                 "image" : "data/images/gemstone.png"
                             }
                         ]
-                    }
+                    },
+                    "cleared" : false,
+                    "_health" : 1,
+                    "max_hp" : 1,
+                    "_name" : "Gemstone",
+                    "_initiative" : 7,
+                    "_attack" : 2,
+                    "_agility" : 3,
+                    "image" : "data/images/gemstone.png",
+                    "_rarity" : 10,
+                    "_start_health" : 1,
+                    "_value" : 14,
+                    "enemies" : [
+                        null
+                    ],
+                    "treasures" : [
+                        null,
+                        null
+                    ]
                 }
             ],
             [
@@ -224,7 +287,16 @@
                                 "image" : "data/images/coin_pouch.png"
                             }
                         ]
-                    }
+                    },
+                    "cleared" : false,
+                    "_name" : "Coin pouch",
+                    "_value" : 6,
+                    "_rarity" : 20,
+                    "image" : "data/images/coin_pouch.png",
+                    "enemies" : [],
+                    "treasures" : [
+                        null
+                    ]
                 },
                 {
                     "name" : "21",
@@ -233,7 +305,10 @@
                     "content" : {
                         "enemies" : [],
                         "treasures" : []
-                    }
+                    },
+                    "cleared" : false,
+                    "enemies" : [],
+                    "treasures" : []
                 },
                 {
                     "name" : "22",
@@ -267,7 +342,25 @@
                                 "image" : "data/images/coin_pouch.png"
                             }
                         ]
-                    }
+                    },
+                    "cleared" : false,
+                    "_health" : 2,
+                    "max_hp" : 2,
+                    "_name" : "Coin pouch",
+                    "_initiative" : 4,
+                    "_attack" : 3,
+                    "_agility" : 3,
+                    "image" : "data/images/coin_pouch.png",
+                    "_rarity" : 20,
+                    "_start_health" : 2,
+                    "_value" : 6,
+                    "enemies" : [
+                        null
+                    ],
+                    "treasures" : [
+                        null,
+                        null
+                    ]
                 },
                 {
                     "name" : "23",
@@ -276,7 +369,10 @@
                     "content" : {
                         "enemies" : [],
                         "treasures" : []
-                    }
+                    },
+                    "cleared" : false,
+                    "enemies" : [],
+                    "treasures" : []
                 }
             ],
             [
@@ -287,7 +383,10 @@
                     "content" : {
                         "enemies" : [],
                         "treasures" : []
-                    }
+                    },
+                    "cleared" : false,
+                    "enemies" : [],
+                    "treasures" : []
                 },
                 {
                     "name" : "31",
@@ -303,7 +402,16 @@
                                 "image" : "data/images/coin_pouch.png"
                             }
                         ]
-                    }
+                    },
+                    "cleared" : false,
+                    "_name" : "Coin pouch",
+                    "_value" : 6,
+                    "_rarity" : 20,
+                    "image" : "data/images/coin_pouch.png",
+                    "enemies" : [],
+                    "treasures" : [
+                        null
+                    ]
                 },
                 {
                     "name" : "32",
@@ -331,7 +439,24 @@
                                 "image" : "data/images/gemstone.png"
                             }
                         ]
-                    }
+                    },
+                    "cleared" : false,
+                    "_health" : 1,
+                    "max_hp" : 1,
+                    "_name" : "Gemstone",
+                    "_initiative" : 7,
+                    "_attack" : 2,
+                    "_agility" : 3,
+                    "image" : "data/images/gemstone.png",
+                    "_rarity" : 10,
+                    "_start_health" : 1,
+                    "_value" : 14,
+                    "enemies" : [
+                        null
+                    ],
+                    "treasures" : [
+                        null
+                    ]
                 },
                 {
                     "name" : "33",
@@ -359,10 +484,47 @@
                                 "image" : "data/images/treasure_chest.png"
                             }
                         ]
-                    }
+                    },
+                    "cleared" : false,
+                    "_health" : 3,
+                    "max_hp" : 3,
+                    "_name" : "Treasure chest",
+                    "_initiative" : 6,
+                    "_attack" : 4,
+                    "_agility" : 4,
+                    "image" : "data/images/treasure_chest.png",
+                    "_rarity" : 5,
+                    "_start_health" : 3,
+                    "_value" : 20,
+                    "enemies" : [
+                        null
+                    ],
+                    "treasures" : [
+                        null
+                    ]
                 }
             ]
-        ]
+        ],
+        "_health" : 3,
+        "max_hp" : 3,
+        "_name" : "Treasure chest",
+        "_initiative" : 6,
+        "_attack" : 4,
+        "_agility" : 4,
+        "image" : "data/images/treasure_chest.png",
+        "_rarity" : 5,
+        "_start_health" : 3,
+        "_value" : 20,
+        "enemies" : [
+            null
+        ],
+        "treasures" : [
+            null
+        ],
+        "name" : "33",
+        "state" : "-",
+        "description" : "You tread carefully into a dark room,\nsuddenly you hear a sound behind you.",
+        "content" : null
     },
     "player" : {
         "name" : "Anton",
@@ -374,7 +536,20 @@
         "room_image" : "data/images/knight_on_room.png",
         "backpack_image" : "data/images/backpack.png",
         "special_ability" : "Sheild block",
-        "backpack" : [],
+        "backpack" : [
+            {
+                "_name" : "Coins",
+                "_value" : 2,
+                "_rarity" : 40,
+                "image" : "data/images/coins.png"
+            },
+            {
+                "_name" : "Gemstone",
+                "_value" : 14,
+                "_rarity" : 10,
+                "image" : "data/images/gemstone.png"
+            }
+        ],
         "start_health" : 9
     }
 }

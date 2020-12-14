@@ -1,6 +1,6 @@
 {
     "player" : {
-        "name" : "Philip",
+        "name" : "Leo",
         "initiative" : 7,
         "health" : 5,
         "attack" : 5,
@@ -10,19 +10,11 @@
         "backpack_image" : "data/images/backpack.png",
         "special_ability" : "Critical strike!",
         "backpack" : [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
             {
-                "_name" : "Coins",
-                "_value" : 2,
-                "_rarity" : 40,
-                "image" : "data/images/coins.png"
+                "_name" : "Coin pouch",
+                "_value" : 6,
+                "_rarity" : 20,
+                "image" : "data/images/coin_pouch.png"
             },
             {
                 "_name" : "Coins",
@@ -35,11 +27,32 @@
                 "_value" : 2,
                 "_rarity" : 40,
                 "image" : "data/images/coins.png"
+            },
+            {
+                "_name" : "Gold jewelry",
+                "_value" : 10,
+                "_rarity" : 15,
+                "image" : "data/images/gold_jewelry.png"
+            },
+            {
+                "_name" : "Coins",
+                "_value" : 2,
+                "_rarity" : 40,
+                "image" : "data/images/coins.png"
+            },
+            {
+                "_name" : "Coins",
+                "_value" : 2,
+                "_rarity" : 40,
+                "image" : "data/images/coins.png"
+            },
+            {
+                "_name" : "Gold jewelry",
+                "_value" : 10,
+                "_rarity" : 15,
+                "image" : "data/images/gold_jewelry.png"
             }
         ],
-        "start_health" : 5,
-        "_name" : "Coins",
-        "_value" : 2,
-        "_rarity" : 40
+        "start_health" : 5
     }
 }

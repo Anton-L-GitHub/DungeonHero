@@ -53,7 +53,9 @@ class Root(tk.Tk):
             'health': '#8bc53f',
             'treasure_green': '#8bc53f'
         }
-
+        height = self.winfo_screenheight()
+        width = self.winfo_screenwidth()
+        self.geometry("+%d+%d" % (0+(width/2)-640, (0+height/2)-360))
 
 class App(tk.Frame):
     def __init__(self, root):
@@ -94,6 +96,12 @@ class App(tk.Frame):
         return_button = tk.Button(win, text="No", bg="GREY", font=("Times", 14, 'bold'), command=lambda:win.destroy())
         return_button.grid(row=1, column=1, sticky="we")
     
+    def end_won_game(self, to_show):
+        self.app_frame.destroy()
+        del self.root.game
+        self.root.game = None
+        to_show()
+
     def create_game_won_frames(self):
         self.game_won_image = tk.PhotoImage(file='data/images/game_won.png')
         self.win_container = tk.Frame(self.app_frame, bg=self.root.color_mapping['victory_grey'], relief=tk.RAISED, borderwidth=5)
@@ -107,11 +115,11 @@ class App(tk.Frame):
         self.win_label = tk.Label(self.win_container, image=self.game_won_image, text="GAME WON!", font=("Times", 20, 'bold'), relief=tk.RAISED, borderwidth=2)
         self.win_label.grid(row=0, column=0, columnspan=3)
         #Exit_to_menu
-        self.exit_room_button = tk.Button(self.win_container, text="Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.switch_frame(self.build_start_menu, self.app_frame))
+        self.exit_room_button = tk.Button(self.win_container, text="Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.end_won_game(self.build_start_menu))
         self.exit_room_button.grid(column=1, row=2, sticky="nswe")
         #Exit_button
-        self.exit_room_button = tk.Button(self.win_container, text="Exit Game", font=('Arial', 13, 'bold'), command=lambda:self.switch_frame(None, self.root))
-        self.exit_room_button.grid(column=1, row=3, sticky="nswe")
+        #self.exit_room_button = tk.Button(self.win_container, text="Exit Game", font=('Arial', 13, 'bold'), command=lambda:self.switch_frame(None, self.root))
+        #self.exit_room_button.grid(column=1, row=3, sticky="nswe")
 
     def save_game_progress(self, return_to, to_destroy):
         database.disc_save_progress(self.root.game.player, self.root.game.game_map)
@@ -133,14 +141,18 @@ class App(tk.Frame):
     def delete_game_progress(self, return_to, to_destroy):
         json_path = f'data/database/characters_ongoing/character_{self.root.game.player.name}.json'
         json_path_character = f'data/database/characters/character_{self.root.game.player.name}.json'
-        if os.path.exists(json_path) or os.path.exists(json_path_character):
+        if os.path.exists(json_path):
             os.remove(json_path)
+        if os.path.exists(json_path_character):
             os.remove(json_path_character)
         del self.root.game
         self.root.game = None
         if return_to:
             self.switch_frame(return_to, self.app_frame)
-        to_destroy.destroy()
+        try:
+            to_destroy.destroy()
+        except:
+            to_destroy()
 
     def finish_dungeon_popup(self):
         self.finish_dungeon_popup_image = tk.PhotoImage(file='data/images/exit_dungeon.png')
@@ -330,16 +342,25 @@ class App(tk.Frame):
             print("Map cannot be empty")
         if player_name != "" and player_name not in existing_names and map_size != '0':
             self.input_frame.destroy()
-            self.new_character_frame.destroy()
-            map_sizes = {
-                'small': (4, 4),
-                'medium': (6, 6),
-                'large': (8, 8)
-            }
-            x, y = map_sizes[map_size]
-            self.root.game.game_map = gamemap.GameMap(x, y)
-            self.root.game.player.name = player_name
-            self.build_app()
+            
+            try:
+                self.load_character_frame.destroy()
+            except:
+                pass
+            try:
+                self.new_character_frame.destroy()
+            except:
+                pass
+            finally:
+                map_sizes = {
+                    'small': (4, 4),
+                    'medium': (6, 6),
+                    'large': (8, 8)
+                }
+                x, y = map_sizes[map_size]
+                self.root.game.game_map = gamemap.GameMap(x, y)
+                self.root.game.player.name = player_name
+                self.build_app()
 
     def build_input_new_game(self):
         self.input_player_image = tk.PhotoImage(file=self.root.game.player.get_image())
@@ -369,13 +390,17 @@ class App(tk.Frame):
 
         hero_label = tk.Label(self.input_frame, image=self.input_player_image)
         hero_label.grid(column=2, row=0, pady=15)
-        hero_name_label = tk.Label(self.input_frame, text="Enter name:", bg="GREY", font=("times", 16, "bold"))
-        hero_name_label.grid(column=1, row=1, sticky="nwe", pady=15, padx=2)
-        hero_name = tk.Entry(self.input_frame, font=("times", 15))
-        hero_name.grid(column=2, row=1, sticky="nsew", pady=15, ipady=2, ipadx=10, padx=2)
+        if not self.root.game.player.name:
+            hero_name_label = tk.Label(self.input_frame, text="Enter name:", bg="GREY", font=("times", 16, "bold"))
+            hero_name_label.grid(column=1, row=1, sticky="nwe", pady=15, padx=2)
+            hero_name = tk.Entry(self.input_frame, font=("times", 15))
+            hero_name.grid(column=2, row=1, sticky="nsew", pady=15, ipady=2, ipadx=10, padx=2)
+        else:
+            hero_name_label = tk.Label(self.input_frame, text=self.root.game.player.name, bg="GREY", font=("times", 16, "bold"))
+            hero_name_label.grid(column=2, row=1, sticky="nwe", pady=15, padx=2)
+            hero_name = tk.StringVar(value=self.root.game.player.name)
 
         map_size = tk.StringVar(value="small")
-
         map_small = tk.Checkbutton(self.input_frame, image=self.small_map, variable=map_size, onvalue='small', bg="GREY")
         map_small.grid(column=1, row=2, sticky="n", pady=10, padx=5)
         map_medium = tk.Checkbutton(self.input_frame, image=self.medium_map, variable=map_size, onvalue='medium', bg="GREY")
@@ -388,6 +413,12 @@ class App(tk.Frame):
             command=lambda:self.handle_new_game_input(hero_name.get(), map_size.get())
         )
         hero_submit.grid(column=3, row=1)
+
+    def handle_load_character(self, player_name):
+        new_player = database.disc_load_character(player_name)
+        self.root.game = Game()
+        self.root.game.player = new_player
+        self.build_input_new_game()
 
     def build_load_character_menu(self):
         self.banner_image = tk.PhotoImage(file='data/images/banner.png')
@@ -406,17 +437,59 @@ class App(tk.Frame):
         self.load_character_frame.columnconfigure(0, weight=1)
         self.load_character_frame.columnconfigure(1, weight=1)
         self.load_character_frame.columnconfigure(2, weight=1)
+        self.load_character_frame.columnconfigure(3, weight=1)
+        self.load_character_frame.columnconfigure(4, weight=1)
         #BANNER
         banner_label = tk.Label(self.load_character_frame, image=self.banner_image, bg="GREY")
-        banner_label.grid(row=0, columnspan=3)
+        banner_label.grid(row=0, columnspan=5)
         #LOAD CHARACTER
-        load_character_button = tk.Button(self.load_character_frame, image=self.load_character_image, bg="GREY")
+        load_character_button = tk.Button(self.load_character_frame, image=self.load_character_image, bg="GREY",
+            command=lambda:self.handle_load_character(self.checked_file.get())
+        )
         load_character_button.grid(row=1, column=0, pady=10)
         #BACK OPTION
         back_button = tk.Button(self.load_character_frame, image=self.back_image, bg="GREY",
             command=lambda:self.switch_frame(self.build_new_game_menu, self.load_character_frame)
         )
         back_button.grid(row=3, column=0, pady=10)
+        #FILE FRAME
+        self.save_files_frame = tk.Frame(self.load_character_frame, bg="BLACK")
+        self.save_files_frame.grid(row=1, rowspan=3, column=1, columnspan=3, sticky="wnes")
+        self.save_files_frame.columnconfigure(0, weight=1)
+        self.save_files_frame.columnconfigure(1, weight=0)
+        save_files_label = tk.Label(self.save_files_frame, text="Saved Characters", font=("times", 22), fg="white", bg="black")
+        save_files_label.grid(row=0, columnspan=2, sticky="we")
+        self.checked_file = tk.StringVar(value=0)
+
+        for row, filename in enumerate(os.listdir('data/database/characters/')):
+            char_name = filename.replace('character_', '')
+            char_name = char_name.replace('.json', '')
+            temp_frame = tk.Frame(self.save_files_frame, relief=tk.RAISED, borderwidth=2)
+            temp_frame.grid(row=row+1, columnspan=2, sticky="we")
+            temp_frame.columnconfigure(0, minsize=210)
+            file_checkbutton = tk.Checkbutton(temp_frame, variable=self.checked_file, onvalue=char_name, offvalue=None)
+            file_checkbutton.grid(row=row, column=0, sticky="e")
+            file_label = tk.Label(temp_frame, text=char_name, font=(18))
+            file_label.grid(row=row, column=1, sticky="we")
+
+    def handle_load_game(self, player_name):
+        new_gamemap, player = database.disc_load_progress(player_name)
+        x = new_gamemap.player_x
+        y = new_gamemap.player_y
+        new_gamemap.map_grid[y][x].set_state('X')
+        self.root.game = Game()
+        self.root.game.player = player
+        self.root.game.game_map = new_gamemap
+        self.app_frame = tk.Frame(self)
+        self.build_game_map_frame(self.app_frame)
+        self.build_player_frame(self.app_frame)
+        self.build_movement_frame(self.player_frame)
+        self.build_save_exit_frame(self.player_frame)
+        self.app_frame.grid(row=0, column=0, columnspan=2, sticky="nswe")
+        self.app_frame.rowconfigure(0, weight=1)
+        self.app_frame.columnconfigure(0, weight=1)
+        self.app_frame.columnconfigure(1, weight=1)
+        self.app_frame.lower()
 
     def build_load_game_menu(self):
         self.banner_image = tk.PhotoImage(file='data/images/banner.png')
@@ -434,17 +507,40 @@ class App(tk.Frame):
         self.load_game_frame.columnconfigure(0, weight=1)
         self.load_game_frame.columnconfigure(1, weight=1)
         self.load_game_frame.columnconfigure(2, weight=1)
+        self.load_game_frame.columnconfigure(3, weight=1)
+        self.load_game_frame.columnconfigure(4, weight=1)
         #BANNER
         self.banner_label = tk.Label(self.load_game_frame, image=self.banner_image, bg="GREY")
-        self.banner_label.grid(row=0, columnspan=3)
+        self.banner_label.grid(row=0, columnspan=5)
         #LOAD GAME
-        self.load_game_button = tk.Button(self.load_game_frame, image=self.load_game_image, bg="GREY",)
+        self.load_game_button = tk.Button(self.load_game_frame, image=self.load_game_image, bg="GREY",
+            command=lambda:self.switch_frame(lambda:self.handle_load_game(self.checked_file.get()), self.load_game_frame)
+        )
         self.load_game_button.grid(row=1, column=0, pady=10)
         #BACK OPTION
         back_button = tk.Button(self.load_game_frame, image=self.back_button_image, bg="GREY",
             command=lambda:self.switch_frame(self.build_start_menu, self.load_game_frame)
         )
         back_button.grid(row=3, column=0, pady=10)
+        #FILE FRAME
+        self.save_files_frame = tk.Frame(self.load_game_frame, bg="BLACK")
+        self.save_files_frame.grid(row=1, rowspan=3, column=1, columnspan=3, sticky="wnes")
+        self.save_files_frame.columnconfigure(0, weight=1)
+        self.save_files_frame.columnconfigure(1, weight=0)
+        save_files_label = tk.Label(self.save_files_frame, text="Saved Games", font=("times", 22), fg="white", bg="black")
+        save_files_label.grid(row=0, columnspan=2, sticky="we")
+        self.checked_file = tk.StringVar(value=0)
+
+        for row, filename in enumerate(os.listdir('data/database/characters_ongoing/')):
+            char_name = filename.replace('character_', '')
+            char_name = char_name.replace('.json', '')
+            temp_frame = tk.Frame(self.save_files_frame, relief=tk.RAISED, borderwidth=2)
+            temp_frame.grid(row=row+1, columnspan=2, sticky="we")
+            temp_frame.columnconfigure(0, minsize=210)
+            file_checkbutton = tk.Checkbutton(temp_frame, variable=self.checked_file, onvalue=char_name, offvalue=None)
+            file_checkbutton.grid(row=row, column=0, sticky="e")
+            file_label = tk.Label(temp_frame, text=char_name, font=(18))
+            file_label.grid(row=row, column=1, sticky="we")
 
     def build_new_character_menu(self):
         self.root.game = Game()
@@ -513,14 +609,14 @@ class App(tk.Frame):
             self.place_holder.destroy()
         else:
             room = self.root.game.game_map.make_move(direction)
-            print(room)
             if room == 'exit':
                 self.finish_dungeon_popup()
             if isinstance(room, gamemap.Room):
                 self.place_holder = self.game_map
                 self.game_map = GuiGameMap(self.root, self.game_map_frame)
                 self.place_holder.destroy()
-                self.get_room_content(room)
+                if not room.cleared:
+                    self.get_room_content(room)
 
     def get_room_content(self, room):
         if room.get_contents():
@@ -873,7 +969,7 @@ class GuiRoom(tk.Frame):
         self.exit_room_button = tk.Button(self.lose_container, text="Exit: Main Menu", font=('Arial', 13, 'bold'), command=lambda:self.app.delete_game_progress(self.app.build_start_menu, self.app.app_frame))
         self.exit_room_button.grid(column=1, row=2, sticky="nswe")
         #Exit_button
-        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Game", font=('Arial', 13, 'bold'), command=lambda:self.app.delete_game_progress(None, self.root))
+        self.exit_room_button = tk.Button(self.lose_container, text="Exit: Game", font=('Arial', 13, 'bold'), command=lambda:self.app.delete_game_progress(None, sys.exit))
         self.exit_room_button.grid(column=1, row=3, sticky="nswe")
 
     def create_room_won_frames(self):
@@ -1011,6 +1107,9 @@ class GuiCombat(tk.Frame):
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
         self.combat_escaped = False
+        self.block = False
+        if self.root.game.player.special_ability == 'Sheild block':
+            self.block = True
        
     def next_turn(self):
         self.enemy_turn_action(self.combat_session.current_turn)
@@ -1023,9 +1122,15 @@ class GuiCombat(tk.Frame):
         attack_value, defend_value = self.combat_session.attack(enemy, player)
         rolls = f"{enemy.get_name()} attacked for {attack_value} and {player.get_name()} defended for {defend_value}"
         if attack_value > defend_value:
-            message = f"{enemy.get_name()} dealt 1 damage to {player.get_name()}."
-            new_health = player.get_health() - 1
+            special = ""
+            damage = 1
+            if self.block:
+                self.block = False
+                damage = 0
+                special = "Shield Block: "
+            new_health = player.get_health() - damage
             player.set_health(new_health)
+            message = f"{special}{enemy.get_name()} dealt {damage} damage to {player.get_name()}."
             if self.combat_session.is_entity_dead(player):
                 self.update_text_field(f'{player.get_name()} died!')
         else:
@@ -1051,8 +1156,14 @@ class GuiCombat(tk.Frame):
                     attack_value, defend_value = self.combat_session.attack(self.combat_session.current_turn, enemy)
                     rolls = f"{self.combat_session.current_turn.get_name()} attacked for {attack_value} and {enemy.get_name()} defended for {defend_value}"
                     if attack_value > defend_value:
-                        message = f"{self.combat_session.current_turn.get_name()} dealt 1 damage to {enemy.get_name()}."
-                        new_health = enemy.get_health() - 1
+                        damage = 1
+                        special = ""
+                        if self.root.game.player.special_ability == 'Critical strike!':
+                            if random.randrange(0, 4) == 1:
+                                damage *= 2
+                                special = "Critical Strike: "
+                        message = f"{special}{self.combat_session.current_turn.get_name()} dealt {damage} damage to {enemy.get_name()}."
+                        new_health = enemy.get_health() - damage
                         enemy.set_health(new_health)
                         if self.combat_session.is_entity_dead(enemy):
                             self.update_text_field(f'{enemy.get_name()} died!')

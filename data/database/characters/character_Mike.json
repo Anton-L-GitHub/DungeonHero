@@ -1,6 +1,6 @@
 {
     "player" : {
-        "name" : "Philip",
+        "name" : "Mike",
         "initiative" : 7,
         "health" : 5,
         "attack" : 5,
@@ -10,19 +10,11 @@
         "backpack_image" : "data/images/backpack.png",
         "special_ability" : "Critical strike!",
         "backpack" : [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
             {
-                "_name" : "Coins",
-                "_value" : 2,
-                "_rarity" : 40,
-                "image" : "data/images/coins.png"
+                "_name" : "Gemstone",
+                "_value" : 14,
+                "_rarity" : 10,
+                "image" : "data/images/gemstone.png"
             },
             {
                 "_name" : "Coins",
@@ -37,9 +29,6 @@
                 "image" : "data/images/coins.png"
             }
         ],
-        "start_health" : 5,
-        "_name" : "Coins",
-        "_value" : 2,
-        "_rarity" : 40
+        "start_health" : 5
     }
 }
