@@ -457,7 +457,7 @@ class App(tk.Frame):
         self.save_files_frame.grid(row=1, rowspan=3, column=1, columnspan=3, sticky="wnes")
         self.save_files_frame.columnconfigure(0, weight=1)
         self.save_files_frame.columnconfigure(1, weight=0)
-        save_files_label = tk.Label(self.save_files_frame, text="Saved Games", font=("times", 22), fg="white", bg="black")
+        save_files_label = tk.Label(self.save_files_frame, text="Saved Characters", font=("times", 22), fg="white", bg="black")
         save_files_label.grid(row=0, columnspan=2, sticky="we")
         self.checked_file = tk.StringVar(value=0)
 
