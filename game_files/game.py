@@ -2,6 +2,7 @@ from game_files.gamemap import Room
 from utils.prompts import prompts
 from utils.utils import dice_toss, sort_keys
 from random import randint
+from time import sleep
 
 """ Concerned with blabla """
 
@@ -15,9 +16,9 @@ class Game:
         self.game_map = GameMap
         self._room = Room('ERROR_ROOM')
         self._monsters = self._room.content.get('enemies')
-        
 
     # Terminal methods
+
     @classmethod
     def terminal_create_hero(cls):
         character, game_map = prompts.new_game()
@@ -35,7 +36,6 @@ class Game:
             self._set_room(next_room)
             self._set_monsters()
             return next_room
-            
 
     def terminal_exit(self):
         # disc_save_character(self.character)
@@ -48,20 +48,22 @@ class Game:
         return prompts.fight_or_flight()
 
     def terminal_print_monster_health(self):
-        monsters_hp = [f' {monster.get_name()}: {monster.get_health()}/{monster.get_start_health()} HP\n' for monster in self.room_get_monsters()]
+        monsters_hp = [
+            f' {monster.get_name()}: {monster.get_health()}/{monster.get_start_health()} HP\n' for monster in self.room_get_monsters()]
         if monsters_hp:
-            print(*monsters_hp) 
+            print(*monsters_hp)
 
     def terminal_print_player_health(self):
-        print(f'You have {self.player_get_health()}/{self.player_get_start_health()}') 
+        print(
+            f'You have {self.player_get_health()}/{self.player_get_start_health()}')
 
     def terminal_print_player_backpack(self):
-        print(f'You have {self.player_get_backpack_sum()} worth of treasures') 
+        print(f'You have {self.player_get_backpack_sum()} worth of treasures')
 
     def terminal_print_fight_stats(self):
         prompts.clear_screen()
-        print(f'You are in trouble! \nYour health: {self.character.get_health()}/{self.character.get_start_health()} HP\n'
-            f'Backpack items: {self.player_get_backpack_items()}\nBackpack value: {self.player_get_backpack_sum()}\n\nMonsters:')
+        print(f'\nYour health: {self.character.get_health()}/{self.character.get_start_health()} HP\n'
+              f'Backpack items: {self.player_get_backpack_items()}\nBackpack value: {self.player_get_backpack_sum()}\n\nMonsters:')
         self.terminal_print_monster_health()
 
     def terminal_player_death(self):
@@ -74,39 +76,38 @@ class Game:
         while True:
             self.terminal_map_print()
             next_room = self.terminal_make_move()
-            if not next_room:
-                continue
-            else:
+            if next_room:
                 turn_order = self.fight_get_turn_order()
                 while len(self._monsters) > 0:
                     if self.terminal_combat(turn_order) == 'ESCAPED':
-                        print('\nYou have escaped the dungeon!')
-                        break 
-                    self.player_gather_treasures()
-                    print('\nYou killed the monsters')
+                        break
+                    else:
+                        self.player_gather_treasures()
 
-        
     def terminal_combat(self, turn_order):
-            for fighter in turn_order:
+        for fighter in turn_order:
 
-                if self.player_check_is_dead():
-                    self.terminal_player_death()
+            if self.player_check_is_dead():
+                self.terminal_player_death()
 
-                elif fighter == self.character:
-                    choice = self.terminal_fight_or_flight()
-                    
-                    if choice == 'FIGHT':
-                        self.player_try_attack(self._monsters)
+            elif len(self._monsters) <= 0:
+                break
 
-                    elif choice == 'RUN':
-                        if self.player_try_run_away():
-                            print('\nYou ran away!')
-                            return 'ESCAPED'
+            elif fighter == self.character:
+                choice = self.terminal_fight_or_flight()
 
-                    self.terminal_print_fight_stats()
-                else:
-                    self.monster_try_attack(fighter)
+                if choice == 'FIGHT':
+                    prompts.clear_screen()
+                    self.player_try_attack(self._monsters)
 
+                elif choice == 'RUN':
+                    if self.player_try_run_away():
+                        print('\nYou ran away!')
+                        return 'ESCAPED'
+
+                self.terminal_print_fight_stats()
+            else:
+                self.monster_try_attack(fighter)
 
     # Map methods
 
@@ -155,16 +156,18 @@ class Game:
 
     def player_try_run_away(self):
         chance = self.character.get_agility() * 10
-        if chance <= randint(1,101):
+        if chance <= randint(1, 101):
             self.game_map.make_step_back()
             return True
-        else:
-            return False
 
     def player_check_is_dead(self):
         return self.character.is_dead()
 
     # Combat methods
+
+    def monsters_is_killed(self):
+        if len(self._monsters) == 0:
+            return True
 
     def monster_try_attack(self, monster):
         player_dice_sum = dice_toss(self.character.get_agility())
@@ -172,8 +175,6 @@ class Game:
         if player_dice_sum < monster_dice_sum:
             self._damage_player()
             return True
-        else: 
-            return False
 
     def fight_get_turn_order(self) -> list:
         result = {}
@@ -197,14 +198,12 @@ class Game:
             monsters[monster.get_name()] = monster.get_health()
         return monsters
 
-    def _damage_monster(self, monster:object):
+    def _damage_monster(self, monster: object):
         if monster.get_health() <= 0:
             return False
         monster.set_health(monster.get_health() - 1)
 
     def _damage_player(self):
-        if self.character.get_health() <= 0:
-            return 'TEMP You dead man TEMP'
         self.character.set_health(self.character.get_health() - 1)
 
     def _kill_monster(self, monster):
@@ -212,7 +211,7 @@ class Game:
             self._monsters.remove(monster)
         except:
             return False
-    
+
     # Cls setters
 
     def _set_monsters(self):
