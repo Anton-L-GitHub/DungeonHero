@@ -54,7 +54,15 @@ def disc_load_character(player_name):
         player_dict = json.load(f)
 
     newPlayer = characters.Character()
+    temp_backpack = []
+    for backpack in player_dict['player']['backpack']:
+        temp_treasure = treasures.Treasure()
+        json.loads(json.dumps(backpack), object_hook=temp_treasure.parse_data)
+        temp_backpack.append(temp_treasure)
+
     json.loads(json.dumps(player_dict['player']), object_hook=newPlayer.parse_data) 
+
+    newPlayer.backpack = temp_backpack
 
     return newPlayer
 
