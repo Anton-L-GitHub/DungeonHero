@@ -515,7 +515,6 @@ class App(tk.Frame):
             room = self.root.game.game_map.make_move(direction)
             print(room)
             if room == 'exit':
-                print("HERE")
                 self.finish_dungeon_popup()
             if isinstance(room, gamemap.Room):
                 self.place_holder = self.game_map
